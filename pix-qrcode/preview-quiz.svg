@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="260" viewBox="0 0 800 260">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="210" viewBox="0 0 800 210">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%"  stop-color="#1A1D27"/>
@@ -7,45 +7,34 @@
     </linearGradient>
   </defs>
 
-  <!-- fundo -->
-  <rect width="800" height="260" rx="12" fill="url(#bg)"/>
+  <rect width="800" height="210" rx="10" fill="url(#bg)"/>
+  <circle cx="660" cy="50"  r="130" fill="rgba(0,179,131,0.06)"/>
+  <circle cx="700" cy="190" r="90"  fill="rgba(0,122,90,0.05)"/>
 
-  <!-- detalhes decorativos -->
-  <circle cx="660" cy="60"  r="140" fill="rgba(0,179,131,0.06)"/>
-  <circle cx="700" cy="220" r="100" fill="rgba(0,122,90,0.05)"/>
-  <circle cx="40"  cy="210" r="90"  fill="rgba(255,255,255,0.02)"/>
-
-  <!-- linha de acento verde à esquerda -->
-  <rect x="0" y="0" width="4" height="260" rx="2" fill="#00B383"/>
+  <!-- acento verde -->
+  <rect x="0" y="0" width="4" height="210" rx="2" fill="#00B383"/>
 
   <!-- badge -->
-  <rect x="48" y="44" width="70" height="28" rx="14" fill="#00B383"/>
-  <text x="83" y="63" font-family="system-ui, sans-serif" font-size="13" font-weight="700"
+  <rect x="40" y="34" width="64" height="24" rx="12" fill="#00B383"/>
+  <text x="72" y="51" font-family="system-ui,sans-serif" font-size="12" font-weight="700"
         fill="white" text-anchor="middle" letter-spacing="2">QUIZ</text>
 
   <!-- título -->
-  <text x="48" y="116" font-family="system-ui, sans-serif" font-size="38" font-weight="800"
-        fill="white">Pix por QR Code</text>
+  <text x="40" y="96" font-family="system-ui,sans-serif" font-size="34" font-weight="800" fill="white">Pix por QR Code</text>
 
-  <!-- subtítulo linha 1 -->
-  <text x="48" y="150" font-family="system-ui, sans-serif" font-size="15" fill="rgba(255,255,255,0.7)">
-    20 perguntas sobre BR Code, API Pix, SPI, DICT e muito mais.
-  </text>
-  <!-- subtítulo linha 2 -->
-  <text x="48" y="170" font-family="system-ui, sans-serif" font-size="15" fill="rgba(255,255,255,0.7)">
-    Responda todas e clique em Enviar.
+  <!-- subtítulo -->
+  <text x="40" y="122" font-family="system-ui,sans-serif" font-size="13.5" fill="rgba(255,255,255,0.72)">
+    20 perguntas sobre BR Code, API Pix, SPI, DICT e muito mais. Responda todas e clique em Enviar.
   </text>
 
   <!-- separador -->
-  <line x1="48" y1="196" x2="752" y2="196" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <line x1="40" y1="148" x2="760" y2="148" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
 
-  <!-- indicadores -->
-  <text x="48" y="227" font-family="system-ui, sans-serif" font-size="13" fill="rgba(255,255,255,0.5)">
+  <!-- rodapé -->
+  <text x="40" y="178" font-family="system-ui,sans-serif" font-size="12" fill="rgba(255,255,255,0.45)">
     Teste seu conhecimento sobre o ecossistema Pix
   </text>
 
-  <!-- ícone de seta → direito -->
-  <circle cx="750" cy="220" r="18" fill="rgba(0,179,131,0.2)"/>
-  <text x="750" y="226" font-family="system-ui, sans-serif" font-size="18" fill="#00B383"
-        text-anchor="middle">→</text>
+  <circle cx="748" cy="172" r="16" fill="rgba(0,179,131,0.2)"/>
+  <text x="748" y="178" font-family="system-ui,sans-serif" font-size="16" fill="#00B383" text-anchor="middle">→</text>
 </svg>
