@@ -1,4 +1,4 @@
-# finlab
+# FinLab
 
 Repositório de ferramentas financeiras publicadas via GitHub Pages.
 
