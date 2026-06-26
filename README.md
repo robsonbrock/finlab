@@ -14,6 +14,6 @@ Editor e validador de arquivos CNAB 240 e CNAB 150.
 ### Pix — Pagamento com QR Code (Aula Magna)
 Aula completa sobre o funcionamento do Pix via QR Code.
 
-🔗 **Aula:** https://robsonbrock.github.io/finlab/Pix%20-%20pagamento%20com%20QR%20Code%20-%20aula%20magna/aula-pix-qrcode.html
+🔗 **Aula:** https://robsonbrock.github.io/finlab/pix-qrcode/aula-pix-qrcode.html
 
-🔗 **Quiz:** https://robsonbrock.github.io/finlab/Pix%20-%20pagamento%20com%20QR%20Code%20-%20aula%20magna/quiz-pix-qrcode.html
+🔗 **Quiz:** https://robsonbrock.github.io/finlab/pix-qrcode/quiz-pix-qrcode.html
