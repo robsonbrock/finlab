@@ -1411,17 +1411,74 @@ function loadSample240(){
   const mk=(...parts)=>parts.join('').padEnd(240,' ').slice(0,240);
   const banco='033', ag=pL('1234',5), cc=pL('87654321',12);
   const hoje='25052025';
+  // favorecidos para variar os documentos
+  const favs=[
+    {cpf:'98765432100',nome:'JOAO DA SILVA',        end:'RUA DAS FLORES 123',   bairro:'CENTRO',    cep:'01310',suf:'100',cid:'SAO PAULO',      uf:'SP'},
+    {cpf:'11122233344',nome:'MARIA OLIVEIRA SANTOS', end:'AV BRASIL 4500',       bairro:'JARDINS',   cep:'01430',suf:'000',cid:'SAO PAULO',      uf:'SP'},
+    {cpf:'55566677788',nome:'PEDRO HENRIQUE SOUZA',  end:'RUA XV DE NOVEMBRO 87', bairro:'CENTRO',    cep:'13010',suf:'520',cid:'CAMPINAS',       uf:'SP'},
+    {cpf:'99988877766',nome:'ANA CAROLINA LIMA',     end:'RUA DAS PALMEIRAS 32',  bairro:'BOA VISTA', cep:'20040',suf:'010',cid:'RIO DE JANEIRO', uf:'RJ'},
+    {cpf:'22233344455',nome:'CARLOS EDUARDO ROCHA',  end:'AV PAULISTA 1000',      bairro:'BELA VISTA',cep:'01310',suf:'200',cid:'SAO PAULO',      uf:'SP'},
+  ];
+  const valorDoc=(l,d)=>15000+l*1000+d*250;  // valores variados (centavos)
+  const nossoNum=(l,d)=>pL(String(l)+pL(d,3)+'0000000000',20);
+
+  // ── Builders de registro (posições conforme layout do editor) ──
+  const headerLote=lote=>mk(banco,lote,'1','C','09','01','040',' ','02',pL('12345678000195',14),p('CONV001',20),ag,'0',cc,'1','0',p('EMPRESA EXEMPLO SA',30),p('SERVICOS DIGITAIS',20),p('LOTE '+lote,20),pL('1',6),hoje,'27052025',p('',65),p('',10));
+  const trailerLote=(lote,qtdReg,soma)=>mk(banco,lote,'5',p('',9),pL(qtdReg,6),pL(soma,18),pL('0',18),pL('0',6),p('',165),p('',10));
+  // Segmento P — Cobrança (título)
+  const segP=(lote,seq,d,valor)=>mk(banco,lote,'3',pL(seq,5),'P',' ','01',ag,'0',cc,'1','0',nossoNum(lote,d),'1','1','1','1','2',p('SEU-'+lote+'-'+pL(d,2),10),'27052025',pL(valor,15),pL('1234',5),'0',p('',2),'0',p('',2),'02','N',hoje,'0',p('',8),pL('0',15),'0',p('',8),pL('0',15),'0',p('',8),pL('0',15),pL('0',15),pL('0',15),p('',21));
+  // Segmento Q — Sacado/beneficiário
+  const segQ=(lote,seq,f)=>mk(banco,lote,'3',pL(seq,5),'Q',' ','01','2',pL(f.cpf,15),p(f.nome,40),p(f.end,40),p(f.bairro,15),pL(f.cep,5),f.suf,p(f.cid,15),f.uf,'2',pL('0',15),p('EMPRESA PROPRIETARIA',40),p('',31));
+  // Segmento R — Descontos / multa / juros / mensagens (opcional)
+  const segR=(lote,seq)=>mk(banco,lote,'3',pL(seq,5),'R',' ','01','1','30052025',pL('500',15),'0',pL('0',8),pL('0',15),'1','01062025',pL('100',15),pL('0',15),pL('0',5),pL('0',15),p('MULTA 2% APOS VENCIMENTO',40),p('DESCONTO R$5,00 ATE 30/05',40),p('',36));
+  // Segmento Y — Alteração de boleto (movimento à parte)
+  const segY=(lote,seq,d)=>mk(banco,lote,'3',pL(seq,5),'Y','5','31',pL('1234',6),nossoNum(lote,d),pL('1',5),'01',pL('0',15),pL('0',5),'0',pL('0',12),'0','0','01',p('BENEFICIARIO RATEIO LTDA',40),p('',15),p('',98));
+
   // H0 — Header Arquivo: CNPJ=15 chars (pos 18–32), convênio=20 chars (pos 33–52)
   const h0=mk(banco,'0000','0',p('',8),'2',pL('12345678000195',15),p('CONV001',20),ag,'0',cc,'1','0',p('EMPRESA EXEMPLO SA',30),p('BANCO SANTANDER',30),p('',10),'1',hoje,'143000',pL('1',6),'040',pL('01600',5),p('',20),p('',20),p('',29));
-  // HL — Header Lote: CNPJ=14 chars (pos 20–33), convênio=20 chars (pos 34–53), nº rem=6 chars (pos 144–149)
-  const hl=mk(banco,'0001','1','C','09','01','040',' ','02',pL('12345678000195',14),p('CONV001',20),ag,'0',cc,'1','0',p('EMPRESA EXEMPLO SA',30),p('SERVICOS DIGITAIS',20),p('LOTE 0001',20),pL('1',6),hoje,'27052025',p('',65),p('',10));
-  // HP — Detalhe Segmento P: cada campo na posição exata do layout
-  const hp=mk(banco,'0001','3',pL('1',5),'P',' ','01',ag,'0',cc,'1','0',pL('1234567890123456',20),'1','1','1','1','2',p('SEU-0001',10),'27052025',pL('15000',15),pL('1234',5),'0',p('',2),'0',p('',2),'02','N',hoje,'0',p('',8),pL('0',15),'0',p('',8),pL('0',15),'0',p('',8),pL('0',15),pL('0',15),pL('0',15),p('',21));
-  // HQ — Detalhe Segmento Q: nome=40 chars (pos 34–73), endereço=40 chars (pos 74–113), cidade=15 chars
-  const hq=mk(banco,'0001','3',pL('2',5),'Q',' ','01','2',pL('98765432100',15),p('JOAO DA SILVA',40),p('RUA DAS FLORES 123',40),p('CENTRO',15),pL('01310',5),'100',p('SAO PAULO',15),'SP','2',pL('0',15),p('EMPRESA PROPRIETARIA',40),p('',31));
-  const tl=mk(banco,'0001','5',p('',9),pL('4',6),pL('15000',18),pL('0',18),pL('0',6),p('',165),p('',10));
-  const t0=mk(banco,'9999','9',p('',9),pL('1',6),pL('6',6),pL('0',6),p('',205));
-  loadContent([h0,hl,hp,hq,tl,t0].join('\n'));
+
+  const linhas=[h0];
+  let totalReg=1, numLote=0;  // totalReg já conta o H0
+
+  // ── Lote 1: 2 documentos simples (P, Q, P, Q) ──
+  numLote++; let lote=pL(numLote,4), seq=0, soma=0, reg=1;  // reg conta o HL
+  linhas.push(headerLote(lote)); totalReg++;
+  for(let d=1; d<=2; d++){
+    const v=valorDoc(numLote,d); soma+=v;
+    linhas.push(segP(lote,++seq,d,v)); totalReg++; reg++;
+    linhas.push(segQ(lote,++seq,favs[(d-1)%favs.length])); totalReg++; reg++;
+  }
+  linhas.push(trailerLote(lote,reg+1,soma)); totalReg++;
+
+  // ── Lote 2: variedade válida de cobrança remessa ──
+  // doc 1 = P+Q+R (com desconto/multa/juros), doc 2 = P+Q, e um registro Y (alteração de boleto)
+  numLote++; lote=pL(numLote,4); seq=0; soma=0; reg=1;
+  linhas.push(headerLote(lote)); totalReg++;
+  let v1=valorDoc(numLote,1); soma+=v1;
+  linhas.push(segP(lote,++seq,1,v1)); totalReg++; reg++;
+  linhas.push(segQ(lote,++seq,favs[0])); totalReg++; reg++;
+  linhas.push(segR(lote,++seq)); totalReg++; reg++;
+  let v2=valorDoc(numLote,2); soma+=v2;
+  linhas.push(segP(lote,++seq,2,v2)); totalReg++; reg++;
+  linhas.push(segQ(lote,++seq,favs[1])); totalReg++; reg++;
+  linhas.push(segY(lote,++seq,1)); totalReg++; reg++;
+  linhas.push(trailerLote(lote,reg+1,soma)); totalReg++;
+
+  // ── Lote 3: 4 documentos simples (P, Q) ──
+  numLote++; lote=pL(numLote,4); seq=0; soma=0; reg=1;
+  linhas.push(headerLote(lote)); totalReg++;
+  for(let d=1; d<=4; d++){
+    const v=valorDoc(numLote,d); soma+=v;
+    linhas.push(segP(lote,++seq,d,v)); totalReg++; reg++;
+    linhas.push(segQ(lote,++seq,favs[(d-1)%favs.length])); totalReg++; reg++;
+  }
+  linhas.push(trailerLote(lote,reg+1,soma)); totalReg++;
+
+  // T0 — Trailer Arquivo: qtd lotes e qtd total de registros (inclui o próprio T0)
+  totalReg++;
+  linhas.push(mk(banco,'9999','9',p('',9),pL(numLote,6),pL(totalReg,6),pL('0',6),p('',205)));
+
+  loadContent(linhas.join('\n'));
 }
 
 function loadSample150(){
