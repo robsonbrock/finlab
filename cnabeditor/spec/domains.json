@@ -1,0 +1,7366 @@
+{
+  "domains": {
+    "C004": {
+      "codigo": "C004",
+      "nome": "Código de Movimento Remessa",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Entrada de Títulos"
+        },
+        {
+          "code": "02",
+          "descricao": "Pedido de Baixa"
+        },
+        {
+          "code": "03",
+          "descricao": "Protesto para Fins Falimentares"
+        },
+        {
+          "code": "04",
+          "descricao": "Concessão de Abatimento"
+        },
+        {
+          "code": "05",
+          "descricao": "Cancelamento de Abatimento"
+        },
+        {
+          "code": "06",
+          "descricao": "Alteração de Vencimento"
+        },
+        {
+          "code": "07",
+          "descricao": "Concessão de Desconto"
+        },
+        {
+          "code": "08",
+          "descricao": "Cancelamento de Desconto"
+        },
+        {
+          "code": "09",
+          "descricao": "Protestar"
+        },
+        {
+          "code": "10",
+          "descricao": "Sustar Protesto e Baixar Título"
+        },
+        {
+          "code": "11",
+          "descricao": "Sustar Protesto e Manter em Carteira"
+        },
+        {
+          "code": "12",
+          "descricao": "Alteração de Juros de Mora"
+        },
+        {
+          "code": "13",
+          "descricao": "Dispensar Cobrança de Juros de Mora"
+        },
+        {
+          "code": "14",
+          "descricao": "Alteração de Valor/Percentual de Multa"
+        },
+        {
+          "code": "15",
+          "descricao": "Dispensar Cobrança de Multa"
+        },
+        {
+          "code": "16",
+          "descricao": "Alteração de Valor/Data de Desconto"
+        },
+        {
+          "code": "17",
+          "descricao": "Não conceder Desconto"
+        },
+        {
+          "code": "18",
+          "descricao": "Alteração do Valor de Abatimento"
+        },
+        {
+          "code": "19",
+          "descricao": "Prazo Limite de Recebimento - Alterar"
+        },
+        {
+          "code": "20",
+          "descricao": "Prazo Limite de Recebimento - Dispensar"
+        },
+        {
+          "code": "21",
+          "descricao": "Alterar número do título dado pelo Beneficiário"
+        },
+        {
+          "code": "22",
+          "descricao": "Alterar número controle do Participante"
+        },
+        {
+          "code": "23",
+          "descricao": "Alterar dados do Pagador"
+        },
+        {
+          "code": "24",
+          "descricao": "Alterar dados do Sacador/Avalista"
+        },
+        {
+          "code": "30",
+          "descricao": "Recusa da Alegação do Pagador"
+        },
+        {
+          "code": "31",
+          "descricao": "Alteração de Outros Dados"
+        },
+        {
+          "code": "33",
+          "descricao": "Alteração dos Dados do Rateio de Crédito"
+        },
+        {
+          "code": "34",
+          "descricao": "Pedido de Cancelamento dos Dados do Rateio de Crédito"
+        },
+        {
+          "code": "35",
+          "descricao": "Pedido de Desagendamento do Débito Automático"
+        },
+        {
+          "code": "40",
+          "descricao": "Alteração de Carteira"
+        },
+        {
+          "code": "41",
+          "descricao": "Cancelar protesto"
+        },
+        {
+          "code": "42",
+          "descricao": "Alteração de Espécie de Título"
+        },
+        {
+          "code": "43",
+          "descricao": "Transferência de carteira/modalidade de cobrança"
+        },
+        {
+          "code": "44",
+          "descricao": "Alteração de contrato de cobrança"
+        },
+        {
+          "code": "45",
+          "descricao": "Negativação Sem Protesto"
+        },
+        {
+          "code": "46",
+          "descricao": "Solicitação de Baixa de Título Negativado Sem Protesto"
+        },
+        {
+          "code": "47",
+          "descricao": "Alteração do Valor Nominal do Título"
+        },
+        {
+          "code": "48",
+          "descricao": "Alteração do Valor Mínimo/Percentual"
+        },
+        {
+          "code": "49",
+          "descricao": "Alteração do Valor Máximo/Percentual"
+        },
+        {
+          "code": "61",
+          "descricao": "Alteração para inclusão/manutenção de QR Code Pix"
+        }
+      ]
+    },
+    "C006": {
+      "codigo": "C006",
+      "nome": "Código da Carteira",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Cobrança Simples"
+        },
+        {
+          "code": "2",
+          "descricao": "Cobrança Vinculada"
+        },
+        {
+          "code": "3",
+          "descricao": "Cobrança Caucionada"
+        },
+        {
+          "code": "4",
+          "descricao": "Cobrança Descontada"
+        },
+        {
+          "code": "5",
+          "descricao": "Cobrança Vendor"
+        },
+        {
+          "code": "6",
+          "descricao": "Cobrança Cessão"
+        }
+      ]
+    },
+    "C007": {
+      "codigo": "C007",
+      "nome": "Forma de Cadastramento do Título no Banco",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Com Cadastramento (Cobrança Registrada)"
+        },
+        {
+          "code": "2",
+          "descricao": "Sem Cadastramento (Cobrança sem Registro)"
+        },
+        {
+          "code": "3",
+          "descricao": "Com Cadastramento / Recusa do Débito Automático"
+        }
+      ]
+    },
+    "C008": {
+      "codigo": "C008",
+      "nome": "Tipo de Documento",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Tradicional"
+        },
+        {
+          "code": "2",
+          "descricao": "Escritural"
+        }
+      ]
+    },
+    "C009": {
+      "codigo": "C009",
+      "nome": "Identificação da Emissão do Boleto de Pagamento",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Banco Emite"
+        },
+        {
+          "code": "2",
+          "descricao": "Cliente Emite"
+        },
+        {
+          "code": "3",
+          "descricao": "Banco Pré-emite e Cliente Complementa"
+        },
+        {
+          "code": "4",
+          "descricao": "Banco Reemite"
+        },
+        {
+          "code": "5",
+          "descricao": "Banco Não Reemite"
+        },
+        {
+          "code": "7",
+          "descricao": "Banco Emitente - Aberta"
+        },
+        {
+          "code": "8",
+          "descricao": "Banco Emitente - Auto-envelopável"
+        }
+      ]
+    },
+    "C010": {
+      "codigo": "C010",
+      "nome": "Identificação da Distribuição",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Banco Distribui"
+        },
+        {
+          "code": "2",
+          "descricao": "Cliente Distribui"
+        },
+        {
+          "code": "3",
+          "descricao": "Banco envia e-mail"
+        },
+        {
+          "code": "4",
+          "descricao": "Banco envia SMS"
+        },
+        {
+          "code": "P",
+          "descricao": "Banco registra e cliente distribui boleto com QR Code Pix"
+        },
+        {
+          "code": "Q",
+          "descricao": "Banco registra e distribui boleto com QR Code Pix"
+        }
+      ]
+    },
+    "C015": {
+      "codigo": "C015",
+      "nome": "Espécie do Título",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "CH Cheque"
+        },
+        {
+          "code": "02",
+          "descricao": "DM Duplicata Mercantil"
+        },
+        {
+          "code": "03",
+          "descricao": "DMI Duplicata Mercantil p/ Indicação"
+        },
+        {
+          "code": "04",
+          "descricao": "DS Duplicata de Serviço"
+        },
+        {
+          "code": "05",
+          "descricao": "DSI Duplicata de Serviço p/ Indicação"
+        },
+        {
+          "code": "06",
+          "descricao": "DR Duplicata Rural"
+        },
+        {
+          "code": "07",
+          "descricao": "LC Letra de Câmbio"
+        },
+        {
+          "code": "08",
+          "descricao": "NCC Nota de Crédito Comercial"
+        },
+        {
+          "code": "09",
+          "descricao": "NCE Nota de Crédito a Exportação"
+        },
+        {
+          "code": "10",
+          "descricao": "NCI Nota de Crédito Industrial"
+        },
+        {
+          "code": "11",
+          "descricao": "NCR Nota de Crédito Rural"
+        },
+        {
+          "code": "12",
+          "descricao": "NP Nota Promissória"
+        },
+        {
+          "code": "13",
+          "descricao": "NPR Nota Promissória Rural"
+        },
+        {
+          "code": "14",
+          "descricao": "TM Triplicata Mercantil"
+        },
+        {
+          "code": "15",
+          "descricao": "TS Triplicata de Serviço"
+        },
+        {
+          "code": "16",
+          "descricao": "NS Nota de Seguro"
+        },
+        {
+          "code": "17",
+          "descricao": "RC Recibo"
+        },
+        {
+          "code": "18",
+          "descricao": "FAT Fatura"
+        },
+        {
+          "code": "19",
+          "descricao": "ND Nota de Débito"
+        },
+        {
+          "code": "20",
+          "descricao": "AP Apólice de Seguro"
+        },
+        {
+          "code": "21",
+          "descricao": "ME Mensalidade Escolar"
+        },
+        {
+          "code": "22",
+          "descricao": "PC Parcela de Consórcio"
+        },
+        {
+          "code": "23",
+          "descricao": "NF Nota Fiscal"
+        },
+        {
+          "code": "24",
+          "descricao": "DD Documento de Dívida"
+        },
+        {
+          "code": "25",
+          "descricao": "Cédula de Produto Rural"
+        },
+        {
+          "code": "26",
+          "descricao": "Warrant"
+        },
+        {
+          "code": "27",
+          "descricao": "Dívida Ativa de Estado"
+        },
+        {
+          "code": "28",
+          "descricao": "Dívida Ativa de Município"
+        },
+        {
+          "code": "29",
+          "descricao": "Dívida Ativa da União"
+        },
+        {
+          "code": "30",
+          "descricao": "Encargos condominiais"
+        },
+        {
+          "code": "31",
+          "descricao": "CC Cartão de Crédito"
+        },
+        {
+          "code": "32",
+          "descricao": "BDP – Boleto de Proposta"
+        },
+        {
+          "code": "99",
+          "descricao": "Outros"
+        }
+      ]
+    },
+    "C016": {
+      "codigo": "C016",
+      "nome": "Identificação de Título Aceito / Não Aceito",
+      "valores": [
+        {
+          "code": "A",
+          "descricao": "Aceite"
+        },
+        {
+          "code": "N",
+          "descricao": "Não Aceite"
+        }
+      ]
+    },
+    "C018": {
+      "codigo": "C018",
+      "nome": "Código do Juros de Mora",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Valor por Dia"
+        },
+        {
+          "code": "2",
+          "descricao": "Taxa Mensal"
+        },
+        {
+          "code": "3",
+          "descricao": "Isento"
+        }
+      ]
+    },
+    "C021": {
+      "codigo": "C021",
+      "nome": "Código do Desconto 1 / 2 / 3",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Valor Fixo Até a Data Informada"
+        },
+        {
+          "code": "2",
+          "descricao": "Percentual Até a Data Informada"
+        },
+        {
+          "code": "3",
+          "descricao": "Valor por Antecipação Dia Corrido"
+        },
+        {
+          "code": "4",
+          "descricao": "Valor por Antecipação Dia Útil"
+        },
+        {
+          "code": "5",
+          "descricao": "Percentual Sobre o Valor Nominal Dia Corrido"
+        },
+        {
+          "code": "6",
+          "descricao": "Percentual Sobre o Valor Nominal Dia Útil"
+        },
+        {
+          "code": "7",
+          "descricao": "Cancelamento de Desconto"
+        }
+      ]
+    },
+    "C026": {
+      "codigo": "C026",
+      "nome": "Código para Protesto",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Protestar Dias Corridos"
+        },
+        {
+          "code": "2",
+          "descricao": "Protestar Dias Úteis"
+        },
+        {
+          "code": "3",
+          "descricao": "Não Protestar"
+        },
+        {
+          "code": "4",
+          "descricao": "Protestar Fim Falimentar - Dias Úteis"
+        },
+        {
+          "code": "5",
+          "descricao": "Protestar Fim Falimentar - Dias Corridos"
+        },
+        {
+          "code": "7",
+          "descricao": "Não negativar"
+        },
+        {
+          "code": "8",
+          "descricao": "Negativação sem Protesto"
+        },
+        {
+          "code": "9",
+          "descricao": "Cancelamento Protesto Automático"
+        }
+      ]
+    },
+    "C028": {
+      "codigo": "C028",
+      "nome": "Código para Baixa / Devolução",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Baixar / Devolver"
+        },
+        {
+          "code": "2",
+          "descricao": "Não Baixar / Não Devolver"
+        },
+        {
+          "code": "3",
+          "descricao": "Cancelar Prazo para Baixa / Devolução"
+        }
+      ]
+    },
+    "C039": {
+      "codigo": "C039",
+      "nome": "Aviso para Débito Automático",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Emite o Aviso com o Endereço Informado no Arquivo Remessa"
+        },
+        {
+          "code": "02",
+          "descricao": "Não Emite Aviso ao Pagador"
+        },
+        {
+          "code": "03",
+          "descricao": "Emite Aviso com o Endereço Constante do Cadastro do Banco"
+        }
+      ]
+    },
+    "C040": {
+      "codigo": "C040",
+      "nome": "Tipo de Impressão",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Frente do Boleto de Pagamento"
+        },
+        {
+          "code": "2",
+          "descricao": "Verso do Boleto de Pagamento"
+        },
+        {
+          "code": "3",
+          "descricao": "Corpo de Instruções da Ficha de Compensação do Boleto de Pagamento"
+        }
+      ]
+    },
+    "C043": {
+      "codigo": "C043",
+      "nome": "Tipo do Caracter a ser Impresso",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Normal"
+        },
+        {
+          "code": "02",
+          "descricao": "Itálico"
+        },
+        {
+          "code": "03",
+          "descricao": "Normal Negrito"
+        },
+        {
+          "code": "04",
+          "descricao": "Itálico Negrito"
+        }
+      ]
+    },
+    "C044": {
+      "codigo": "C044",
+      "nome": "Código de Movimento Retorno",
+      "valores": [
+        {
+          "code": "02",
+          "descricao": "Entrada Confirmada"
+        },
+        {
+          "code": "03",
+          "descricao": "Entrada Rejeitada"
+        },
+        {
+          "code": "04",
+          "descricao": "Transferência de Carteira/Entrada"
+        },
+        {
+          "code": "05",
+          "descricao": "Transferência de Carteira/Baixa"
+        },
+        {
+          "code": "06",
+          "descricao": "Liquidação"
+        },
+        {
+          "code": "07",
+          "descricao": "Confirmação do Recebimento da Instrução de Desconto"
+        },
+        {
+          "code": "08",
+          "descricao": "Confirmação do Recebimento do Cancelamento do Desconto"
+        },
+        {
+          "code": "09",
+          "descricao": "Baixa"
+        },
+        {
+          "code": "11",
+          "descricao": "Títulos em Carteira (Em Ser)"
+        },
+        {
+          "code": "12",
+          "descricao": "Confirmação Recebimento Instrução de Abatimento"
+        },
+        {
+          "code": "13",
+          "descricao": "Confirmação Recebimento Instrução de Cancelamento Abatimento"
+        },
+        {
+          "code": "14",
+          "descricao": "Confirmação Recebimento Instrução Alteração de Vencimento"
+        },
+        {
+          "code": "15",
+          "descricao": "Franco de Pagamento"
+        },
+        {
+          "code": "17",
+          "descricao": "Liquidação Após Baixa ou Liquidação Título Não Registrado"
+        },
+        {
+          "code": "19",
+          "descricao": "Confirmação Recebimento Instrução de Protesto"
+        },
+        {
+          "code": "20",
+          "descricao": "Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto"
+        },
+        {
+          "code": "23",
+          "descricao": "Remessa a Cartório (Aponte em Cartório)"
+        },
+        {
+          "code": "24",
+          "descricao": "Retirada de Cartório e Manutenção em Carteira"
+        },
+        {
+          "code": "25",
+          "descricao": "Protestado e Baixado (Baixa por Ter Sido Protestado)"
+        },
+        {
+          "code": "26",
+          "descricao": "Instrução Rejeitada"
+        },
+        {
+          "code": "27",
+          "descricao": "Confirmação do Pedido de Alteração de Outros Dados"
+        },
+        {
+          "code": "28",
+          "descricao": "Débito de Tarifas/Custas"
+        },
+        {
+          "code": "29",
+          "descricao": "Ocorrências do Pagador"
+        },
+        {
+          "code": "30",
+          "descricao": "Alteração de Dados Rejeitada"
+        },
+        {
+          "code": "33",
+          "descricao": "Confirmação da Alteração dos Dados do Rateio de Crédito"
+        },
+        {
+          "code": "34",
+          "descricao": "Confirmação do Cancelamento dos Dados do Rateio de Crédito"
+        },
+        {
+          "code": "35",
+          "descricao": "Confirmação do Desagendamento do Débito Automático"
+        },
+        {
+          "code": "36",
+          "descricao": "Confirmação de envio de e-mail/SMS"
+        },
+        {
+          "code": "37",
+          "descricao": "Envio de e-mail/SMS rejeitado"
+        },
+        {
+          "code": "38",
+          "descricao": "Confirmação de alteração do Prazo Limite de Recebimento"
+        },
+        {
+          "code": "39",
+          "descricao": "Confirmação de Dispensa de Prazo Limite de Recebimento"
+        },
+        {
+          "code": "40",
+          "descricao": "Confirmação da alteração do número do título dado pelo Beneficiário"
+        },
+        {
+          "code": "41",
+          "descricao": "Confirmação da alteração do número controle do Participante"
+        },
+        {
+          "code": "42",
+          "descricao": "Confirmação da alteração dos dados do Pagador"
+        },
+        {
+          "code": "43",
+          "descricao": "Confirmação da alteração dos dados do Sacador/Avalista"
+        },
+        {
+          "code": "44",
+          "descricao": "Título pago com cheque devolvido"
+        },
+        {
+          "code": "45",
+          "descricao": "Título pago com cheque compensado"
+        },
+        {
+          "code": "46",
+          "descricao": "Instrução para cancelar protesto confirmada"
+        },
+        {
+          "code": "47",
+          "descricao": "Instrução para protesto para fins falimentares confirmada"
+        },
+        {
+          "code": "48",
+          "descricao": "Confirmação de instrução de transferência de carteira/modalidade de cobrança"
+        },
+        {
+          "code": "49",
+          "descricao": "Alteração de contrato de cobrança"
+        },
+        {
+          "code": "50",
+          "descricao": "Título pago com cheque pendente de liquidação"
+        },
+        {
+          "code": "51",
+          "descricao": "Título DDA reconhecido pelo Pagador"
+        },
+        {
+          "code": "52",
+          "descricao": "Título DDA não reconhecido pelo Pagador"
+        },
+        {
+          "code": "53",
+          "descricao": "Título DDA recusado pela CIP"
+        },
+        {
+          "code": "54",
+          "descricao": "Confirmação da Instrução de Baixa de Título Negativado sem Protesto"
+        },
+        {
+          "code": "55",
+          "descricao": "Confirmação de Pedido de Dispensa de Multa"
+        },
+        {
+          "code": "56",
+          "descricao": "Confirmação do Pedido de Cobrança de Multa"
+        },
+        {
+          "code": "57",
+          "descricao": "Confirmação do Pedido de Alteração de Cobrança de Juros"
+        },
+        {
+          "code": "58",
+          "descricao": "Confirmação do Pedido de Alteração do Valor/Data de Desconto"
+        },
+        {
+          "code": "59",
+          "descricao": "Confirmação do Pedido de Alteração do Beneficiário do Título"
+        },
+        {
+          "code": "60",
+          "descricao": "Confirmação do Pedido de Dispensa de Juros de Mora"
+        },
+        {
+          "code": "61",
+          "descricao": "Confirmação de Alteração do Valor Nominal do Título"
+        },
+        {
+          "code": "63",
+          "descricao": "Título Sustado Judicialmente"
+        },
+        {
+          "code": "64",
+          "descricao": "Confirmação de alteração do valor mínimo/percentual"
+        },
+        {
+          "code": "65",
+          "descricao": "Confirmação de alteração do valor máximo/percentual"
+        },
+        {
+          "code": "93",
+          "descricao": "Intenção de pagamento"
+        },
+        {
+          "code": "94",
+          "descricao": "Cancelamento de intenção de pagamento"
+        }
+      ]
+    },
+    "C047": {
+      "codigo": "C047",
+      "nome": "Motivo da Ocorrência",
+      "note": "Três subtabelas: A=rejeições (mov. 02/03/26/30), B=tarifas/custas (mov. 28), C=liquidação/baixa (mov. 06/09/17). Códigos numéricos podem colidir entre subtabelas; o significado depende do código de movimento (C044).",
+      "subtabelas": {
+        "A_rejeicoes": [
+          {
+            "code": "01",
+            "descricao": "Código do Banco Inválido"
+          },
+          {
+            "code": "02",
+            "descricao": "Código do Registro Detalhe Inválido"
+          },
+          {
+            "code": "03",
+            "descricao": "Código do Segmento Inválido"
+          },
+          {
+            "code": "04",
+            "descricao": "Código de Movimento Não Permitido para Carteira"
+          },
+          {
+            "code": "05",
+            "descricao": "Código de Movimento Inválido"
+          },
+          {
+            "code": "06",
+            "descricao": "Tipo/Número de Inscrição do Beneficiário Inválidos"
+          },
+          {
+            "code": "07",
+            "descricao": "Agência/Conta/DV Inválido"
+          },
+          {
+            "code": "08",
+            "descricao": "Nosso Número Inválido"
+          },
+          {
+            "code": "09",
+            "descricao": "Nosso Número Duplicado"
+          },
+          {
+            "code": "10",
+            "descricao": "Carteira Inválida"
+          },
+          {
+            "code": "11",
+            "descricao": "Forma de Cadastramento do Título Inválido"
+          },
+          {
+            "code": "12",
+            "descricao": "Tipo de Documento Inválido"
+          },
+          {
+            "code": "13",
+            "descricao": "Identificação da Emissão do Boleto de Pagamento Inválida"
+          },
+          {
+            "code": "14",
+            "descricao": "Identificação da Distribuição do Boleto de Pagamento Inválida"
+          },
+          {
+            "code": "15",
+            "descricao": "Características da Cobrança Incompatíveis"
+          },
+          {
+            "code": "16",
+            "descricao": "Data de Vencimento Inválida"
+          },
+          {
+            "code": "17",
+            "descricao": "Data de Vencimento Anterior a Data de Emissão"
+          },
+          {
+            "code": "18",
+            "descricao": "Vencimento Fora do Prazo de Operação"
+          },
+          {
+            "code": "19",
+            "descricao": "Título a Cargo de Bancos Correspondentes com Vencimento Inferior a XX Dias"
+          },
+          {
+            "code": "20",
+            "descricao": "Valor do Título Inválido"
+          },
+          {
+            "code": "21",
+            "descricao": "Espécie do Título Inválida"
+          },
+          {
+            "code": "22",
+            "descricao": "Espécie do Título Não Permitida para a Carteira"
+          },
+          {
+            "code": "23",
+            "descricao": "Aceite Inválido"
+          },
+          {
+            "code": "24",
+            "descricao": "Data da Emissão Inválida"
+          },
+          {
+            "code": "25",
+            "descricao": "Data da Emissão Posterior a Data de Entrada"
+          },
+          {
+            "code": "26",
+            "descricao": "Código de Juros de Mora Inválido"
+          },
+          {
+            "code": "27",
+            "descricao": "Valor/Taxa de Juros de Mora Inválido"
+          },
+          {
+            "code": "28",
+            "descricao": "Código do Desconto Inválido"
+          },
+          {
+            "code": "29",
+            "descricao": "Valor do Desconto Maior ou Igual ao Valor do Título"
+          },
+          {
+            "code": "30",
+            "descricao": "Desconto a Conceder Não Confere"
+          },
+          {
+            "code": "31",
+            "descricao": "Concessão de Desconto - Já Existe Desconto Anterior"
+          },
+          {
+            "code": "32",
+            "descricao": "Valor do IOF Inválido"
+          },
+          {
+            "code": "33",
+            "descricao": "Valor do Abatimento Inválido"
+          },
+          {
+            "code": "34",
+            "descricao": "Valor do Abatimento Maior ou Igual ao Valor do Título"
+          },
+          {
+            "code": "35",
+            "descricao": "Valor a Conceder Não Confere"
+          },
+          {
+            "code": "36",
+            "descricao": "Concessão de Abatimento - Já Existe Abatimento Anterior"
+          },
+          {
+            "code": "37",
+            "descricao": "Código para Protesto Inválido"
+          },
+          {
+            "code": "38",
+            "descricao": "Prazo para Protesto Inválido"
+          },
+          {
+            "code": "39",
+            "descricao": "Pedido de Protesto Não Permitido para o Título"
+          },
+          {
+            "code": "40",
+            "descricao": "Título com Ordem de Protesto Emitida"
+          },
+          {
+            "code": "41",
+            "descricao": "Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto"
+          },
+          {
+            "code": "42",
+            "descricao": "Código para Baixa/Devolução Inválido"
+          },
+          {
+            "code": "43",
+            "descricao": "Prazo para Baixa/Devolução Inválido"
+          },
+          {
+            "code": "44",
+            "descricao": "Código da Moeda Inválido"
+          },
+          {
+            "code": "45",
+            "descricao": "Nome do Pagador Não Informado"
+          },
+          {
+            "code": "46",
+            "descricao": "Tipo/Número de Inscrição do Pagador Inválidos"
+          },
+          {
+            "code": "47",
+            "descricao": "Endereço do Pagador Não Informado"
+          },
+          {
+            "code": "48",
+            "descricao": "CEP Inválido"
+          },
+          {
+            "code": "49",
+            "descricao": "CEP Sem Praça de Cobrança (Não Localizado)"
+          },
+          {
+            "code": "50",
+            "descricao": "CEP Referente a um Banco Correspondente"
+          },
+          {
+            "code": "51",
+            "descricao": "CEP incompatível com a Unidade da Federação"
+          },
+          {
+            "code": "52",
+            "descricao": "Unidade da Federação Inválida"
+          },
+          {
+            "code": "53",
+            "descricao": "Tipo/Número de Inscrição do Sacador/Avalista Inválidos"
+          },
+          {
+            "code": "54",
+            "descricao": "Sacador/Avalista Não Informado"
+          },
+          {
+            "code": "55",
+            "descricao": "Nosso número no Banco Correspondente Não Informado"
+          },
+          {
+            "code": "56",
+            "descricao": "Código do Banco Correspondente Não Informado"
+          },
+          {
+            "code": "57",
+            "descricao": "Código da Multa Inválido"
+          },
+          {
+            "code": "58",
+            "descricao": "Data da Multa Inválida"
+          },
+          {
+            "code": "59",
+            "descricao": "Valor/Percentual da Multa Inválido"
+          },
+          {
+            "code": "60",
+            "descricao": "Movimento para Título Não Cadastrado"
+          },
+          {
+            "code": "61",
+            "descricao": "Alteração da Agência Cobradora/DV Inválida"
+          },
+          {
+            "code": "62",
+            "descricao": "Tipo de Impressão Inválido"
+          },
+          {
+            "code": "63",
+            "descricao": "Entrada para Título já Cadastrado"
+          },
+          {
+            "code": "64",
+            "descricao": "Número da Linha Inválido"
+          },
+          {
+            "code": "65",
+            "descricao": "Código do Banco para Débito Inválido"
+          },
+          {
+            "code": "66",
+            "descricao": "Agência/Conta/DV para Débito Inválido"
+          },
+          {
+            "code": "67",
+            "descricao": "Dados para Débito incompatível com a Identificação da Emissão do Boleto de Pagamento"
+          },
+          {
+            "code": "68",
+            "descricao": "Débito Automático Agendado"
+          },
+          {
+            "code": "69",
+            "descricao": "Débito Não Agendado - Erro nos Dados da Remessa"
+          },
+          {
+            "code": "70",
+            "descricao": "Débito Não Agendado - Pagador Não Consta do Cadastro de Autorizante"
+          },
+          {
+            "code": "71",
+            "descricao": "Débito Não Agendado - Beneficiário Não Autorizado pelo Pagador"
+          },
+          {
+            "code": "72",
+            "descricao": "Débito Não Agendado - Beneficiário Não Participa da Modalidade Débito Automático"
+          },
+          {
+            "code": "73",
+            "descricao": "Débito Não Agendado - Código de Moeda Diferente de Real (R$)"
+          },
+          {
+            "code": "74",
+            "descricao": "Débito Não Agendado - Data Vencimento Inválida"
+          },
+          {
+            "code": "75",
+            "descricao": "Débito Não Agendado, Conforme seu Pedido, Título Não Registrado"
+          },
+          {
+            "code": "76",
+            "descricao": "Débito Não Agendado, Tipo/Num. Inscrição do Debitado, Inválido"
+          },
+          {
+            "code": "77",
+            "descricao": "Transferência para Desconto Não Permitida para a Carteira do Título"
+          },
+          {
+            "code": "78",
+            "descricao": "Data Inferior ou Igual ao Vencimento para Débito Automático"
+          },
+          {
+            "code": "79",
+            "descricao": "Data Juros de Mora Inválido"
+          },
+          {
+            "code": "80",
+            "descricao": "Data do Desconto Inválida"
+          },
+          {
+            "code": "81",
+            "descricao": "Tentativas de Débito Esgotadas - Baixado"
+          },
+          {
+            "code": "82",
+            "descricao": "Tentativas de Débito Esgotadas - Pendente"
+          },
+          {
+            "code": "83",
+            "descricao": "Limite Excedido"
+          },
+          {
+            "code": "84",
+            "descricao": "Número Autorização Inexistente"
+          },
+          {
+            "code": "85",
+            "descricao": "Título com Pagamento Vinculado"
+          },
+          {
+            "code": "86",
+            "descricao": "Seu Número Inválido"
+          },
+          {
+            "code": "87",
+            "descricao": "e-mail/SMS enviado"
+          },
+          {
+            "code": "88",
+            "descricao": "e-mail Lido"
+          },
+          {
+            "code": "89",
+            "descricao": "e-mail/SMS devolvido - endereço de e-mail ou número do celular incorreto"
+          },
+          {
+            "code": "90",
+            "descricao": "e-mail devolvido - caixa postal cheia"
+          },
+          {
+            "code": "91",
+            "descricao": "e-mail/número do celular do Pagador não informado"
+          },
+          {
+            "code": "92",
+            "descricao": "Pagador optante por Boleto de Pagamento Eletrônico - e-mail não enviado"
+          },
+          {
+            "code": "93",
+            "descricao": "Código para emissão de Boleto de Pagamento não permite envio de e-mail"
+          },
+          {
+            "code": "94",
+            "descricao": "Código da Carteira inválido para envio e-mail"
+          },
+          {
+            "code": "95",
+            "descricao": "Contrato não permite o envio de e-mail"
+          },
+          {
+            "code": "96",
+            "descricao": "Número de contrato inválido"
+          },
+          {
+            "code": "97",
+            "descricao": "Rejeição da alteração do prazo limite de recebimento"
+          },
+          {
+            "code": "98",
+            "descricao": "Rejeição de dispensa de prazo limite de recebimento"
+          },
+          {
+            "code": "99",
+            "descricao": "Rejeição da alteração do número do título dado pelo Beneficiário"
+          },
+          {
+            "code": "A1",
+            "descricao": "Rejeição da alteração do número controle do participante"
+          },
+          {
+            "code": "A2",
+            "descricao": "Rejeição da alteração dos dados do Pagador"
+          },
+          {
+            "code": "A3",
+            "descricao": "Rejeição da alteração dos dados do Sacador/avalista"
+          },
+          {
+            "code": "A4",
+            "descricao": "Pagador DDA"
+          },
+          {
+            "code": "A5",
+            "descricao": "Registro Rejeitado – Título já Liquidado"
+          },
+          {
+            "code": "A6",
+            "descricao": "Código do Convenente Inválido ou Encerrado"
+          },
+          {
+            "code": "A7",
+            "descricao": "Título já se encontra na situação Pretendida"
+          },
+          {
+            "code": "A8",
+            "descricao": "Valor do Abatimento inválido para cancelamento"
+          },
+          {
+            "code": "A9",
+            "descricao": "Não autoriza pagamento parcial"
+          },
+          {
+            "code": "B1",
+            "descricao": "Autoriza recebimento parcial"
+          },
+          {
+            "code": "B2",
+            "descricao": "Valor Nominal do Título Conflitante"
+          },
+          {
+            "code": "B3",
+            "descricao": "Tipo de Pagamento Inválido"
+          },
+          {
+            "code": "B4",
+            "descricao": "Valor Máximo/Percentual Inválido"
+          },
+          {
+            "code": "B5",
+            "descricao": "Valor Mínimo/Percentual Inválido"
+          },
+          {
+            "code": "P1",
+            "descricao": "Registrado com QR Code Pix"
+          },
+          {
+            "code": "P2",
+            "descricao": "Registrado sem QR Code Pix"
+          },
+          {
+            "code": "P3",
+            "descricao": "Chave PIX – chave inválida"
+          },
+          {
+            "code": "P4",
+            "descricao": "Chave PIX – sem cadastro na DICT"
+          },
+          {
+            "code": "P5",
+            "descricao": "Chave PIX – não é compatível com o CNPJ"
+          },
+          {
+            "code": "P6",
+            "descricao": "Identificador (TXID) – em duplicidade"
+          },
+          {
+            "code": "P7",
+            "descricao": "Identificador (TXID) – inválido ou não encontrado"
+          },
+          {
+            "code": "P8",
+            "descricao": "Ocorrência – alterar QR Code – alteração não permitida – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor"
+          },
+          {
+            "code": "P9",
+            "descricao": "Ocorrência – cancela QR Code – cancelamento não permitido – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor"
+          }
+        ],
+        "B_tarifas_custas": [
+          {
+            "code": "01",
+            "descricao": "Tarifa de Extrato de Posição"
+          },
+          {
+            "code": "02",
+            "descricao": "Tarifa de Manutenção de Título Vencido"
+          },
+          {
+            "code": "03",
+            "descricao": "Tarifa de Sustação"
+          },
+          {
+            "code": "04",
+            "descricao": "Tarifa de Protesto"
+          },
+          {
+            "code": "05",
+            "descricao": "Tarifa de Outras Instruções"
+          },
+          {
+            "code": "06",
+            "descricao": "Tarifa de Outras Ocorrências"
+          },
+          {
+            "code": "07",
+            "descricao": "Tarifa de Envio de Duplicata ao Pagador"
+          },
+          {
+            "code": "08",
+            "descricao": "Custas de Protesto"
+          },
+          {
+            "code": "09",
+            "descricao": "Custas de Sustação de Protesto"
+          },
+          {
+            "code": "10",
+            "descricao": "Custas de Cartório Distribuidor"
+          },
+          {
+            "code": "11",
+            "descricao": "Custas de Edital"
+          },
+          {
+            "code": "12",
+            "descricao": "Tarifa Sobre Devolução de Título Vencido"
+          },
+          {
+            "code": "13",
+            "descricao": "Tarifa Sobre Registro Cobrada na Baixa/Liquidação"
+          },
+          {
+            "code": "14",
+            "descricao": "Tarifa Sobre Reapresentação Automática"
+          },
+          {
+            "code": "15",
+            "descricao": "Tarifa Sobre Rateio de Crédito"
+          },
+          {
+            "code": "16",
+            "descricao": "Tarifa Sobre Informações Via Fax"
+          },
+          {
+            "code": "17",
+            "descricao": "Tarifa Sobre Prorrogação de Vencimento"
+          },
+          {
+            "code": "18",
+            "descricao": "Tarifa Sobre Alteração de Abatimento/Desconto"
+          },
+          {
+            "code": "19",
+            "descricao": "Tarifa Sobre Arquivo mensal (Em Ser)"
+          },
+          {
+            "code": "20",
+            "descricao": "Tarifa Sobre Emissão de Boleto de Pagamento Pré-Emitido pelo Banco"
+          }
+        ],
+        "C_liquidacao_baixa": [
+          {
+            "code": "01",
+            "descricao": "Liquidação Por Saldo"
+          },
+          {
+            "code": "02",
+            "descricao": "Liquidação Por Conta"
+          },
+          {
+            "code": "03",
+            "descricao": "Liquidação no Guichê de Caixa em Dinheiro"
+          },
+          {
+            "code": "04",
+            "descricao": "Compensação Eletrônica"
+          },
+          {
+            "code": "05",
+            "descricao": "Compensação Convencional"
+          },
+          {
+            "code": "06",
+            "descricao": "Por Meio Eletrônico"
+          },
+          {
+            "code": "07",
+            "descricao": "Após Feriado Local"
+          },
+          {
+            "code": "08",
+            "descricao": "Em Cartório"
+          },
+          {
+            "code": "30",
+            "descricao": "Liquidação no Guichê de Caixa em Cheque"
+          },
+          {
+            "code": "31",
+            "descricao": "Liquidação em banco correspondente"
+          },
+          {
+            "code": "32",
+            "descricao": "Liquidação Terminal de Auto-Atendimento"
+          },
+          {
+            "code": "33",
+            "descricao": "Liquidação na Internet (Home banking)"
+          },
+          {
+            "code": "34",
+            "descricao": "Liquidado Office Banking"
+          },
+          {
+            "code": "35",
+            "descricao": "Liquidado Correspondente em Dinheiro"
+          },
+          {
+            "code": "36",
+            "descricao": "Liquidado Correspondente em Cheque"
+          },
+          {
+            "code": "37",
+            "descricao": "Liquidado por meio de Central de Atendimento (Telefone)"
+          },
+          {
+            "code": "61",
+            "descricao": "Liquidado via Pix"
+          },
+          {
+            "code": "09",
+            "descricao": "Baixa Comandada Banco"
+          },
+          {
+            "code": "10",
+            "descricao": "Baixa Comandada Cliente Arquivo"
+          },
+          {
+            "code": "11",
+            "descricao": "Baixa Comandada Cliente On-line"
+          },
+          {
+            "code": "12",
+            "descricao": "Baixa Decurso Prazo - Cliente"
+          },
+          {
+            "code": "13",
+            "descricao": "Baixa Decurso Prazo - Banco"
+          },
+          {
+            "code": "14",
+            "descricao": "Baixa Protestado"
+          },
+          {
+            "code": "15",
+            "descricao": "Título Excluído"
+          }
+        ]
+      },
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Código do Banco Inválido"
+        },
+        {
+          "code": "02",
+          "descricao": "Código do Registro Detalhe Inválido"
+        },
+        {
+          "code": "03",
+          "descricao": "Código do Segmento Inválido"
+        },
+        {
+          "code": "04",
+          "descricao": "Código de Movimento Não Permitido para Carteira"
+        },
+        {
+          "code": "05",
+          "descricao": "Código de Movimento Inválido"
+        },
+        {
+          "code": "06",
+          "descricao": "Tipo/Número de Inscrição do Beneficiário Inválidos"
+        },
+        {
+          "code": "07",
+          "descricao": "Agência/Conta/DV Inválido"
+        },
+        {
+          "code": "08",
+          "descricao": "Nosso Número Inválido"
+        },
+        {
+          "code": "09",
+          "descricao": "Nosso Número Duplicado"
+        },
+        {
+          "code": "10",
+          "descricao": "Carteira Inválida"
+        },
+        {
+          "code": "11",
+          "descricao": "Forma de Cadastramento do Título Inválido"
+        },
+        {
+          "code": "12",
+          "descricao": "Tipo de Documento Inválido"
+        },
+        {
+          "code": "13",
+          "descricao": "Identificação da Emissão do Boleto de Pagamento Inválida"
+        },
+        {
+          "code": "14",
+          "descricao": "Identificação da Distribuição do Boleto de Pagamento Inválida"
+        },
+        {
+          "code": "15",
+          "descricao": "Características da Cobrança Incompatíveis"
+        },
+        {
+          "code": "16",
+          "descricao": "Data de Vencimento Inválida"
+        },
+        {
+          "code": "17",
+          "descricao": "Data de Vencimento Anterior a Data de Emissão"
+        },
+        {
+          "code": "18",
+          "descricao": "Vencimento Fora do Prazo de Operação"
+        },
+        {
+          "code": "19",
+          "descricao": "Título a Cargo de Bancos Correspondentes com Vencimento Inferior a XX Dias"
+        },
+        {
+          "code": "20",
+          "descricao": "Valor do Título Inválido"
+        },
+        {
+          "code": "21",
+          "descricao": "Espécie do Título Inválida"
+        },
+        {
+          "code": "22",
+          "descricao": "Espécie do Título Não Permitida para a Carteira"
+        },
+        {
+          "code": "23",
+          "descricao": "Aceite Inválido"
+        },
+        {
+          "code": "24",
+          "descricao": "Data da Emissão Inválida"
+        },
+        {
+          "code": "25",
+          "descricao": "Data da Emissão Posterior a Data de Entrada"
+        },
+        {
+          "code": "26",
+          "descricao": "Código de Juros de Mora Inválido"
+        },
+        {
+          "code": "27",
+          "descricao": "Valor/Taxa de Juros de Mora Inválido"
+        },
+        {
+          "code": "28",
+          "descricao": "Código do Desconto Inválido"
+        },
+        {
+          "code": "29",
+          "descricao": "Valor do Desconto Maior ou Igual ao Valor do Título"
+        },
+        {
+          "code": "30",
+          "descricao": "Desconto a Conceder Não Confere"
+        },
+        {
+          "code": "31",
+          "descricao": "Concessão de Desconto - Já Existe Desconto Anterior"
+        },
+        {
+          "code": "32",
+          "descricao": "Valor do IOF Inválido"
+        },
+        {
+          "code": "33",
+          "descricao": "Valor do Abatimento Inválido"
+        },
+        {
+          "code": "34",
+          "descricao": "Valor do Abatimento Maior ou Igual ao Valor do Título"
+        },
+        {
+          "code": "35",
+          "descricao": "Valor a Conceder Não Confere"
+        },
+        {
+          "code": "36",
+          "descricao": "Concessão de Abatimento - Já Existe Abatimento Anterior"
+        },
+        {
+          "code": "37",
+          "descricao": "Código para Protesto Inválido"
+        },
+        {
+          "code": "38",
+          "descricao": "Prazo para Protesto Inválido"
+        },
+        {
+          "code": "39",
+          "descricao": "Pedido de Protesto Não Permitido para o Título"
+        },
+        {
+          "code": "40",
+          "descricao": "Título com Ordem de Protesto Emitida"
+        },
+        {
+          "code": "41",
+          "descricao": "Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto"
+        },
+        {
+          "code": "42",
+          "descricao": "Código para Baixa/Devolução Inválido"
+        },
+        {
+          "code": "43",
+          "descricao": "Prazo para Baixa/Devolução Inválido"
+        },
+        {
+          "code": "44",
+          "descricao": "Código da Moeda Inválido"
+        },
+        {
+          "code": "45",
+          "descricao": "Nome do Pagador Não Informado"
+        },
+        {
+          "code": "46",
+          "descricao": "Tipo/Número de Inscrição do Pagador Inválidos"
+        },
+        {
+          "code": "47",
+          "descricao": "Endereço do Pagador Não Informado"
+        },
+        {
+          "code": "48",
+          "descricao": "CEP Inválido"
+        },
+        {
+          "code": "49",
+          "descricao": "CEP Sem Praça de Cobrança (Não Localizado)"
+        },
+        {
+          "code": "50",
+          "descricao": "CEP Referente a um Banco Correspondente"
+        },
+        {
+          "code": "51",
+          "descricao": "CEP incompatível com a Unidade da Federação"
+        },
+        {
+          "code": "52",
+          "descricao": "Unidade da Federação Inválida"
+        },
+        {
+          "code": "53",
+          "descricao": "Tipo/Número de Inscrição do Sacador/Avalista Inválidos"
+        },
+        {
+          "code": "54",
+          "descricao": "Sacador/Avalista Não Informado"
+        },
+        {
+          "code": "55",
+          "descricao": "Nosso número no Banco Correspondente Não Informado"
+        },
+        {
+          "code": "56",
+          "descricao": "Código do Banco Correspondente Não Informado"
+        },
+        {
+          "code": "57",
+          "descricao": "Código da Multa Inválido"
+        },
+        {
+          "code": "58",
+          "descricao": "Data da Multa Inválida"
+        },
+        {
+          "code": "59",
+          "descricao": "Valor/Percentual da Multa Inválido"
+        },
+        {
+          "code": "60",
+          "descricao": "Movimento para Título Não Cadastrado"
+        },
+        {
+          "code": "61",
+          "descricao": "Alteração da Agência Cobradora/DV Inválida"
+        },
+        {
+          "code": "62",
+          "descricao": "Tipo de Impressão Inválido"
+        },
+        {
+          "code": "63",
+          "descricao": "Entrada para Título já Cadastrado"
+        },
+        {
+          "code": "64",
+          "descricao": "Número da Linha Inválido"
+        },
+        {
+          "code": "65",
+          "descricao": "Código do Banco para Débito Inválido"
+        },
+        {
+          "code": "66",
+          "descricao": "Agência/Conta/DV para Débito Inválido"
+        },
+        {
+          "code": "67",
+          "descricao": "Dados para Débito incompatível com a Identificação da Emissão do Boleto de Pagamento"
+        },
+        {
+          "code": "68",
+          "descricao": "Débito Automático Agendado"
+        },
+        {
+          "code": "69",
+          "descricao": "Débito Não Agendado - Erro nos Dados da Remessa"
+        },
+        {
+          "code": "70",
+          "descricao": "Débito Não Agendado - Pagador Não Consta do Cadastro de Autorizante"
+        },
+        {
+          "code": "71",
+          "descricao": "Débito Não Agendado - Beneficiário Não Autorizado pelo Pagador"
+        },
+        {
+          "code": "72",
+          "descricao": "Débito Não Agendado - Beneficiário Não Participa da Modalidade Débito Automático"
+        },
+        {
+          "code": "73",
+          "descricao": "Débito Não Agendado - Código de Moeda Diferente de Real (R$)"
+        },
+        {
+          "code": "74",
+          "descricao": "Débito Não Agendado - Data Vencimento Inválida"
+        },
+        {
+          "code": "75",
+          "descricao": "Débito Não Agendado, Conforme seu Pedido, Título Não Registrado"
+        },
+        {
+          "code": "76",
+          "descricao": "Débito Não Agendado, Tipo/Num. Inscrição do Debitado, Inválido"
+        },
+        {
+          "code": "77",
+          "descricao": "Transferência para Desconto Não Permitida para a Carteira do Título"
+        },
+        {
+          "code": "78",
+          "descricao": "Data Inferior ou Igual ao Vencimento para Débito Automático"
+        },
+        {
+          "code": "79",
+          "descricao": "Data Juros de Mora Inválido"
+        },
+        {
+          "code": "80",
+          "descricao": "Data do Desconto Inválida"
+        },
+        {
+          "code": "81",
+          "descricao": "Tentativas de Débito Esgotadas - Baixado"
+        },
+        {
+          "code": "82",
+          "descricao": "Tentativas de Débito Esgotadas - Pendente"
+        },
+        {
+          "code": "83",
+          "descricao": "Limite Excedido"
+        },
+        {
+          "code": "84",
+          "descricao": "Número Autorização Inexistente"
+        },
+        {
+          "code": "85",
+          "descricao": "Título com Pagamento Vinculado"
+        },
+        {
+          "code": "86",
+          "descricao": "Seu Número Inválido"
+        },
+        {
+          "code": "87",
+          "descricao": "e-mail/SMS enviado"
+        },
+        {
+          "code": "88",
+          "descricao": "e-mail Lido"
+        },
+        {
+          "code": "89",
+          "descricao": "e-mail/SMS devolvido - endereço de e-mail ou número do celular incorreto"
+        },
+        {
+          "code": "90",
+          "descricao": "e-mail devolvido - caixa postal cheia"
+        },
+        {
+          "code": "91",
+          "descricao": "e-mail/número do celular do Pagador não informado"
+        },
+        {
+          "code": "92",
+          "descricao": "Pagador optante por Boleto de Pagamento Eletrônico - e-mail não enviado"
+        },
+        {
+          "code": "93",
+          "descricao": "Código para emissão de Boleto de Pagamento não permite envio de e-mail"
+        },
+        {
+          "code": "94",
+          "descricao": "Código da Carteira inválido para envio e-mail"
+        },
+        {
+          "code": "95",
+          "descricao": "Contrato não permite o envio de e-mail"
+        },
+        {
+          "code": "96",
+          "descricao": "Número de contrato inválido"
+        },
+        {
+          "code": "97",
+          "descricao": "Rejeição da alteração do prazo limite de recebimento"
+        },
+        {
+          "code": "98",
+          "descricao": "Rejeição de dispensa de prazo limite de recebimento"
+        },
+        {
+          "code": "99",
+          "descricao": "Rejeição da alteração do número do título dado pelo Beneficiário"
+        },
+        {
+          "code": "A1",
+          "descricao": "Rejeição da alteração do número controle do participante"
+        },
+        {
+          "code": "A2",
+          "descricao": "Rejeição da alteração dos dados do Pagador"
+        },
+        {
+          "code": "A3",
+          "descricao": "Rejeição da alteração dos dados do Sacador/avalista"
+        },
+        {
+          "code": "A4",
+          "descricao": "Pagador DDA"
+        },
+        {
+          "code": "A5",
+          "descricao": "Registro Rejeitado – Título já Liquidado"
+        },
+        {
+          "code": "A6",
+          "descricao": "Código do Convenente Inválido ou Encerrado"
+        },
+        {
+          "code": "A7",
+          "descricao": "Título já se encontra na situação Pretendida"
+        },
+        {
+          "code": "A8",
+          "descricao": "Valor do Abatimento inválido para cancelamento"
+        },
+        {
+          "code": "A9",
+          "descricao": "Não autoriza pagamento parcial"
+        },
+        {
+          "code": "B1",
+          "descricao": "Autoriza recebimento parcial"
+        },
+        {
+          "code": "B2",
+          "descricao": "Valor Nominal do Título Conflitante"
+        },
+        {
+          "code": "B3",
+          "descricao": "Tipo de Pagamento Inválido"
+        },
+        {
+          "code": "B4",
+          "descricao": "Valor Máximo/Percentual Inválido"
+        },
+        {
+          "code": "B5",
+          "descricao": "Valor Mínimo/Percentual Inválido"
+        },
+        {
+          "code": "P1",
+          "descricao": "Registrado com QR Code Pix"
+        },
+        {
+          "code": "P2",
+          "descricao": "Registrado sem QR Code Pix"
+        },
+        {
+          "code": "P3",
+          "descricao": "Chave PIX – chave inválida"
+        },
+        {
+          "code": "P4",
+          "descricao": "Chave PIX – sem cadastro na DICT"
+        },
+        {
+          "code": "P5",
+          "descricao": "Chave PIX – não é compatível com o CNPJ"
+        },
+        {
+          "code": "P6",
+          "descricao": "Identificador (TXID) – em duplicidade"
+        },
+        {
+          "code": "P7",
+          "descricao": "Identificador (TXID) – inválido ou não encontrado"
+        },
+        {
+          "code": "P8",
+          "descricao": "Ocorrência – alterar QR Code – alteração não permitida – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor"
+        },
+        {
+          "code": "P9",
+          "descricao": "Ocorrência – cancela QR Code – cancelamento não permitido – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor"
+        }
+      ]
+    },
+    "C061": {
+      "codigo": "C061",
+      "nome": "Código de Cálculo de Rateio para Beneficiário",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Valor Cobrado"
+        },
+        {
+          "code": "2",
+          "descricao": "Valor Registro"
+        },
+        {
+          "code": "3",
+          "descricao": "Rateio pelo Menor Valor"
+        }
+      ]
+    },
+    "C062": {
+      "codigo": "C062",
+      "nome": "Tipo de Valor Informado",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Percentual (%)"
+        },
+        {
+          "code": "2",
+          "descricao": "Valor ou Quantidade"
+        }
+      ]
+    },
+    "C066": {
+      "codigo": "C066",
+      "nome": "Identificação das Rejeições (Rateio de Crédito)",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Conta Beneficiário Inválida"
+        },
+        {
+          "code": "02",
+          "descricao": "Conta Corrente Inativa para Rateio"
+        },
+        {
+          "code": "03",
+          "descricao": "Código de Cálculo do Rateio Diferente de 1, 2 ou 3"
+        },
+        {
+          "code": "04",
+          "descricao": "Banco/Agência/Conta do Beneficiário Não Numérico"
+        },
+        {
+          "code": "05",
+          "descricao": "Valor do Rateio Informado Não Numérico"
+        },
+        {
+          "code": "06",
+          "descricao": "Percentual para Rateio Não Numérico"
+        },
+        {
+          "code": "07",
+          "descricao": "Tipo de Valor Informado Diferente de 1 ou 2"
+        },
+        {
+          "code": "08",
+          "descricao": "Banco Não Participante do Rateio"
+        },
+        {
+          "code": "09",
+          "descricao": "Dígito Agência Beneficiário Não Confere"
+        },
+        {
+          "code": "10",
+          "descricao": "Dígito Conta Beneficiário Não Confere"
+        },
+        {
+          "code": "11",
+          "descricao": "Banco/Agência/Conta Beneficiário Igual a Zeros"
+        },
+        {
+          "code": "12",
+          "descricao": "Nome do Beneficiário Não Informado"
+        },
+        {
+          "code": "13",
+          "descricao": "Quantidade de Beneficiários Excedida"
+        },
+        {
+          "code": "14",
+          "descricao": "Floating Beneficiário Inválido"
+        },
+        {
+          "code": "15",
+          "descricao": "Tipo Valor Informado, Inválido para Código Cálculo Rateio"
+        },
+        {
+          "code": "16",
+          "descricao": "Beneficiário com Códigos de Cálculo de Rateio Diferentes"
+        },
+        {
+          "code": "17",
+          "descricao": "Beneficiários Informados em Percentual e Outros em Valor"
+        },
+        {
+          "code": "18",
+          "descricao": "Somatória dos Valores dos Beneficiários Excedeu Valor do Título"
+        },
+        {
+          "code": "19",
+          "descricao": "Somatório dos Percentuais dos Beneficiários Excedeu 100%"
+        },
+        {
+          "code": "20",
+          "descricao": "Acerto do Rateio Efetuado"
+        },
+        {
+          "code": "21",
+          "descricao": "Cliente Bloqueado para Rateio"
+        },
+        {
+          "code": "22",
+          "descricao": "Título Não Registrado na Cobrança"
+        },
+        {
+          "code": "23",
+          "descricao": "Título Não Cadastrado para Rateio, Efetuada a Inclusão"
+        },
+        {
+          "code": "24",
+          "descricao": "Cancelamento de Rateio Efetuado"
+        },
+        {
+          "code": "25",
+          "descricao": "Rateio Cancelado, Título Baixado"
+        },
+        {
+          "code": "26",
+          "descricao": "Rateio Efetuado, Beneficiário Aguardando Crédito"
+        },
+        {
+          "code": "27",
+          "descricao": "Rateio Efetuado, Beneficiário Já Creditado"
+        },
+        {
+          "code": "28",
+          "descricao": "Rateio Não Efetuado, Conta Beneficiário Encerrada"
+        },
+        {
+          "code": "29",
+          "descricao": "Rateio Não Efetuado, Conta Débito Beneficiário Bloqueada"
+        },
+        {
+          "code": "30",
+          "descricao": "Rateio Não Efetuado, Código Cálculo 2 (Valor Registro) e Valor Pago Menor"
+        },
+        {
+          "code": "31",
+          "descricao": "Ocorrência Não Possui Rateio"
+        },
+        {
+          "code": "32",
+          "descricao": "Título Já Cadastrado para Rateio"
+        },
+        {
+          "code": "33",
+          "descricao": "Seu Número Inválido"
+        },
+        {
+          "code": "34",
+          "descricao": "Título Já Rateado ou Baixado"
+        }
+      ]
+    },
+    "C077": {
+      "codigo": "C077",
+      "nome": "Uso livre banco/empresa (Autorização de Pagamento Parcial)",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Não autoriza pagamento parcial"
+        },
+        {
+          "code": "2",
+          "descricao": "Autoriza pagamentos parciais"
+        }
+      ]
+    },
+    "C078": {
+      "codigo": "C078",
+      "nome": "Identificação do Tipo de Pagamento",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Aceita qualquer valor"
+        },
+        {
+          "code": "02",
+          "descricao": "Entre o mínimo e o máximo"
+        },
+        {
+          "code": "03",
+          "descricao": "Não aceita pagamento com o valor divergente"
+        }
+      ]
+    },
+    "C080": {
+      "codigo": "C080",
+      "nome": "Tipo de Valor Informado",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "% (percentual)"
+        },
+        {
+          "code": "2",
+          "descricao": "valor"
+        }
+      ]
+    },
+    "D006": {
+      "codigo": "D006",
+      "nome": "Complemento do Tipo de Serviço (finalidade do DOC)",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Crédito em Conta"
+        },
+        {
+          "code": "02",
+          "descricao": "Pagamento de Aluguel/Condomínio"
+        },
+        {
+          "code": "03",
+          "descricao": "Pagamento de Duplicata/Títulos"
+        },
+        {
+          "code": "04",
+          "descricao": "Pagamento de Dividendos"
+        },
+        {
+          "code": "05",
+          "descricao": "Pagamento de Mensalidade Escolar"
+        },
+        {
+          "code": "06",
+          "descricao": "Pagamento de Salários"
+        },
+        {
+          "code": "07",
+          "descricao": "Pagamento de Fornecedores/Honorários"
+        },
+        {
+          "code": "08",
+          "descricao": "Operações de Câmbios/Fundos/Bolsa de Valores"
+        },
+        {
+          "code": "09",
+          "descricao": "Repasse de Arrecadação/Pagamento de Tributos"
+        },
+        {
+          "code": "10",
+          "descricao": "Transferência Internacional em Real"
+        },
+        {
+          "code": "11",
+          "descricao": "DOC para Poupança"
+        },
+        {
+          "code": "12",
+          "descricao": "DOC para Depósito Judicial"
+        },
+        {
+          "code": "13",
+          "descricao": "Outros"
+        }
+      ]
+    },
+    "D007": {
+      "codigo": "D007",
+      "nome": "Aviso ao Pagador",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Não Emite Aviso"
+        },
+        {
+          "code": "2",
+          "descricao": "Emite Aviso Somente para o Remetente"
+        },
+        {
+          "code": "5",
+          "descricao": "Emite Aviso Somente para o Pagador"
+        },
+        {
+          "code": "6",
+          "descricao": "Emite Aviso para o Remetente e Pagador"
+        },
+        {
+          "code": "7",
+          "descricao": "Emite Aviso para o Pagador e 2 Vias para o Remetente"
+        }
+      ]
+    },
+    "F001": {
+      "codigo": "F001",
+      "nome": "Natureza do Saldo em C/C",
+      "valores": [
+        {
+          "code": "DPV",
+          "descricao": "Disponível"
+        },
+        {
+          "code": "SCR",
+          "descricao": "Vinculado"
+        },
+        {
+          "code": "SSR",
+          "descricao": "Bloqueado"
+        },
+        {
+          "code": "SDS",
+          "descricao": "Somatório dos Saldos"
+        }
+      ]
+    },
+    "F005": {
+      "codigo": "F005",
+      "nome": "Situação do Saldo Inicial da Natureza",
+      "valores": [
+        {
+          "code": "D",
+          "descricao": "Devedor"
+        },
+        {
+          "code": "C",
+          "descricao": "Credor"
+        }
+      ]
+    },
+    "F012": {
+      "codigo": "F012",
+      "nome": "Situação do Saldo Final da Natureza",
+      "valores": [
+        {
+          "code": "D",
+          "descricao": "Devedor"
+        },
+        {
+          "code": "C",
+          "descricao": "Credor"
+        }
+      ]
+    },
+    "G001": {
+      "codigo": "G001",
+      "nome": "Código do Banco na Compensação",
+      "external": true,
+      "note": "Código COMPE fornecido pelo Banco Central. Lista de bancos é externa (não consta no manual). Preencher com '988' para transferência a outra instituição via código ISPB.",
+      "valores": []
+    },
+    "G003": {
+      "codigo": "G003",
+      "nome": "Tipo de Registro",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Header de Arquivo"
+        },
+        {
+          "code": "1",
+          "descricao": "Header de Lote"
+        },
+        {
+          "code": "2",
+          "descricao": "Registros Iniciais do Lote"
+        },
+        {
+          "code": "3",
+          "descricao": "Detalhe"
+        },
+        {
+          "code": "4",
+          "descricao": "Registros Finais do Lote"
+        },
+        {
+          "code": "5",
+          "descricao": "Trailer de Lote"
+        },
+        {
+          "code": "9",
+          "descricao": "Trailer de Arquivo"
+        }
+      ]
+    },
+    "G005": {
+      "codigo": "G005",
+      "nome": "Tipo de Inscrição da Empresa",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Isento / Não Informado"
+        },
+        {
+          "code": "1",
+          "descricao": "CPF"
+        },
+        {
+          "code": "2",
+          "descricao": "CGC / CNPJ"
+        },
+        {
+          "code": "3",
+          "descricao": "PIS / PASEP"
+        },
+        {
+          "code": "9",
+          "descricao": "Outros"
+        }
+      ]
+    },
+    "G015": {
+      "codigo": "G015",
+      "nome": "Código Remessa / Retorno",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Remessa (Cliente → Banco)"
+        },
+        {
+          "code": "2",
+          "descricao": "Retorno (Banco → Cliente)"
+        }
+      ]
+    },
+    "G020": {
+      "codigo": "G020",
+      "nome": "Densidade de Gravação do Arquivo",
+      "uncertain": true,
+      "valores": [
+        {
+          "code": "1600",
+          "descricao": "1600 BPI"
+        },
+        {
+          "code": "6250",
+          "descricao": "6250 BPI"
+        }
+      ]
+    },
+    "G025": {
+      "codigo": "G025",
+      "nome": "Tipo de Serviço",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Cobrança"
+        },
+        {
+          "code": "03",
+          "descricao": "Boleto de Pagamento Eletrônico"
+        },
+        {
+          "code": "04",
+          "descricao": "Conciliação Bancária"
+        },
+        {
+          "code": "05",
+          "descricao": "Débitos"
+        },
+        {
+          "code": "06",
+          "descricao": "Custódia de Cheques"
+        },
+        {
+          "code": "07",
+          "descricao": "Gestão de Caixa"
+        },
+        {
+          "code": "08",
+          "descricao": "Consulta/Informação Margem"
+        },
+        {
+          "code": "09",
+          "descricao": "Averbação da Consignação/Retenção"
+        },
+        {
+          "code": "10",
+          "descricao": "Pagamento Dividendos"
+        },
+        {
+          "code": "11",
+          "descricao": "Manutenção da Consignação"
+        },
+        {
+          "code": "12",
+          "descricao": "Consignação de Parcelas"
+        },
+        {
+          "code": "13",
+          "descricao": "Glosa da Consignação (INSS)"
+        },
+        {
+          "code": "14",
+          "descricao": "Consulta de Tributos a pagar"
+        },
+        {
+          "code": "20",
+          "descricao": "Pagamento Fornecedor"
+        },
+        {
+          "code": "22",
+          "descricao": "Pagamento de Contas, Tributos e Impostos"
+        },
+        {
+          "code": "23",
+          "descricao": "Interoperabilidade entre Contas de Instituições de Pagamentos"
+        },
+        {
+          "code": "25",
+          "descricao": "Compror"
+        },
+        {
+          "code": "26",
+          "descricao": "Compror Rotativo"
+        },
+        {
+          "code": "29",
+          "descricao": "Alegação do Pagador"
+        },
+        {
+          "code": "30",
+          "descricao": "Pagamento Salários"
+        },
+        {
+          "code": "32",
+          "descricao": "Pagamento de honorários"
+        },
+        {
+          "code": "33",
+          "descricao": "Pagamento de bolsa auxílio"
+        },
+        {
+          "code": "34",
+          "descricao": "Pagamento de prebenda (remuneração a padres e sacerdotes)"
+        },
+        {
+          "code": "40",
+          "descricao": "Vendor"
+        },
+        {
+          "code": "41",
+          "descricao": "Vendor a Termo"
+        },
+        {
+          "code": "50",
+          "descricao": "Pagamento Sinistros Segurados"
+        },
+        {
+          "code": "60",
+          "descricao": "Pagamento Despesas Viajante em Trânsito"
+        },
+        {
+          "code": "70",
+          "descricao": "Pagamento Autorizado"
+        },
+        {
+          "code": "75",
+          "descricao": "Pagamento Credenciados"
+        },
+        {
+          "code": "77",
+          "descricao": "Pagamento de Remuneração"
+        },
+        {
+          "code": "80",
+          "descricao": "Pagamento Representantes / Vendedores Autorizados"
+        },
+        {
+          "code": "90",
+          "descricao": "Pagamento Benefícios"
+        },
+        {
+          "code": "98",
+          "descricao": "Pagamentos Diversos"
+        }
+      ]
+    },
+    "G028": {
+      "codigo": "G028",
+      "nome": "Tipo de Operação",
+      "valores": [
+        {
+          "code": "C",
+          "descricao": "Lançamento a Crédito"
+        },
+        {
+          "code": "D",
+          "descricao": "Lançamento a Débito"
+        },
+        {
+          "code": "E",
+          "descricao": "Extrato para Conciliação"
+        },
+        {
+          "code": "G",
+          "descricao": "Extrato para Gestão de Caixa"
+        },
+        {
+          "code": "I",
+          "descricao": "Informações de Títulos Capturados do Próprio Banco"
+        },
+        {
+          "code": "R",
+          "descricao": "Arquivo Remessa"
+        },
+        {
+          "code": "T",
+          "descricao": "Arquivo Retorno"
+        }
+      ]
+    },
+    "G029": {
+      "codigo": "G029",
+      "nome": "Forma de Lançamento",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Crédito em Conta Corrente/Salário"
+        },
+        {
+          "code": "02",
+          "descricao": "Cheque Pagamento / Administrativo"
+        },
+        {
+          "code": "03",
+          "descricao": "DOC/TED"
+        },
+        {
+          "code": "04",
+          "descricao": "Cartão Salário (somente para Tipo de Serviço = '30')"
+        },
+        {
+          "code": "05",
+          "descricao": "Crédito em Conta Poupança"
+        },
+        {
+          "code": "10",
+          "descricao": "OP à Disposição"
+        },
+        {
+          "code": "11",
+          "descricao": "Pagamento de Contas e Tributos com Código de Barras"
+        },
+        {
+          "code": "16",
+          "descricao": "Tributo - DARF Normal"
+        },
+        {
+          "code": "17",
+          "descricao": "Tributo - GPS (Guia da Previdência Social)"
+        },
+        {
+          "code": "18",
+          "descricao": "Tributo - DARF Simples"
+        },
+        {
+          "code": "19",
+          "descricao": "Tributo - IPTU – Prefeituras"
+        },
+        {
+          "code": "20",
+          "descricao": "Pagamento com Autenticação"
+        },
+        {
+          "code": "21",
+          "descricao": "Tributo – DARJ"
+        },
+        {
+          "code": "22",
+          "descricao": "Tributo - GARE-SP ICMS"
+        },
+        {
+          "code": "23",
+          "descricao": "Tributo - GARE-SP DR"
+        },
+        {
+          "code": "24",
+          "descricao": "Tributo - GARE-SP ITCMD"
+        },
+        {
+          "code": "25",
+          "descricao": "Tributo - IPVA"
+        },
+        {
+          "code": "26",
+          "descricao": "Tributo - Licenciamento"
+        },
+        {
+          "code": "27",
+          "descricao": "Tributo – DPVAT"
+        },
+        {
+          "code": "30",
+          "descricao": "Liquidação de Títulos do Próprio Banco"
+        },
+        {
+          "code": "31",
+          "descricao": "Pagamento de Títulos de Outros Bancos"
+        },
+        {
+          "code": "40",
+          "descricao": "Extrato de Conta Corrente"
+        },
+        {
+          "code": "41",
+          "descricao": "TED – Outra Titularidade"
+        },
+        {
+          "code": "43",
+          "descricao": "TED – Mesma Titularidade"
+        },
+        {
+          "code": "44",
+          "descricao": "TED para Transferência de Conta Investimento"
+        },
+        {
+          "code": "45",
+          "descricao": "PIX Transferência"
+        },
+        {
+          "code": "47",
+          "descricao": "PIX QR-CODE"
+        },
+        {
+          "code": "50",
+          "descricao": "Débito em Conta Corrente"
+        },
+        {
+          "code": "70",
+          "descricao": "Extrato para Gestão de Caixa"
+        },
+        {
+          "code": "71",
+          "descricao": "Depósito Judicial em Conta Corrente"
+        },
+        {
+          "code": "72",
+          "descricao": "Depósito Judicial em Poupança"
+        },
+        {
+          "code": "73",
+          "descricao": "Extrato de Conta Investimento"
+        },
+        {
+          "code": "80",
+          "descricao": "Pagamento de tributos municipais ISS – LCP 157 – próprio Banco"
+        },
+        {
+          "code": "81",
+          "descricao": "Pagamento de Tributos Municipais ISS – LCP 157 – outros Bancos"
+        }
+      ]
+    },
+    "G040": {
+      "codigo": "G040",
+      "nome": "Tipo de Moeda",
+      "valores": [
+        {
+          "code": "BTN",
+          "descricao": "Bônus do Tesouro Nacional + TR"
+        },
+        {
+          "code": "BRL",
+          "descricao": "Real"
+        },
+        {
+          "code": "USD",
+          "descricao": "Dólar Americano"
+        },
+        {
+          "code": "PTE",
+          "descricao": "Escudo Português"
+        },
+        {
+          "code": "FRF",
+          "descricao": "Franco Francês"
+        },
+        {
+          "code": "CHF",
+          "descricao": "Franco Suíço"
+        },
+        {
+          "code": "JPY",
+          "descricao": "Ien Japonês"
+        },
+        {
+          "code": "IGP",
+          "descricao": "Índice Geral de Preços"
+        },
+        {
+          "code": "IGM",
+          "descricao": "Índice Geral de Preços de Mercado"
+        },
+        {
+          "code": "GBP",
+          "descricao": "Libra Esterlina"
+        },
+        {
+          "code": "ITL",
+          "descricao": "Lira Italiana"
+        },
+        {
+          "code": "DEM",
+          "descricao": "Marco Alemão"
+        },
+        {
+          "code": "TRD",
+          "descricao": "Taxa Referencial Diária"
+        },
+        {
+          "code": "UPC",
+          "descricao": "Unidade Padrão de Capital"
+        },
+        {
+          "code": "UPF",
+          "descricao": "Unidade Padrão de Financiamento"
+        },
+        {
+          "code": "UFR",
+          "descricao": "Unidade Fiscal de Referência"
+        },
+        {
+          "code": "XEU",
+          "descricao": "Unidade Monetária Européia"
+        }
+      ]
+    },
+    "G059": {
+      "codigo": "G059",
+      "nome": "Código das Ocorrências para Retorno/Remessa",
+      "note": "Pode-se informar até 5 ocorrências simultaneamente, cada uma com 2 dígitos.",
+      "valores": [
+        {
+          "code": "00",
+          "descricao": "Crédito ou Débito Efetivado"
+        },
+        {
+          "code": "01",
+          "descricao": "Insuficiência de Fundos - Débito Não Efetuado"
+        },
+        {
+          "code": "02",
+          "descricao": "Crédito ou Débito Cancelado pelo Pagador/Credor"
+        },
+        {
+          "code": "03",
+          "descricao": "Débito Autorizado pela Agência - Efetuado"
+        },
+        {
+          "code": "AA",
+          "descricao": "Controle Inválido"
+        },
+        {
+          "code": "AB",
+          "descricao": "Tipo de Operação Inválido"
+        },
+        {
+          "code": "AC",
+          "descricao": "Tipo de Serviço Inválido"
+        },
+        {
+          "code": "AD",
+          "descricao": "Forma de Lançamento Inválida"
+        },
+        {
+          "code": "AE",
+          "descricao": "Tipo/Número de Inscrição Inválido"
+        },
+        {
+          "code": "AF",
+          "descricao": "Código de Convênio Inválido"
+        },
+        {
+          "code": "AG",
+          "descricao": "Agência/Conta Corrente/DV Inválido"
+        },
+        {
+          "code": "AH",
+          "descricao": "Nº Seqüencial do Registro no Lote Inválido"
+        },
+        {
+          "code": "AI",
+          "descricao": "Código de Segmento de Detalhe Inválido"
+        },
+        {
+          "code": "AJ",
+          "descricao": "Tipo de Movimento Inválido"
+        },
+        {
+          "code": "AK",
+          "descricao": "Código da Câmara de Compensação do Banco Favorecido/Depositário Inválido"
+        },
+        {
+          "code": "AL",
+          "descricao": "Código do Banco Favorecido, Instituição de Pagamento ou Depositário Inválido"
+        },
+        {
+          "code": "AM",
+          "descricao": "Agência Mantenedora da Conta Corrente do Favorecido Inválida"
+        },
+        {
+          "code": "AN",
+          "descricao": "Conta Corrente/DV/Conta de Pagamento do Favorecido Inválido"
+        },
+        {
+          "code": "AO",
+          "descricao": "Nome do Favorecido Não Informado"
+        },
+        {
+          "code": "AP",
+          "descricao": "Data Lançamento Inválido"
+        },
+        {
+          "code": "AQ",
+          "descricao": "Tipo/Quantidade da Moeda Inválido"
+        },
+        {
+          "code": "AR",
+          "descricao": "Valor do Lançamento Inválido"
+        },
+        {
+          "code": "AS",
+          "descricao": "Aviso ao Favorecido - Identificação Inválida"
+        },
+        {
+          "code": "AT",
+          "descricao": "Tipo/Número de Inscrição do Favorecido Inválido"
+        },
+        {
+          "code": "AU",
+          "descricao": "Logradouro do Favorecido Não Informado"
+        },
+        {
+          "code": "AV",
+          "descricao": "Nº do Local do Favorecido Não Informado"
+        },
+        {
+          "code": "AW",
+          "descricao": "Cidade do Favorecido Não Informada"
+        },
+        {
+          "code": "AX",
+          "descricao": "CEP/Complemento do Favorecido Inválido"
+        },
+        {
+          "code": "AY",
+          "descricao": "Sigla do Estado do Favorecido Inválida"
+        },
+        {
+          "code": "AZ",
+          "descricao": "Código/Nome do Banco Depositário Inválido"
+        },
+        {
+          "code": "BA",
+          "descricao": "Código/Nome da Agência Depositária Não Informado"
+        },
+        {
+          "code": "BB",
+          "descricao": "Seu Número Inválido"
+        },
+        {
+          "code": "BC",
+          "descricao": "Nosso Número Inválido"
+        },
+        {
+          "code": "BD",
+          "descricao": "Inclusão Efetuada com Sucesso"
+        },
+        {
+          "code": "BE",
+          "descricao": "Alteração Efetuada com Sucesso"
+        },
+        {
+          "code": "BF",
+          "descricao": "Exclusão Efetuada com Sucesso"
+        },
+        {
+          "code": "BG",
+          "descricao": "Agência/Conta Impedida Legalmente/Bloqueada"
+        },
+        {
+          "code": "BH",
+          "descricao": "Empresa não pagou salário"
+        },
+        {
+          "code": "BI",
+          "descricao": "Falecimento do mutuário"
+        },
+        {
+          "code": "BJ",
+          "descricao": "Empresa não enviou remessa do mutuário"
+        },
+        {
+          "code": "BK",
+          "descricao": "Empresa não enviou remessa no vencimento"
+        },
+        {
+          "code": "BL",
+          "descricao": "Valor da parcela inválida"
+        },
+        {
+          "code": "BM",
+          "descricao": "Identificação do contrato inválida"
+        },
+        {
+          "code": "BN",
+          "descricao": "Operação de Consignação Incluída com Sucesso"
+        },
+        {
+          "code": "BO",
+          "descricao": "Operação de Consignação Alterada com Sucesso"
+        },
+        {
+          "code": "BP",
+          "descricao": "Operação de Consignação Excluída com Sucesso"
+        },
+        {
+          "code": "BQ",
+          "descricao": "Operação de Consignação Liquidada com Sucesso"
+        },
+        {
+          "code": "BR",
+          "descricao": "Reativação Efetuada com Sucesso"
+        },
+        {
+          "code": "BS",
+          "descricao": "Suspensão Efetuada com Sucesso"
+        },
+        {
+          "code": "CA",
+          "descricao": "Código de Barras - Código do Banco Inválido"
+        },
+        {
+          "code": "CB",
+          "descricao": "Código de Barras - Código da Moeda Inválido"
+        },
+        {
+          "code": "CC",
+          "descricao": "Código de Barras - Dígito Verificador Geral Inválido"
+        },
+        {
+          "code": "CD",
+          "descricao": "Código de Barras - Valor do Título Inválido"
+        },
+        {
+          "code": "CE",
+          "descricao": "Código de Barras - Campo Livre Inválido"
+        },
+        {
+          "code": "CF",
+          "descricao": "Valor do Documento Inválido"
+        },
+        {
+          "code": "CG",
+          "descricao": "Valor do Abatimento Inválido"
+        },
+        {
+          "code": "CH",
+          "descricao": "Valor do Desconto Inválido"
+        },
+        {
+          "code": "CI",
+          "descricao": "Valor de Mora Inválido"
+        },
+        {
+          "code": "CJ",
+          "descricao": "Valor da Multa Inválido"
+        },
+        {
+          "code": "CK",
+          "descricao": "Valor do IR Inválido"
+        },
+        {
+          "code": "CL",
+          "descricao": "Valor do ISS Inválido"
+        },
+        {
+          "code": "CM",
+          "descricao": "Valor do IOF Inválido"
+        },
+        {
+          "code": "CN",
+          "descricao": "Valor de Outras Deduções Inválido"
+        },
+        {
+          "code": "CO",
+          "descricao": "Valor de Outros Acréscimos Inválido"
+        },
+        {
+          "code": "CP",
+          "descricao": "Valor do INSS Inválido"
+        },
+        {
+          "code": "HA",
+          "descricao": "Lote Não Aceito"
+        },
+        {
+          "code": "HB",
+          "descricao": "Inscrição da Empresa Inválida para o Contrato"
+        },
+        {
+          "code": "HC",
+          "descricao": "Convênio com a Empresa Inexistente/Inválido para o Contrato"
+        },
+        {
+          "code": "HD",
+          "descricao": "Agência/Conta Corrente da Empresa Inexistente/Inválido para o Contrato"
+        },
+        {
+          "code": "HE",
+          "descricao": "Tipo de Serviço Inválido para o Contrato"
+        },
+        {
+          "code": "HF",
+          "descricao": "Conta Corrente da Empresa com Saldo Insuficiente"
+        },
+        {
+          "code": "HG",
+          "descricao": "Lote de Serviço Fora de Seqüência"
+        },
+        {
+          "code": "HH",
+          "descricao": "Lote de Serviço Inválido"
+        },
+        {
+          "code": "HI",
+          "descricao": "Arquivo não aceito"
+        },
+        {
+          "code": "HJ",
+          "descricao": "Tipo de Registro Inválido"
+        },
+        {
+          "code": "HK",
+          "descricao": "Código Remessa / Retorno Inválido"
+        },
+        {
+          "code": "HL",
+          "descricao": "Versão de layout inválida"
+        },
+        {
+          "code": "HM",
+          "descricao": "Mutuário não identificado"
+        },
+        {
+          "code": "HN",
+          "descricao": "Tipo do benefício não permite empréstimo"
+        },
+        {
+          "code": "HO",
+          "descricao": "Benefício cessado/suspenso"
+        },
+        {
+          "code": "HP",
+          "descricao": "Benefício possui representante legal"
+        },
+        {
+          "code": "HQ",
+          "descricao": "Benefício é do tipo PA (Pensão alimentícia)"
+        },
+        {
+          "code": "HR",
+          "descricao": "Quantidade de contratos permitida excedida"
+        },
+        {
+          "code": "HS",
+          "descricao": "Benefício não pertence ao Banco informado"
+        },
+        {
+          "code": "HT",
+          "descricao": "Início do desconto informado já ultrapassado"
+        },
+        {
+          "code": "HU",
+          "descricao": "Número da parcela inválida"
+        },
+        {
+          "code": "HV",
+          "descricao": "Quantidade de parcela inválida"
+        },
+        {
+          "code": "HW",
+          "descricao": "Margem consignável excedida para o mutuário dentro do prazo do contrato"
+        },
+        {
+          "code": "HX",
+          "descricao": "Empréstimo já cadastrado"
+        },
+        {
+          "code": "HY",
+          "descricao": "Empréstimo inexistente"
+        },
+        {
+          "code": "HZ",
+          "descricao": "Empréstimo já encerrado"
+        },
+        {
+          "code": "H1",
+          "descricao": "Arquivo sem trailer"
+        },
+        {
+          "code": "H2",
+          "descricao": "Mutuário sem crédito na competência"
+        },
+        {
+          "code": "H3",
+          "descricao": "Não descontado – outros motivos"
+        },
+        {
+          "code": "H4",
+          "descricao": "Retorno de Crédito não pago"
+        },
+        {
+          "code": "H5",
+          "descricao": "Cancelamento de empréstimo retroativo"
+        },
+        {
+          "code": "H6",
+          "descricao": "Outros Motivos de Glosa"
+        },
+        {
+          "code": "H7",
+          "descricao": "Margem consignável excedida para o mutuário acima do prazo do contrato"
+        },
+        {
+          "code": "H8",
+          "descricao": "Mutuário desligado do empregador"
+        },
+        {
+          "code": "H9",
+          "descricao": "Mutuário afastado por licença"
+        },
+        {
+          "code": "IA",
+          "descricao": "Primeiro nome do mutuário diferente do primeiro nome do movimento do censo ou diferente da base de Titular do Benefício"
+        },
+        {
+          "code": "IB",
+          "descricao": "Benefício suspenso/cessado pela APS ou Sisobi"
+        },
+        {
+          "code": "IC",
+          "descricao": "Benefício suspenso por dependência de cálculo"
+        },
+        {
+          "code": "ID",
+          "descricao": "Benefício suspenso/cessado pela inspetoria/auditoria"
+        },
+        {
+          "code": "IE",
+          "descricao": "Benefício bloqueado para empréstimo pelo beneficiário"
+        },
+        {
+          "code": "IF",
+          "descricao": "Benefício bloqueado para empréstimo por TBM"
+        },
+        {
+          "code": "IG",
+          "descricao": "Benefício está em fase de concessão de PA ou desdobramento"
+        },
+        {
+          "code": "IH",
+          "descricao": "Benefício cessado por óbito"
+        },
+        {
+          "code": "II",
+          "descricao": "Benefício cessado por fraude"
+        },
+        {
+          "code": "IJ",
+          "descricao": "Benefício cessado por concessão de outro benefício"
+        },
+        {
+          "code": "IK",
+          "descricao": "Benefício cessado: estatutário transferido para órgão de origem"
+        },
+        {
+          "code": "IL",
+          "descricao": "Empréstimo suspenso pela APS"
+        },
+        {
+          "code": "IM",
+          "descricao": "Empréstimo cancelado pelo banco"
+        },
+        {
+          "code": "IN",
+          "descricao": "Crédito transformado em PAB"
+        },
+        {
+          "code": "IO",
+          "descricao": "Término da consignação foi alterado"
+        },
+        {
+          "code": "IP",
+          "descricao": "Fim do empréstimo ocorreu durante período de suspensão ou concessão"
+        },
+        {
+          "code": "IQ",
+          "descricao": "Empréstimo suspenso pelo banco"
+        },
+        {
+          "code": "IR",
+          "descricao": "Não averbação de contrato – quantidade de parcelas/competências informadas ultrapassou a data limite da extinção de cota do dependente titular de benefícios"
+        },
+        {
+          "code": "TA",
+          "descricao": "Lote Não Aceito - Totais do Lote com Diferença"
+        },
+        {
+          "code": "YA",
+          "descricao": "Título Não Encontrado"
+        },
+        {
+          "code": "YB",
+          "descricao": "Identificador Registro Opcional Inválido"
+        },
+        {
+          "code": "YC",
+          "descricao": "Código Padrão Inválido"
+        },
+        {
+          "code": "YD",
+          "descricao": "Código de Ocorrência Inválido"
+        },
+        {
+          "code": "YE",
+          "descricao": "Complemento de Ocorrência Inválido"
+        },
+        {
+          "code": "YF",
+          "descricao": "Alegação já Informada"
+        },
+        {
+          "code": "ZA",
+          "descricao": "Agência / Conta do Favorecido Substituída"
+        },
+        {
+          "code": "ZB",
+          "descricao": "Divergência entre o primeiro e último nome do beneficiário versus primeiro e último nome na Receita Federal"
+        },
+        {
+          "code": "ZC",
+          "descricao": "Confirmação de Antecipação de Valor"
+        },
+        {
+          "code": "ZD",
+          "descricao": "Antecipação parcial de valor"
+        },
+        {
+          "code": "ZE",
+          "descricao": "Título bloqueado na base"
+        },
+        {
+          "code": "ZF",
+          "descricao": "Sistema em contingência – título valor maior que referência"
+        },
+        {
+          "code": "ZG",
+          "descricao": "Sistema em contingência – título vencido"
+        },
+        {
+          "code": "ZH",
+          "descricao": "Sistema em contingência – título indexado"
+        },
+        {
+          "code": "ZI",
+          "descricao": "Beneficiário divergente"
+        },
+        {
+          "code": "ZJ",
+          "descricao": "Limite de pagamentos parciais excedido"
+        },
+        {
+          "code": "ZK",
+          "descricao": "Boleto já liquidado"
+        },
+        {
+          "code": "PA",
+          "descricao": "Pix não efetivado"
+        },
+        {
+          "code": "PB",
+          "descricao": "Transação interrompida devido a erro no PSP do Recebedor"
+        },
+        {
+          "code": "PC",
+          "descricao": "Número da conta transacional encerrada no PSP do Recebedor"
+        },
+        {
+          "code": "PD",
+          "descricao": "Tipo incorreto para a conta transacional especificada"
+        },
+        {
+          "code": "PE",
+          "descricao": "Tipo de transação não é suportado/autorizado na conta transacional especificada"
+        },
+        {
+          "code": "PF",
+          "descricao": "CPF/CNPJ do usuário recebedor não é consistente com o titular da conta transacional especificada"
+        },
+        {
+          "code": "PG",
+          "descricao": "CPF/CNPJ do usuário recebedor incorreto"
+        },
+        {
+          "code": "PH",
+          "descricao": "Ordem rejeitada pelo PSP do Recebedor"
+        },
+        {
+          "code": "PI",
+          "descricao": "ISPB do PSP do Pagador inválido ou inexistente"
+        },
+        {
+          "code": "PJ",
+          "descricao": "Chave não cadastrada no DICT"
+        },
+        {
+          "code": "PK",
+          "descricao": "QR Code inválido/vencido"
+        },
+        {
+          "code": "PL",
+          "descricao": "Forma de iniciação inválida"
+        },
+        {
+          "code": "PM",
+          "descricao": "Chave de pagamento inválida"
+        },
+        {
+          "code": "PN",
+          "descricao": "Chave de pagamento não informada"
+        }
+      ]
+    },
+    "G060": {
+      "codigo": "G060",
+      "nome": "Tipo de Movimento",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Indica INCLUSÃO"
+        },
+        {
+          "code": "1",
+          "descricao": "Indica CONSULTA"
+        },
+        {
+          "code": "2",
+          "descricao": "Indica SUSPENSÃO"
+        },
+        {
+          "code": "3",
+          "descricao": "Indica ESTORNO (somente para retorno)"
+        },
+        {
+          "code": "4",
+          "descricao": "Indica REATIVAÇÃO"
+        },
+        {
+          "code": "5",
+          "descricao": "Indica ALTERAÇÃO"
+        },
+        {
+          "code": "7",
+          "descricao": "Indica LIQUIDAÇÃO"
+        },
+        {
+          "code": "9",
+          "descricao": "Indica EXCLUSÃO"
+        }
+      ]
+    },
+    "G061": {
+      "codigo": "G061",
+      "nome": "Código da Instrução para Movimento",
+      "valores": [
+        {
+          "code": "00",
+          "descricao": "Inclusão de Registro Detalhe Liberado"
+        },
+        {
+          "code": "09",
+          "descricao": "Inclusão do Registro Detalhe Bloqueado"
+        },
+        {
+          "code": "10",
+          "descricao": "Alteração do Pagamento Liberado para Bloqueado (Bloqueio)"
+        },
+        {
+          "code": "11",
+          "descricao": "Alteração do Pagamento Bloqueado para Liberado (Liberação)"
+        },
+        {
+          "code": "17",
+          "descricao": "Alteração do Valor do Título"
+        },
+        {
+          "code": "19",
+          "descricao": "Alteração da Data de Pagamento"
+        },
+        {
+          "code": "23",
+          "descricao": "Pagamento Direto ao Fornecedor - Baixar"
+        },
+        {
+          "code": "25",
+          "descricao": "Manutenção em Carteira - Não Pagar"
+        },
+        {
+          "code": "27",
+          "descricao": "Retirada de Carteira - Não Pagar"
+        },
+        {
+          "code": "33",
+          "descricao": "Estorno por Devolução da Câmara Centralizadora (somente para Tipo de Movimento = '3')"
+        },
+        {
+          "code": "40",
+          "descricao": "Alegação do Pagador"
+        },
+        {
+          "code": "99",
+          "descricao": "Exclusão do Registro Detalhe Incluído Anteriormente"
+        }
+      ]
+    },
+    "G062": {
+      "codigo": "G062",
+      "nome": "Código Padrão",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Formato Livre"
+        },
+        {
+          "code": "02",
+          "descricao": "Formato Ocorrência (Descrição A002)"
+        }
+      ]
+    },
+    "G065": {
+      "codigo": "G065",
+      "nome": "Código da Moeda",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Reservado para Uso Futuro"
+        },
+        {
+          "code": "02",
+          "descricao": "Dólar Americano Comercial (Venda)"
+        },
+        {
+          "code": "03",
+          "descricao": "Dólar Americano Turismo (Venda)"
+        },
+        {
+          "code": "04",
+          "descricao": "ITRD"
+        },
+        {
+          "code": "05",
+          "descricao": "IDTR"
+        },
+        {
+          "code": "06",
+          "descricao": "UFIR Diária"
+        },
+        {
+          "code": "07",
+          "descricao": "UFIR Mensal"
+        },
+        {
+          "code": "08",
+          "descricao": "FAJ-TR"
+        },
+        {
+          "code": "09",
+          "descricao": "Real"
+        },
+        {
+          "code": "10",
+          "descricao": "TR"
+        },
+        {
+          "code": "11",
+          "descricao": "IGPM"
+        },
+        {
+          "code": "12",
+          "descricao": "CDI"
+        },
+        {
+          "code": "13",
+          "descricao": "Percentual do CDI"
+        },
+        {
+          "code": "14",
+          "descricao": "Euro"
+        },
+        {
+          "code": "15",
+          "descricao": "CDI – CETIP"
+        },
+        {
+          "code": "16",
+          "descricao": "CHF"
+        },
+        {
+          "code": "17",
+          "descricao": "CUB/RS (NOVO)"
+        },
+        {
+          "code": "18",
+          "descricao": "CUB/RS (R8-N)"
+        },
+        {
+          "code": "19",
+          "descricao": "CUB/SC (ANTIGO)"
+        },
+        {
+          "code": "20",
+          "descricao": "CUBRS"
+        },
+        {
+          "code": "21",
+          "descricao": "CUB-SC (NOVO)"
+        },
+        {
+          "code": "22",
+          "descricao": "GBP"
+        },
+        {
+          "code": "23",
+          "descricao": "ICC (SALVADOR)"
+        },
+        {
+          "code": "24",
+          "descricao": "IGPM (A)"
+        },
+        {
+          "code": "25",
+          "descricao": "IGPM (N)"
+        },
+        {
+          "code": "26",
+          "descricao": "INCC"
+        },
+        {
+          "code": "27",
+          "descricao": "INCC-M"
+        },
+        {
+          "code": "28",
+          "descricao": "INPC"
+        },
+        {
+          "code": "29",
+          "descricao": "JPY"
+        },
+        {
+          "code": "30",
+          "descricao": "TJLP"
+        }
+      ]
+    },
+    "G067": {
+      "codigo": "G067",
+      "nome": "Identificação de Registro Opcional",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Informação de Dados do Sacador Avalista"
+        },
+        {
+          "code": "02",
+          "descricao": "Alegação do Pagador"
+        },
+        {
+          "code": "03",
+          "descricao": "Informação de Dados do Pagador"
+        },
+        {
+          "code": "04",
+          "descricao": "Informação de Dados de Cheques Utilizados"
+        },
+        {
+          "code": "11",
+          "descricao": "Informações sobre dados de parcelas de compror"
+        },
+        {
+          "code": "50",
+          "descricao": "Informação de Dados para Rateio de Crédito"
+        },
+        {
+          "code": "51",
+          "descricao": "Informações de Notas Fiscais"
+        },
+        {
+          "code": "52",
+          "descricao": "identificação dos entes envolvidos no processo de pagamento"
+        },
+        {
+          "code": "53",
+          "descricao": "identificação do Pagador Final e Agregador de Pagamento"
+        }
+      ]
+    },
+    "G073": {
+      "codigo": "G073",
+      "nome": "Código da Multa",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Valor Fixo"
+        },
+        {
+          "code": "2",
+          "descricao": "Percentual"
+        }
+      ]
+    },
+    "G081": {
+      "codigo": "G081",
+      "nome": "Situação do Saldo Inicial (D/C)",
+      "valores": [
+        {
+          "code": "D",
+          "descricao": "Devedor"
+        },
+        {
+          "code": "C",
+          "descricao": "Credor"
+        }
+      ]
+    },
+    "G082": {
+      "codigo": "G082",
+      "nome": "Posição do Saldo Inicial",
+      "valores": [
+        {
+          "code": "P",
+          "descricao": "Parcial"
+        },
+        {
+          "code": "F",
+          "descricao": "Final"
+        },
+        {
+          "code": "I",
+          "descricao": "Intra-Dia"
+        }
+      ]
+    },
+    "G084": {
+      "codigo": "G084",
+      "nome": "Natureza do Lançamento",
+      "valores": [
+        {
+          "code": "DPV",
+          "descricao": "Tipo Disponível (Lançamento ocorrido em Saldo Disponível)"
+        },
+        {
+          "code": "SCR",
+          "descricao": "Tipo Vinculado (Saldo Disponível ou Vinculado, pendente de liberação)"
+        },
+        {
+          "code": "SSR",
+          "descricao": "Tipo Bloqueado (Lançamento ocorrido em Saldo Bloqueado)"
+        },
+        {
+          "code": "CDS",
+          "descricao": "Composição de Diversos Saldos"
+        }
+      ]
+    },
+    "G085": {
+      "codigo": "G085",
+      "nome": "Tipo do Complemento do Lançamento",
+      "valores": [
+        {
+          "code": "00",
+          "descricao": "Sem Informação do Complemento do Lançamento"
+        },
+        {
+          "code": "01",
+          "descricao": "Identificação da Origem do Lançamento"
+        }
+      ]
+    },
+    "G087": {
+      "codigo": "G087",
+      "nome": "Identificação de Isenção do CPMF",
+      "valores": [
+        {
+          "code": "S",
+          "descricao": "Isento"
+        },
+        {
+          "code": "N",
+          "descricao": "Não Isento"
+        }
+      ]
+    },
+    "G091": {
+      "codigo": "G091",
+      "nome": "Tipo do Lançamento: Valor a Débito / Crédito",
+      "valores": [
+        {
+          "code": "D",
+          "descricao": "Débito"
+        },
+        {
+          "code": "C",
+          "descricao": "Crédito"
+        }
+      ]
+    },
+    "G092": {
+      "codigo": "G092",
+      "nome": "Categoria do Lançamento",
+      "note": "Códigos 1xx = Débitos; códigos 2xx = Créditos.",
+      "valores": [
+        {
+          "code": "101",
+          "descricao": "Cheque Compensado"
+        },
+        {
+          "code": "102",
+          "descricao": "Encargos"
+        },
+        {
+          "code": "103",
+          "descricao": "Estornos"
+        },
+        {
+          "code": "104",
+          "descricao": "Lançamento Avisado"
+        },
+        {
+          "code": "105",
+          "descricao": "Tarifas"
+        },
+        {
+          "code": "106",
+          "descricao": "Aplicação"
+        },
+        {
+          "code": "107",
+          "descricao": "Empréstimo / Financiamento"
+        },
+        {
+          "code": "108",
+          "descricao": "Câmbio"
+        },
+        {
+          "code": "109",
+          "descricao": "CPMF"
+        },
+        {
+          "code": "110",
+          "descricao": "IOF"
+        },
+        {
+          "code": "111",
+          "descricao": "Imposto de Renda"
+        },
+        {
+          "code": "112",
+          "descricao": "Pagamento Fornecedores"
+        },
+        {
+          "code": "113",
+          "descricao": "Pagamentos Salário"
+        },
+        {
+          "code": "114",
+          "descricao": "Saque Eletrônico"
+        },
+        {
+          "code": "115",
+          "descricao": "Ações"
+        },
+        {
+          "code": "117",
+          "descricao": "Transferência entre Contas"
+        },
+        {
+          "code": "118",
+          "descricao": "Devolução da Compensação"
+        },
+        {
+          "code": "119",
+          "descricao": "Devolução de Cheque Depositado"
+        },
+        {
+          "code": "120",
+          "descricao": "Transferência Interbancária (DOC, TED, Pix)"
+        },
+        {
+          "code": "121",
+          "descricao": "Antecipação a Fornecedores"
+        },
+        {
+          "code": "122",
+          "descricao": "OC / AEROPS"
+        },
+        {
+          "code": "123",
+          "descricao": "Saque em Espécie"
+        },
+        {
+          "code": "124",
+          "descricao": "Cheque Pago"
+        },
+        {
+          "code": "125",
+          "descricao": "Pagamentos Diversos"
+        },
+        {
+          "code": "126",
+          "descricao": "Pagamento de Tributos"
+        },
+        {
+          "code": "127",
+          "descricao": "Cartão de crédito - Pagamento de fatura de cartão de crédito da própria IF"
+        },
+        {
+          "code": "201",
+          "descricao": "Depósito em Cheque"
+        },
+        {
+          "code": "202",
+          "descricao": "Crédito de Cobrança"
+        },
+        {
+          "code": "203",
+          "descricao": "Devolução de Cheques"
+        },
+        {
+          "code": "204",
+          "descricao": "Estornos"
+        },
+        {
+          "code": "205",
+          "descricao": "Lançamento Avisado"
+        },
+        {
+          "code": "206",
+          "descricao": "Resgate de Aplicação"
+        },
+        {
+          "code": "207",
+          "descricao": "Empréstimo / Financiamento"
+        },
+        {
+          "code": "208",
+          "descricao": "Câmbio"
+        },
+        {
+          "code": "209",
+          "descricao": "Transferência Interbancária (DOC, TED, Pix)"
+        },
+        {
+          "code": "210",
+          "descricao": "Ações"
+        },
+        {
+          "code": "211",
+          "descricao": "Dividendos"
+        },
+        {
+          "code": "212",
+          "descricao": "Seguro"
+        },
+        {
+          "code": "213",
+          "descricao": "Transferência entre Contas"
+        },
+        {
+          "code": "214",
+          "descricao": "Depósitos Especiais"
+        },
+        {
+          "code": "215",
+          "descricao": "Devolução da Compensação"
+        },
+        {
+          "code": "216",
+          "descricao": "OCT"
+        },
+        {
+          "code": "217",
+          "descricao": "Pagamentos Fornecedores"
+        },
+        {
+          "code": "218",
+          "descricao": "Pagamentos Diversos"
+        },
+        {
+          "code": "219",
+          "descricao": "Recebimento de Salário"
+        },
+        {
+          "code": "220",
+          "descricao": "Depósito em Espécie"
+        },
+        {
+          "code": "221",
+          "descricao": "Pagamento de Tributos"
+        },
+        {
+          "code": "222",
+          "descricao": "Cartão de Crédito - Recebíveis de cartão de crédito"
+        },
+        {
+          "code": "223",
+          "descricao": "Crédito Pix via QrCode"
+        }
+      ]
+    },
+    "G098": {
+      "codigo": "G098",
+      "nome": "Situação do Saldo Final (D/C)",
+      "valores": [
+        {
+          "code": "C",
+          "descricao": "Credor"
+        },
+        {
+          "code": "D",
+          "descricao": "Devedor"
+        }
+      ]
+    },
+    "G099": {
+      "codigo": "G099",
+      "nome": "Posição do Saldo Final",
+      "valores": [
+        {
+          "code": "F",
+          "descricao": "Final"
+        },
+        {
+          "code": "P",
+          "descricao": "Parcial"
+        },
+        {
+          "code": "I",
+          "descricao": "Intra-Dia"
+        }
+      ]
+    },
+    "G100": {
+      "codigo": "G100",
+      "nome": "Forma de Iniciação (PIX)",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Chave Pix – tipo Telefone"
+        },
+        {
+          "code": "02",
+          "descricao": "Chave Pix – tipo Email"
+        },
+        {
+          "code": "03",
+          "descricao": "Chave Pix – tipo CPF/CNPJ"
+        },
+        {
+          "code": "04",
+          "descricao": "Chave Aleatória"
+        },
+        {
+          "code": "05",
+          "descricao": "Dados bancários"
+        }
+      ]
+    },
+    "G103": {
+      "codigo": "G103",
+      "nome": "Tipo de Chave DICT",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CPF"
+        },
+        {
+          "code": "2",
+          "descricao": "CNPJ"
+        },
+        {
+          "code": "3",
+          "descricao": "Celular"
+        },
+        {
+          "code": "4",
+          "descricao": "e-mail"
+        },
+        {
+          "code": "5",
+          "descricao": "EVP – chave aleatória"
+        }
+      ]
+    },
+    "H008": {
+      "codigo": "H008",
+      "nome": "Status do Mutuário",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Ativo"
+        },
+        {
+          "code": "2",
+          "descricao": "Inativo"
+        },
+        {
+          "code": "3",
+          "descricao": "Pensionista"
+        }
+      ]
+    },
+    "H009": {
+      "codigo": "H009",
+      "nome": "Regime de Contratação do Mutuário",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CLT"
+        },
+        {
+          "code": "2",
+          "descricao": "Estatutário"
+        },
+        {
+          "code": "3",
+          "descricao": "Temporário"
+        }
+      ]
+    },
+    "H010": {
+      "codigo": "H010",
+      "nome": "Situação Sindical do Mutuário",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Sindicalizado"
+        },
+        {
+          "code": "2",
+          "descricao": "Não Sindicalizado"
+        }
+      ]
+    },
+    "H011": {
+      "codigo": "H011",
+      "nome": "Comprometimento da Verba Rescisória",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Sim"
+        },
+        {
+          "code": "2",
+          "descricao": "Não"
+        }
+      ]
+    },
+    "H014": {
+      "codigo": "H014",
+      "nome": "Identificação da Central Sindical",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CUT"
+        },
+        {
+          "code": "2",
+          "descricao": "CGT"
+        },
+        {
+          "code": "3",
+          "descricao": "Força Sindical"
+        },
+        {
+          "code": "4",
+          "descricao": "Outros"
+        }
+      ]
+    },
+    "H015": {
+      "codigo": "H015",
+      "nome": "Tipo da Operação",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Financiamento"
+        },
+        {
+          "code": "2",
+          "descricao": "Empréstimo"
+        },
+        {
+          "code": "3",
+          "descricao": "Arrendamento Mercantil"
+        },
+        {
+          "code": "4",
+          "descricao": "Outros"
+        },
+        {
+          "code": "5",
+          "descricao": "Devolução de Glosa"
+        },
+        {
+          "code": "6",
+          "descricao": "Cartão Consignado de Benefício"
+        },
+        {
+          "code": "7",
+          "descricao": "Empréstimo Viaje Mais"
+        }
+      ]
+    },
+    "H031": {
+      "codigo": "H031",
+      "nome": "Tipo Residual Garantido",
+      "uncertain": true,
+      "note": "No manual os valores aparecem descritos por nome (Antecipado/Parcelado/Final) sem código numérico explícito; o mapeamento code pode variar por banco.",
+      "valores": [
+        {
+          "code": "Antecipado",
+          "descricao": "integralmente no ato da operação"
+        },
+        {
+          "code": "Parcelado",
+          "descricao": "número igual à contraprestação"
+        },
+        {
+          "code": "Final",
+          "descricao": "integralmente no vencimento do contrato"
+        }
+      ]
+    },
+    "H042": {
+      "codigo": "H042",
+      "nome": "Modalidade de Averbação INSS",
+      "uncertain": true,
+      "note": "O manual lista o item '3' sem descrição legível ('3- Obs.: Campo exclusivo para o INSS'); código 3 não incluído por falta de descrição.",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Consignado (desconto pelo INSS)"
+        },
+        {
+          "code": "2",
+          "descricao": "Vinculado (retenção pela Instituição Financeira)"
+        }
+      ]
+    },
+    "I004": {
+      "codigo": "I004",
+      "nome": "Regime de Encargos Financeiros",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Pré-fixado"
+        },
+        {
+          "code": "2",
+          "descricao": "Pós-fixado"
+        }
+      ]
+    },
+    "I005": {
+      "codigo": "I005",
+      "nome": "Modalidade de Encargos Financeiros - Pós-fixados",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "CDI + sobretaxa mensal"
+        },
+        {
+          "code": "02",
+          "descricao": "Percentual do CDI"
+        },
+        {
+          "code": "03",
+          "descricao": "Variação Cambial"
+        }
+      ]
+    },
+    "I007": {
+      "codigo": "I007",
+      "nome": "Forma de Reposição",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Parcela única"
+        },
+        {
+          "code": "2",
+          "descricao": "Reposição em parcelas"
+        },
+        {
+          "code": "3",
+          "descricao": "Encargos antecipados"
+        },
+        {
+          "code": "4",
+          "descricao": "Crédito rotativo"
+        }
+      ]
+    },
+    "I008": {
+      "codigo": "I008",
+      "nome": "Metodologia de cálculo dos encargos",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "PRICE"
+        },
+        {
+          "code": "2",
+          "descricao": "SAC"
+        },
+        {
+          "code": "3",
+          "descricao": "Americano"
+        },
+        {
+          "code": "4",
+          "descricao": "Parcela Única"
+        }
+      ]
+    },
+    "I011": {
+      "codigo": "I011",
+      "nome": "Tipo de Vencimento das Parcelas",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Fixo: pela quantidade de parcelas e vencimento inicial/final define-se o prazo"
+        },
+        {
+          "code": "2",
+          "descricao": "Variável: a data de vencimento deverá ser informada parcela a parcela"
+        }
+      ]
+    },
+    "I015": {
+      "codigo": "I015",
+      "nome": "Forma de Pagamento",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Boleto de Pagamento"
+        },
+        {
+          "code": "1",
+          "descricao": "Débito C/C Comprador"
+        }
+      ]
+    },
+    "I017": {
+      "codigo": "I017",
+      "nome": "Forma de Pagamento do IOF",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Debitado no ato"
+        },
+        {
+          "code": "1",
+          "descricao": "Financiado"
+        }
+      ]
+    },
+    "K001": {
+      "codigo": "K001",
+      "nome": "Códigos das Ocorrências – Lote",
+      "valores": [
+        {
+          "code": "00",
+          "descricao": "Remessa aceita"
+        },
+        {
+          "code": "01",
+          "descricao": "Banco Inválido"
+        },
+        {
+          "code": "02",
+          "descricao": "Lote inválido"
+        },
+        {
+          "code": "03",
+          "descricao": "Lote sequência errada"
+        },
+        {
+          "code": "04",
+          "descricao": "Registro inválido"
+        },
+        {
+          "code": "05",
+          "descricao": "Tipo de operação inválido"
+        },
+        {
+          "code": "06",
+          "descricao": "Tipo de serviço inválido"
+        },
+        {
+          "code": "07",
+          "descricao": "Versão do lay-out no arquivo inválida"
+        },
+        {
+          "code": "08",
+          "descricao": "Convênio com a Empresa inexistente/inválido"
+        },
+        {
+          "code": "09",
+          "descricao": "Quantidade de registros no lote inválido"
+        },
+        {
+          "code": "10",
+          "descricao": "Somatório do valor dos cheques inválido"
+        },
+        {
+          "code": "11",
+          "descricao": "Quantidade de cheques inválida"
+        },
+        {
+          "code": "12",
+          "descricao": "Agência/conta corrente com a Empresa inexistente/inválido"
+        },
+        {
+          "code": "13",
+          "descricao": "Agência/conta/DV inválido"
+        },
+        {
+          "code": "14",
+          "descricao": "Nome da empresa não informado"
+        }
+      ]
+    },
+    "K002": {
+      "codigo": "K002",
+      "nome": "Tipo de Movimento Remessa/Retorno",
+      "note": "Códigos 01-04 são de Remessa; 05-24 são de Retorno.",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Inclusão (Remessa)"
+        },
+        {
+          "code": "02",
+          "descricao": "Alteração (Remessa)"
+        },
+        {
+          "code": "03",
+          "descricao": "Exclusão (Remessa)"
+        },
+        {
+          "code": "04",
+          "descricao": "Sinistro (Remessa)"
+        },
+        {
+          "code": "05",
+          "descricao": "Cheques em carteira (em ser) (Retorno)"
+        },
+        {
+          "code": "06",
+          "descricao": "Cheque depositado/enviado para compensação (Retorno)"
+        },
+        {
+          "code": "07",
+          "descricao": "Cheque devolvido (Retorno)"
+        },
+        {
+          "code": "08",
+          "descricao": "Cheque liquidado (Retorno)"
+        },
+        {
+          "code": "09",
+          "descricao": "Cheque a ser depositado/enviado para a compensação na data boa (Retorno)"
+        },
+        {
+          "code": "11",
+          "descricao": "Inclusão Confirmada (Retorno)"
+        },
+        {
+          "code": "12",
+          "descricao": "Alteração Confirmada (Retorno)"
+        },
+        {
+          "code": "13",
+          "descricao": "Exclusão Confirmada (Retorno)"
+        },
+        {
+          "code": "14",
+          "descricao": "Sinistro Confirmado (Retorno)"
+        },
+        {
+          "code": "21",
+          "descricao": "Inclusão Rejeitada (Retorno)"
+        },
+        {
+          "code": "22",
+          "descricao": "Alteração Rejeitada (Retorno)"
+        },
+        {
+          "code": "23",
+          "descricao": "Exclusão Rejeitada (Retorno)"
+        },
+        {
+          "code": "24",
+          "descricao": "Sinistro Rejeitado (Retorno)"
+        }
+      ]
+    },
+    "K003": {
+      "codigo": "K003",
+      "nome": "Código da Finalidade do Movimento",
+      "valores": [
+        {
+          "code": "00",
+          "descricao": "Cheque a Vista"
+        },
+        {
+          "code": "01",
+          "descricao": "Custódia Simples"
+        },
+        {
+          "code": "02",
+          "descricao": "Carteira Descontada"
+        },
+        {
+          "code": "03",
+          "descricao": "Carteira Caucionada"
+        },
+        {
+          "code": "04",
+          "descricao": "Carteira Vinculada"
+        }
+      ]
+    },
+    "K004": {
+      "codigo": "K004",
+      "nome": "Forma de Entrada de Dados do Cheque",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CMC7 (captura de informações da banda magnética)"
+        },
+        {
+          "code": "2",
+          "descricao": "Linha 1 (digitação dos dados pré-impressos na primeira linha do cheque)"
+        }
+      ]
+    },
+    "K006": {
+      "codigo": "K006",
+      "nome": "Tipo de Inscrição do Emitente",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CPF"
+        },
+        {
+          "code": "2",
+          "descricao": "CNPJ"
+        }
+      ]
+    },
+    "K020": {
+      "codigo": "K020",
+      "nome": "Códigos das Ocorrências - Detalhe",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Banco do controle inválido"
+        },
+        {
+          "code": "02",
+          "descricao": "Lote inválido"
+        },
+        {
+          "code": "03",
+          "descricao": "Registro inválido"
+        },
+        {
+          "code": "04",
+          "descricao": "Segmento inválido"
+        },
+        {
+          "code": "05",
+          "descricao": "Tipo de movimento inválido"
+        },
+        {
+          "code": "06",
+          "descricao": "Código da finalidade inválida"
+        },
+        {
+          "code": "07",
+          "descricao": "Forma de entrada inválida"
+        },
+        {
+          "code": "08",
+          "descricao": "CMC7/Linha1 inválida"
+        },
+        {
+          "code": "09",
+          "descricao": "Cheque em duplicidade no arquivo"
+        },
+        {
+          "code": "10",
+          "descricao": "Tipo/Número de inscrição do emitente inválido"
+        },
+        {
+          "code": "11",
+          "descricao": "Valor do cheque inválido"
+        },
+        {
+          "code": "12",
+          "descricao": "Data para depósito inválida"
+        },
+        {
+          "code": "13",
+          "descricao": "Data da captura no cliente inválida"
+        },
+        {
+          "code": "14",
+          "descricao": "Agência/Conta para devolução inválida"
+        },
+        {
+          "code": "15",
+          "descricao": "Banco não cadastrado na COMPE"
+        },
+        {
+          "code": "16",
+          "descricao": "Agência não cadastrada na COMPE"
+        },
+        {
+          "code": "17",
+          "descricao": "Conta do cheque (no mesmo Banco) inválido"
+        },
+        {
+          "code": "18",
+          "descricao": "Cheque não aceito para desconto"
+        },
+        {
+          "code": "19",
+          "descricao": "Cheque não aceito para caução"
+        },
+        {
+          "code": "20",
+          "descricao": "Cheque acatado com divergência de valor"
+        },
+        {
+          "code": "21",
+          "descricao": "Cheque acatado com divergência de data para depósito"
+        },
+        {
+          "code": "22",
+          "descricao": "Cheque acatado com divergência de CPF/CNPJ do emitente"
+        }
+      ]
+    },
+    "N003": {
+      "codigo": "N003",
+      "nome": "Tipo de Identificação do Contribuinte",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "CNPJ"
+        },
+        {
+          "code": "2",
+          "descricao": "CPF"
+        },
+        {
+          "code": "3",
+          "descricao": "NIT / PIS / PASEP"
+        },
+        {
+          "code": "4",
+          "descricao": "CEI"
+        },
+        {
+          "code": "6",
+          "descricao": "NB"
+        },
+        {
+          "code": "7",
+          "descricao": "Nº do Título"
+        },
+        {
+          "code": "8",
+          "descricao": "DEBCAD"
+        },
+        {
+          "code": "9",
+          "descricao": "REFERÊNCIA"
+        }
+      ]
+    },
+    "N005": {
+      "codigo": "N005",
+      "nome": "Código de Identificação do Tributo",
+      "note": "Sugestão do manual: usar os mesmos códigos de Forma de Lançamento (G029).",
+      "valores": [
+        {
+          "code": "16",
+          "descricao": "Tributo - DARF Normal"
+        },
+        {
+          "code": "18",
+          "descricao": "Tributo - DARF Simples"
+        },
+        {
+          "code": "17",
+          "descricao": "Tributo - GPS (Guia da Previdência Social)"
+        },
+        {
+          "code": "21",
+          "descricao": "Tributo – DARJ"
+        },
+        {
+          "code": "25",
+          "descricao": "Tributo – IPVA"
+        },
+        {
+          "code": "26",
+          "descricao": "Tributo – Licenciamento"
+        },
+        {
+          "code": "27",
+          "descricao": "Tributo – DPVAT"
+        },
+        {
+          "code": "22",
+          "descricao": "Tributo - GARE-SP ICMS"
+        },
+        {
+          "code": "23",
+          "descricao": "Tributo - GARE-SP DR"
+        },
+        {
+          "code": "24",
+          "descricao": "Tributo - GARE-SP ITCMD"
+        },
+        {
+          "code": "19",
+          "descricao": "Tributo - IPTU – Prefeituras"
+        }
+      ]
+    },
+    "N019": {
+      "codigo": "N019",
+      "nome": "Opção de Pagamento",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Parcela Única com Desconto"
+        },
+        {
+          "code": "2",
+          "descricao": "Parcela Única sem Desconto"
+        },
+        {
+          "code": "3",
+          "descricao": "Parcela Nº 1"
+        },
+        {
+          "code": "4",
+          "descricao": "Parcela Nº 2"
+        },
+        {
+          "code": "5",
+          "descricao": "Parcela Nº 3"
+        },
+        {
+          "code": "6",
+          "descricao": "Parcela Nº 4"
+        },
+        {
+          "code": "7",
+          "descricao": "Parcela Nº 5"
+        },
+        {
+          "code": "8",
+          "descricao": "Parcela Nº 6"
+        }
+      ]
+    },
+    "N020": {
+      "codigo": "N020",
+      "nome": "Opção de Retirada do CRVL",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Correio"
+        },
+        {
+          "code": "2",
+          "descricao": "DETRAN / CIRETRAN"
+        }
+      ]
+    },
+    "N024": {
+      "codigo": "N024",
+      "nome": "Tipo de Informação",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Para uso da empresa (o banco não valida nem trata estes dados)"
+        },
+        {
+          "code": "2",
+          "descricao": "Para emissão na guia do tributo (dados impressos no documento)"
+        },
+        {
+          "code": "9",
+          "descricao": "Para uso da Informação Complementar de Tributo"
+        }
+      ]
+    },
+    "N027": {
+      "codigo": "N027",
+      "nome": "Identificador de Tributo",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "FGTS"
+        }
+      ]
+    },
+    "P001": {
+      "codigo": "P001",
+      "nome": "Código da Câmara Centralizadora",
+      "valores": [
+        {
+          "code": "018",
+          "descricao": "TED (STR,CIP)"
+        },
+        {
+          "code": "700",
+          "descricao": "DOC (COMPE)"
+        },
+        {
+          "code": "988",
+          "descricao": "TED (STR/CIP) – uso com código ISPB da Instituição Financeira Destinatária"
+        },
+        {
+          "code": "009",
+          "descricao": "PIX (SPI)"
+        }
+      ]
+    },
+    "P005": {
+      "codigo": "P005",
+      "nome": "Complemento do Tipo de Serviço (finalidade do DOC)",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Crédito em Conta"
+        },
+        {
+          "code": "02",
+          "descricao": "Pagamento de Aluguel/Condomínio"
+        },
+        {
+          "code": "03",
+          "descricao": "Pagamento de Duplicata/Títulos"
+        },
+        {
+          "code": "04",
+          "descricao": "Pagamento de Dividendos"
+        },
+        {
+          "code": "05",
+          "descricao": "Pagamento de Mensalidade Escolar"
+        },
+        {
+          "code": "06",
+          "descricao": "Pagamento de Salários"
+        },
+        {
+          "code": "07",
+          "descricao": "Pagamento a Fornecedores"
+        },
+        {
+          "code": "08",
+          "descricao": "Operações de Câmbios/Fundos/Bolsa de Valores"
+        },
+        {
+          "code": "09",
+          "descricao": "Repasse de Arrecadação/Pagamento de Tributos"
+        },
+        {
+          "code": "10",
+          "descricao": "Transferência Internacional em Real"
+        },
+        {
+          "code": "11",
+          "descricao": "DOC para Poupança"
+        },
+        {
+          "code": "12",
+          "descricao": "DOC para Depósito Judicial"
+        },
+        {
+          "code": "13",
+          "descricao": "Outros"
+        },
+        {
+          "code": "16",
+          "descricao": "Pagamento de bolsa auxílio"
+        },
+        {
+          "code": "17",
+          "descricao": "Remuneração à cooperado"
+        },
+        {
+          "code": "18",
+          "descricao": "Pagamento de honorários"
+        },
+        {
+          "code": "19",
+          "descricao": "Pagamento de prebenda (Remuneração a padres e sacerdotes)"
+        }
+      ]
+    },
+    "P006": {
+      "codigo": "P006",
+      "nome": "Aviso ao Favorecido",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Não Emite Aviso"
+        },
+        {
+          "code": "2",
+          "descricao": "Emite Aviso Somente para o Remetente"
+        },
+        {
+          "code": "5",
+          "descricao": "Emite Aviso Somente para o Favorecido"
+        },
+        {
+          "code": "6",
+          "descricao": "Emite Aviso para o Remetente e Favorecido"
+        },
+        {
+          "code": "7",
+          "descricao": "Emite Aviso para o Favorecido e 2 Vias para o Remetente"
+        }
+      ]
+    },
+    "P014": {
+      "codigo": "P014",
+      "nome": "Indicativo de Forma de Pagamento",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Débito em Conta Corrente"
+        },
+        {
+          "code": "02",
+          "descricao": "Débito Empréstimo/Financiamento"
+        },
+        {
+          "code": "03",
+          "descricao": "Débito Cartão de Crédito"
+        }
+      ]
+    },
+    "V002": {
+      "codigo": "V002",
+      "nome": "Código de Movimento Remessa (Vendor)",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Entrada de Títulos"
+        },
+        {
+          "code": "02",
+          "descricao": "Pedido de Baixa"
+        },
+        {
+          "code": "04",
+          "descricao": "Concessão de Abatimento"
+        },
+        {
+          "code": "05",
+          "descricao": "Cancelamento de Abatimento"
+        },
+        {
+          "code": "06",
+          "descricao": "Alteração de Vencimento"
+        },
+        {
+          "code": "07",
+          "descricao": "Concessão de Desconto"
+        },
+        {
+          "code": "08",
+          "descricao": "Cancelamento de Desconto"
+        },
+        {
+          "code": "12",
+          "descricao": "Confirmação de Repactuação"
+        },
+        {
+          "code": "31",
+          "descricao": "Alteração de Outros Dados"
+        },
+        {
+          "code": "41",
+          "descricao": "Alteração de Dados do Comprador"
+        },
+        {
+          "code": "42",
+          "descricao": "Alteração de Dados do Título"
+        }
+      ]
+    },
+    "V003": {
+      "codigo": "V003",
+      "nome": "Código de Movimento Retorno (Vendor)",
+      "valores": [
+        {
+          "code": "02",
+          "descricao": "Entrada Confirmada"
+        },
+        {
+          "code": "03",
+          "descricao": "Entrada Rejeitada"
+        },
+        {
+          "code": "06",
+          "descricao": "Liquidação"
+        },
+        {
+          "code": "07",
+          "descricao": "Confirmação do Recebimento da Instrução de Desconto"
+        },
+        {
+          "code": "08",
+          "descricao": "Confirmação do Recebimento do Cancelamento da Instrução de Desconto"
+        },
+        {
+          "code": "09",
+          "descricao": "Baixa"
+        },
+        {
+          "code": "10",
+          "descricao": "Confirmação do Recebimento da Instrução de Repactuação"
+        },
+        {
+          "code": "12",
+          "descricao": "Confirmação do Recebimento da Instrução de Abatimento"
+        },
+        {
+          "code": "13",
+          "descricao": "Confirmação do Recebimento do Cancelamento da Instrução de Abatimento"
+        },
+        {
+          "code": "14",
+          "descricao": "Confirmação do Recebimento da Instrução de Alteração de Vencimento"
+        },
+        {
+          "code": "17",
+          "descricao": "Liquidação após Baixa ou Liquidação Título não Registrado"
+        },
+        {
+          "code": "26",
+          "descricao": "Instrução Rejeitada"
+        },
+        {
+          "code": "27",
+          "descricao": "Confirmação do Pedido de Alteração de Outros Dados"
+        },
+        {
+          "code": "30",
+          "descricao": "Alteração de Dados Rejeitada"
+        },
+        {
+          "code": "36",
+          "descricao": "Concentração (apenas no arquivo retorno dos dados do Comprador)"
+        },
+        {
+          "code": "37",
+          "descricao": "Títulos debitados a Empresa após o término da carência"
+        },
+        {
+          "code": "38",
+          "descricao": "Títulos pagos em atraso creditados a Empresa"
+        }
+      ]
+    },
+    "V005": {
+      "codigo": "V005",
+      "nome": "Forma de Pagamento (Vendor)",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Boleto de Pagamento"
+        },
+        {
+          "code": "1",
+          "descricao": "Débito C/C Comprador"
+        },
+        {
+          "code": "2",
+          "descricao": "Débito C/C Fornecedor"
+        },
+        {
+          "code": "3",
+          "descricao": "Pagamento via DOC pelo Comprador"
+        },
+        {
+          "code": "4",
+          "descricao": "Pagamento via DOC pelo Fornecedor"
+        }
+      ]
+    },
+    "V009": {
+      "codigo": "V009",
+      "nome": "Tipo de Vencimento das Parcelas (Vendor)",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Fixo: pela quantidade de parcelas e vencimento inicial/final define-se o prazo"
+        },
+        {
+          "code": "2",
+          "descricao": "Variável: a data de vencimento deverá ser informada parcela a parcela"
+        }
+      ]
+    },
+    "V010": {
+      "codigo": "V010",
+      "nome": "Motivo da Ocorrência (Vendor)",
+      "note": "Duas subtabelas: A=rejeições (mov. 03/26/30), C=liquidação/baixa (mov. 06/09/17). Manual do Vendor não define subtabela B.",
+      "subtabelas": {
+        "A_rejeicoes": [
+          {
+            "code": "01",
+            "descricao": "Código do Banco Inválido"
+          },
+          {
+            "code": "02",
+            "descricao": "Código do Registro Detalhe Inválido"
+          },
+          {
+            "code": "03",
+            "descricao": "Código do Segmento Inválido"
+          },
+          {
+            "code": "04",
+            "descricao": "Código de Movimento Não Permitido para Carteira"
+          },
+          {
+            "code": "05",
+            "descricao": "Código de Movimento Inválido"
+          },
+          {
+            "code": "06",
+            "descricao": "Tipo/Número de Inscrição do Beneficiário Inválidos"
+          },
+          {
+            "code": "07",
+            "descricao": "Agência/Conta/DV Inválido"
+          },
+          {
+            "code": "08",
+            "descricao": "Nosso Número Inválido"
+          },
+          {
+            "code": "09",
+            "descricao": "Nosso Número Duplicado"
+          },
+          {
+            "code": "10",
+            "descricao": "Carteira Inválida"
+          },
+          {
+            "code": "11",
+            "descricao": "Forma de Cadastramento do Título Inválido"
+          },
+          {
+            "code": "12",
+            "descricao": "Tipo de Documento Inválido"
+          },
+          {
+            "code": "13",
+            "descricao": "Identificação da Emissão do Boleto de Pagamento Inválida"
+          },
+          {
+            "code": "14",
+            "descricao": "Identificação da Distribuição do Boleto de Pagamento Inválida"
+          },
+          {
+            "code": "15",
+            "descricao": "Características da Cobrança Incompatíveis"
+          },
+          {
+            "code": "16",
+            "descricao": "Data de Vencimento Inválida"
+          },
+          {
+            "code": "17",
+            "descricao": "Data de Vencimento Anterior a Data de Emissão"
+          },
+          {
+            "code": "18",
+            "descricao": "Vencimento Fora do Prazo de Operação"
+          },
+          {
+            "code": "19",
+            "descricao": "Título a Cargo de Bancos Correspondentes com Vencimento Inferior a XX Dias"
+          },
+          {
+            "code": "20",
+            "descricao": "Valor do Título Inválido"
+          },
+          {
+            "code": "21",
+            "descricao": "Espécie do Título Inválida"
+          },
+          {
+            "code": "22",
+            "descricao": "Espécie do Título Não Permitida para a Carteira"
+          },
+          {
+            "code": "23",
+            "descricao": "Aceite Inválido"
+          },
+          {
+            "code": "24",
+            "descricao": "Data da Emissão Inválida"
+          },
+          {
+            "code": "25",
+            "descricao": "Data da Emissão Posterior a Data de Entrada"
+          },
+          {
+            "code": "26",
+            "descricao": "Código de Juros de Mora Inválido"
+          },
+          {
+            "code": "27",
+            "descricao": "Valor/Taxa de Juros de Mora Inválido"
+          },
+          {
+            "code": "28",
+            "descricao": "Código do Desconto Inválido"
+          },
+          {
+            "code": "29",
+            "descricao": "Valor do Desconto Maior ou Igual ao Valor do Título"
+          },
+          {
+            "code": "30",
+            "descricao": "Desconto a Conceder Não Confere"
+          },
+          {
+            "code": "31",
+            "descricao": "Concessão de Desconto - Já Existe Desconto Anterior"
+          },
+          {
+            "code": "32",
+            "descricao": "Valor do IOF Inválido"
+          },
+          {
+            "code": "33",
+            "descricao": "Valor do Abatimento Inválido"
+          },
+          {
+            "code": "34",
+            "descricao": "Valor do Abatimento Maior ou Igual ao Valor do Título"
+          },
+          {
+            "code": "35",
+            "descricao": "Valor a Conceder Não Confere"
+          },
+          {
+            "code": "36",
+            "descricao": "Concessão de Abatimento - Já Existe Abatimento Anterior"
+          },
+          {
+            "code": "37",
+            "descricao": "Código para Protesto Inválido"
+          },
+          {
+            "code": "38",
+            "descricao": "Prazo para Protesto Inválido"
+          },
+          {
+            "code": "39",
+            "descricao": "Pedido de Protesto Não Permitido para o Título"
+          },
+          {
+            "code": "40",
+            "descricao": "Título com Ordem de Protesto Emitida"
+          },
+          {
+            "code": "41",
+            "descricao": "Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto"
+          },
+          {
+            "code": "42",
+            "descricao": "Código para Baixa/Devolução Inválido"
+          },
+          {
+            "code": "43",
+            "descricao": "Prazo para Baixa/Devolução Inválido"
+          },
+          {
+            "code": "44",
+            "descricao": "Código da Moeda Inválido"
+          },
+          {
+            "code": "45",
+            "descricao": "Nome do Pagador Não Informado"
+          },
+          {
+            "code": "46",
+            "descricao": "Tipo/Número de Inscrição do Pagador Inválidos"
+          },
+          {
+            "code": "47",
+            "descricao": "Endereço do Pagador Não Informado"
+          },
+          {
+            "code": "48",
+            "descricao": "CEP Inválido"
+          },
+          {
+            "code": "49",
+            "descricao": "CEP Sem Praça de Cobrança (Não Localizado)"
+          },
+          {
+            "code": "50",
+            "descricao": "CEP Referente a um Banco Correspondente"
+          },
+          {
+            "code": "51",
+            "descricao": "CEP incompatível com a Unidade da Federação"
+          },
+          {
+            "code": "52",
+            "descricao": "Unidade da Federação Inválida"
+          },
+          {
+            "code": "53",
+            "descricao": "Tipo/Número de Inscrição do Sacador/Avalista Inválidos"
+          },
+          {
+            "code": "54",
+            "descricao": "Sacador/Avalista Não Informado"
+          },
+          {
+            "code": "55",
+            "descricao": "Nosso número no Banco Correspondente Não Informado"
+          },
+          {
+            "code": "56",
+            "descricao": "Código do Banco Correspondente Não Informado"
+          },
+          {
+            "code": "57",
+            "descricao": "Código da Multa Inválido"
+          },
+          {
+            "code": "58",
+            "descricao": "Data da Multa Inválida"
+          },
+          {
+            "code": "59",
+            "descricao": "Valor/Percentual da Multa Inválido"
+          },
+          {
+            "code": "60",
+            "descricao": "Movimento para Título Não Cadastrado"
+          },
+          {
+            "code": "61",
+            "descricao": "Alteração da Agência Cobradora/DV Inválida"
+          },
+          {
+            "code": "62",
+            "descricao": "Tipo de Impressão Inválido"
+          },
+          {
+            "code": "63",
+            "descricao": "Entrada para Título já Cadastrado"
+          },
+          {
+            "code": "64",
+            "descricao": "Número da Linha Inválido"
+          },
+          {
+            "code": "65",
+            "descricao": "Código do Banco para Débito Inválido"
+          },
+          {
+            "code": "66",
+            "descricao": "Agência/Conta/DV para Débito Inválido"
+          },
+          {
+            "code": "67",
+            "descricao": "Dados para Débito incompatível com a Identificação da Emissão do Boleto de Pagamento"
+          },
+          {
+            "code": "68",
+            "descricao": "Débito Automático Agendado"
+          },
+          {
+            "code": "69",
+            "descricao": "Débito Não Agendado - Erro nos Dados da Remessa"
+          },
+          {
+            "code": "70",
+            "descricao": "Débito Não Agendado - Pagador Não Consta do Cadastro de Autorizante"
+          },
+          {
+            "code": "71",
+            "descricao": "Débito Não Agendado - Beneficiário Não Autorizado pelo Pagador"
+          },
+          {
+            "code": "72",
+            "descricao": "Débito Não Agendado - Beneficiário Não Participa da Modalidade Débito Automático"
+          },
+          {
+            "code": "73",
+            "descricao": "Débito Não Agendado - Código de Moeda Diferente de Real (R$)"
+          },
+          {
+            "code": "74",
+            "descricao": "Débito Não Agendado - Data Vencimento Inválida"
+          },
+          {
+            "code": "75",
+            "descricao": "Débito Não Agendado, Conforme seu Pedido, Título Não Registrado"
+          },
+          {
+            "code": "76",
+            "descricao": "Débito Não Agendado, Tipo/Num. Inscrição do Debitado, Inválido"
+          },
+          {
+            "code": "77",
+            "descricao": "Transferência para Desconto Não Permitida para a Carteira do Título"
+          },
+          {
+            "code": "78",
+            "descricao": "Data Inferior ou Igual ao Vencimento para Débito Automático"
+          },
+          {
+            "code": "79",
+            "descricao": "Data Juros de Mora Inválido"
+          },
+          {
+            "code": "80",
+            "descricao": "Data do Desconto Inválida"
+          },
+          {
+            "code": "81",
+            "descricao": "Tentativas de Débito Esgotadas - Baixado"
+          },
+          {
+            "code": "82",
+            "descricao": "Tentativas de Débito Esgotadas - Pendente"
+          },
+          {
+            "code": "83",
+            "descricao": "Limite Excedido"
+          },
+          {
+            "code": "84",
+            "descricao": "Número Autorização Inexistente"
+          },
+          {
+            "code": "85",
+            "descricao": "Título com Pagamento Vinculado"
+          },
+          {
+            "code": "86",
+            "descricao": "Seu Número Inválido"
+          },
+          {
+            "code": "87",
+            "descricao": "Quantidade Total Inf. Zerada"
+          },
+          {
+            "code": "88",
+            "descricao": "Tipo de Registro Inválido"
+          },
+          {
+            "code": "89",
+            "descricao": "Tipo de Serviço Inválido"
+          },
+          {
+            "code": "90",
+            "descricao": "Valor Total Inf. Zerado"
+          },
+          {
+            "code": "91",
+            "descricao": "Comprador Impedido de Operar"
+          },
+          {
+            "code": "92",
+            "descricao": "Data Financiamento Inválida"
+          },
+          {
+            "code": "93",
+            "descricao": "Equalização Inválida"
+          },
+          {
+            "code": "94",
+            "descricao": "Financiamento IOF Inválido"
+          },
+          {
+            "code": "95",
+            "descricao": "Indexador Inválido"
+          },
+          {
+            "code": "96",
+            "descricao": "Negociação Bloqueada"
+          },
+          {
+            "code": "97",
+            "descricao": "Parcela Inválida"
+          },
+          {
+            "code": "98",
+            "descricao": "Prazo não Negociado"
+          },
+          {
+            "code": "99",
+            "descricao": "Negociação sem Movimento Transmitido"
+          },
+          {
+            "code": "100",
+            "descricao": "Taxa do Cliente Inválido"
+          },
+          {
+            "code": "101",
+            "descricao": "Tipo de Comprador Inválido"
+          },
+          {
+            "code": "102",
+            "descricao": "Tipo de Operação Inválido"
+          },
+          {
+            "code": "103",
+            "descricao": "Valor Excedeu o Valor Negociado"
+          },
+          {
+            "code": "104",
+            "descricao": "Outros"
+          },
+          {
+            "code": "105",
+            "descricao": "Vencimento Fora do Prazo de Operação"
+          },
+          {
+            "code": "106",
+            "descricao": "CEP não Cadastrado"
+          },
+          {
+            "code": "107",
+            "descricao": "Nome do Comprador Inválido"
+          },
+          {
+            "code": "108",
+            "descricao": "Endereço do Comprador Inválido"
+          },
+          {
+            "code": "109",
+            "descricao": "Cidade do Comprador Inválido"
+          },
+          {
+            "code": "110",
+            "descricao": "Estado do Comprador Inválido"
+          },
+          {
+            "code": "111",
+            "descricao": "Agência Cobradora Inválida"
+          },
+          {
+            "code": "112",
+            "descricao": "Praça Cobradora Inválida"
+          },
+          {
+            "code": "113",
+            "descricao": "Limite Excedido"
+          },
+          {
+            "code": "114",
+            "descricao": "Seu Número Inválido"
+          },
+          {
+            "code": "115",
+            "descricao": "Seqüência de Registro Inválida"
+          },
+          {
+            "code": "116",
+            "descricao": "Data de Vencimento - Título Vencido"
+          },
+          {
+            "code": "117",
+            "descricao": "Registro Entrada em Duplicidade"
+          },
+          {
+            "code": "118",
+            "descricao": "Instrução de Título Bloqueado"
+          },
+          {
+            "code": "119",
+            "descricao": "Registro sem Correspondente"
+          },
+          {
+            "code": "120",
+            "descricao": "Inválido para Vendor Eletrônico"
+          },
+          {
+            "code": "121",
+            "descricao": "Falta Header"
+          },
+          {
+            "code": "122",
+            "descricao": "Código da Ocorrência Inválido"
+          },
+          {
+            "code": "123",
+            "descricao": "Campo não Numérico"
+          },
+          {
+            "code": "124",
+            "descricao": "CNPJ zerado ou não numérico"
+          },
+          {
+            "code": "125",
+            "descricao": "Data de Gravação Inválida"
+          },
+          {
+            "code": "126",
+            "descricao": "Falta Sequência"
+          },
+          {
+            "code": "127",
+            "descricao": "ID Remessa Inválida"
+          }
+        ],
+        "C_liquidacao_baixa": [
+          {
+            "code": "01",
+            "descricao": "Liquidação Por Saldo"
+          },
+          {
+            "code": "02",
+            "descricao": "Liquidação Por Conta"
+          },
+          {
+            "code": "03",
+            "descricao": "Liquidação No Próprio Banco"
+          },
+          {
+            "code": "04",
+            "descricao": "Compensação Eletrônica"
+          },
+          {
+            "code": "05",
+            "descricao": "Compensação Convencional"
+          },
+          {
+            "code": "06",
+            "descricao": "Por Meio Eletrônico"
+          },
+          {
+            "code": "07",
+            "descricao": "Após Feriado Local"
+          },
+          {
+            "code": "08",
+            "descricao": "Em Cartório"
+          },
+          {
+            "code": "09",
+            "descricao": "Baixa Comandada Banco"
+          },
+          {
+            "code": "10",
+            "descricao": "Baixa Comandada Cliente Arquivo"
+          },
+          {
+            "code": "11",
+            "descricao": "Baixa Comandada Cliente On-line"
+          },
+          {
+            "code": "12",
+            "descricao": "Baixa Decurso Prazo - Cliente"
+          },
+          {
+            "code": "13",
+            "descricao": "Baixa Decurso Prazo - Banco"
+          },
+          {
+            "code": "14",
+            "descricao": "Baixa Protestado"
+          },
+          {
+            "code": "15",
+            "descricao": "Título Excluído"
+          }
+        ]
+      },
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Código do Banco Inválido"
+        },
+        {
+          "code": "02",
+          "descricao": "Código do Registro Detalhe Inválido"
+        },
+        {
+          "code": "03",
+          "descricao": "Código do Segmento Inválido"
+        },
+        {
+          "code": "04",
+          "descricao": "Código de Movimento Não Permitido para Carteira"
+        },
+        {
+          "code": "05",
+          "descricao": "Código de Movimento Inválido"
+        },
+        {
+          "code": "06",
+          "descricao": "Tipo/Número de Inscrição do Beneficiário Inválidos"
+        },
+        {
+          "code": "07",
+          "descricao": "Agência/Conta/DV Inválido"
+        },
+        {
+          "code": "08",
+          "descricao": "Nosso Número Inválido"
+        },
+        {
+          "code": "09",
+          "descricao": "Nosso Número Duplicado"
+        },
+        {
+          "code": "10",
+          "descricao": "Carteira Inválida"
+        },
+        {
+          "code": "11",
+          "descricao": "Forma de Cadastramento do Título Inválido"
+        },
+        {
+          "code": "12",
+          "descricao": "Tipo de Documento Inválido"
+        },
+        {
+          "code": "13",
+          "descricao": "Identificação da Emissão do Boleto de Pagamento Inválida"
+        },
+        {
+          "code": "14",
+          "descricao": "Identificação da Distribuição do Boleto de Pagamento Inválida"
+        },
+        {
+          "code": "15",
+          "descricao": "Características da Cobrança Incompatíveis"
+        },
+        {
+          "code": "16",
+          "descricao": "Data de Vencimento Inválida"
+        },
+        {
+          "code": "17",
+          "descricao": "Data de Vencimento Anterior a Data de Emissão"
+        },
+        {
+          "code": "18",
+          "descricao": "Vencimento Fora do Prazo de Operação"
+        },
+        {
+          "code": "19",
+          "descricao": "Título a Cargo de Bancos Correspondentes com Vencimento Inferior a XX Dias"
+        },
+        {
+          "code": "20",
+          "descricao": "Valor do Título Inválido"
+        },
+        {
+          "code": "21",
+          "descricao": "Espécie do Título Inválida"
+        },
+        {
+          "code": "22",
+          "descricao": "Espécie do Título Não Permitida para a Carteira"
+        },
+        {
+          "code": "23",
+          "descricao": "Aceite Inválido"
+        },
+        {
+          "code": "24",
+          "descricao": "Data da Emissão Inválida"
+        },
+        {
+          "code": "25",
+          "descricao": "Data da Emissão Posterior a Data de Entrada"
+        },
+        {
+          "code": "26",
+          "descricao": "Código de Juros de Mora Inválido"
+        },
+        {
+          "code": "27",
+          "descricao": "Valor/Taxa de Juros de Mora Inválido"
+        },
+        {
+          "code": "28",
+          "descricao": "Código do Desconto Inválido"
+        },
+        {
+          "code": "29",
+          "descricao": "Valor do Desconto Maior ou Igual ao Valor do Título"
+        },
+        {
+          "code": "30",
+          "descricao": "Desconto a Conceder Não Confere"
+        },
+        {
+          "code": "31",
+          "descricao": "Concessão de Desconto - Já Existe Desconto Anterior"
+        },
+        {
+          "code": "32",
+          "descricao": "Valor do IOF Inválido"
+        },
+        {
+          "code": "33",
+          "descricao": "Valor do Abatimento Inválido"
+        },
+        {
+          "code": "34",
+          "descricao": "Valor do Abatimento Maior ou Igual ao Valor do Título"
+        },
+        {
+          "code": "35",
+          "descricao": "Valor a Conceder Não Confere"
+        },
+        {
+          "code": "36",
+          "descricao": "Concessão de Abatimento - Já Existe Abatimento Anterior"
+        },
+        {
+          "code": "37",
+          "descricao": "Código para Protesto Inválido"
+        },
+        {
+          "code": "38",
+          "descricao": "Prazo para Protesto Inválido"
+        },
+        {
+          "code": "39",
+          "descricao": "Pedido de Protesto Não Permitido para o Título"
+        },
+        {
+          "code": "40",
+          "descricao": "Título com Ordem de Protesto Emitida"
+        },
+        {
+          "code": "41",
+          "descricao": "Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto"
+        },
+        {
+          "code": "42",
+          "descricao": "Código para Baixa/Devolução Inválido"
+        },
+        {
+          "code": "43",
+          "descricao": "Prazo para Baixa/Devolução Inválido"
+        },
+        {
+          "code": "44",
+          "descricao": "Código da Moeda Inválido"
+        },
+        {
+          "code": "45",
+          "descricao": "Nome do Pagador Não Informado"
+        },
+        {
+          "code": "46",
+          "descricao": "Tipo/Número de Inscrição do Pagador Inválidos"
+        },
+        {
+          "code": "47",
+          "descricao": "Endereço do Pagador Não Informado"
+        },
+        {
+          "code": "48",
+          "descricao": "CEP Inválido"
+        },
+        {
+          "code": "49",
+          "descricao": "CEP Sem Praça de Cobrança (Não Localizado)"
+        },
+        {
+          "code": "50",
+          "descricao": "CEP Referente a um Banco Correspondente"
+        },
+        {
+          "code": "51",
+          "descricao": "CEP incompatível com a Unidade da Federação"
+        },
+        {
+          "code": "52",
+          "descricao": "Unidade da Federação Inválida"
+        },
+        {
+          "code": "53",
+          "descricao": "Tipo/Número de Inscrição do Sacador/Avalista Inválidos"
+        },
+        {
+          "code": "54",
+          "descricao": "Sacador/Avalista Não Informado"
+        },
+        {
+          "code": "55",
+          "descricao": "Nosso número no Banco Correspondente Não Informado"
+        },
+        {
+          "code": "56",
+          "descricao": "Código do Banco Correspondente Não Informado"
+        },
+        {
+          "code": "57",
+          "descricao": "Código da Multa Inválido"
+        },
+        {
+          "code": "58",
+          "descricao": "Data da Multa Inválida"
+        },
+        {
+          "code": "59",
+          "descricao": "Valor/Percentual da Multa Inválido"
+        },
+        {
+          "code": "60",
+          "descricao": "Movimento para Título Não Cadastrado"
+        },
+        {
+          "code": "61",
+          "descricao": "Alteração da Agência Cobradora/DV Inválida"
+        },
+        {
+          "code": "62",
+          "descricao": "Tipo de Impressão Inválido"
+        },
+        {
+          "code": "63",
+          "descricao": "Entrada para Título já Cadastrado"
+        },
+        {
+          "code": "64",
+          "descricao": "Número da Linha Inválido"
+        },
+        {
+          "code": "65",
+          "descricao": "Código do Banco para Débito Inválido"
+        },
+        {
+          "code": "66",
+          "descricao": "Agência/Conta/DV para Débito Inválido"
+        },
+        {
+          "code": "67",
+          "descricao": "Dados para Débito incompatível com a Identificação da Emissão do Boleto de Pagamento"
+        },
+        {
+          "code": "68",
+          "descricao": "Débito Automático Agendado"
+        },
+        {
+          "code": "69",
+          "descricao": "Débito Não Agendado - Erro nos Dados da Remessa"
+        },
+        {
+          "code": "70",
+          "descricao": "Débito Não Agendado - Pagador Não Consta do Cadastro de Autorizante"
+        },
+        {
+          "code": "71",
+          "descricao": "Débito Não Agendado - Beneficiário Não Autorizado pelo Pagador"
+        },
+        {
+          "code": "72",
+          "descricao": "Débito Não Agendado - Beneficiário Não Participa da Modalidade Débito Automático"
+        },
+        {
+          "code": "73",
+          "descricao": "Débito Não Agendado - Código de Moeda Diferente de Real (R$)"
+        },
+        {
+          "code": "74",
+          "descricao": "Débito Não Agendado - Data Vencimento Inválida"
+        },
+        {
+          "code": "75",
+          "descricao": "Débito Não Agendado, Conforme seu Pedido, Título Não Registrado"
+        },
+        {
+          "code": "76",
+          "descricao": "Débito Não Agendado, Tipo/Num. Inscrição do Debitado, Inválido"
+        },
+        {
+          "code": "77",
+          "descricao": "Transferência para Desconto Não Permitida para a Carteira do Título"
+        },
+        {
+          "code": "78",
+          "descricao": "Data Inferior ou Igual ao Vencimento para Débito Automático"
+        },
+        {
+          "code": "79",
+          "descricao": "Data Juros de Mora Inválido"
+        },
+        {
+          "code": "80",
+          "descricao": "Data do Desconto Inválida"
+        },
+        {
+          "code": "81",
+          "descricao": "Tentativas de Débito Esgotadas - Baixado"
+        },
+        {
+          "code": "82",
+          "descricao": "Tentativas de Débito Esgotadas - Pendente"
+        },
+        {
+          "code": "83",
+          "descricao": "Limite Excedido"
+        },
+        {
+          "code": "84",
+          "descricao": "Número Autorização Inexistente"
+        },
+        {
+          "code": "85",
+          "descricao": "Título com Pagamento Vinculado"
+        },
+        {
+          "code": "86",
+          "descricao": "Seu Número Inválido"
+        },
+        {
+          "code": "87",
+          "descricao": "Quantidade Total Inf. Zerada"
+        },
+        {
+          "code": "88",
+          "descricao": "Tipo de Registro Inválido"
+        },
+        {
+          "code": "89",
+          "descricao": "Tipo de Serviço Inválido"
+        },
+        {
+          "code": "90",
+          "descricao": "Valor Total Inf. Zerado"
+        },
+        {
+          "code": "91",
+          "descricao": "Comprador Impedido de Operar"
+        },
+        {
+          "code": "92",
+          "descricao": "Data Financiamento Inválida"
+        },
+        {
+          "code": "93",
+          "descricao": "Equalização Inválida"
+        },
+        {
+          "code": "94",
+          "descricao": "Financiamento IOF Inválido"
+        },
+        {
+          "code": "95",
+          "descricao": "Indexador Inválido"
+        },
+        {
+          "code": "96",
+          "descricao": "Negociação Bloqueada"
+        },
+        {
+          "code": "97",
+          "descricao": "Parcela Inválida"
+        },
+        {
+          "code": "98",
+          "descricao": "Prazo não Negociado"
+        },
+        {
+          "code": "99",
+          "descricao": "Negociação sem Movimento Transmitido"
+        },
+        {
+          "code": "100",
+          "descricao": "Taxa do Cliente Inválido"
+        },
+        {
+          "code": "101",
+          "descricao": "Tipo de Comprador Inválido"
+        },
+        {
+          "code": "102",
+          "descricao": "Tipo de Operação Inválido"
+        },
+        {
+          "code": "103",
+          "descricao": "Valor Excedeu o Valor Negociado"
+        },
+        {
+          "code": "104",
+          "descricao": "Outros"
+        },
+        {
+          "code": "105",
+          "descricao": "Vencimento Fora do Prazo de Operação"
+        },
+        {
+          "code": "106",
+          "descricao": "CEP não Cadastrado"
+        },
+        {
+          "code": "107",
+          "descricao": "Nome do Comprador Inválido"
+        },
+        {
+          "code": "108",
+          "descricao": "Endereço do Comprador Inválido"
+        },
+        {
+          "code": "109",
+          "descricao": "Cidade do Comprador Inválido"
+        },
+        {
+          "code": "110",
+          "descricao": "Estado do Comprador Inválido"
+        },
+        {
+          "code": "111",
+          "descricao": "Agência Cobradora Inválida"
+        },
+        {
+          "code": "112",
+          "descricao": "Praça Cobradora Inválida"
+        },
+        {
+          "code": "113",
+          "descricao": "Limite Excedido"
+        },
+        {
+          "code": "114",
+          "descricao": "Seu Número Inválido"
+        },
+        {
+          "code": "115",
+          "descricao": "Seqüência de Registro Inválida"
+        },
+        {
+          "code": "116",
+          "descricao": "Data de Vencimento - Título Vencido"
+        },
+        {
+          "code": "117",
+          "descricao": "Registro Entrada em Duplicidade"
+        },
+        {
+          "code": "118",
+          "descricao": "Instrução de Título Bloqueado"
+        },
+        {
+          "code": "119",
+          "descricao": "Registro sem Correspondente"
+        },
+        {
+          "code": "120",
+          "descricao": "Inválido para Vendor Eletrônico"
+        },
+        {
+          "code": "121",
+          "descricao": "Falta Header"
+        },
+        {
+          "code": "122",
+          "descricao": "Código da Ocorrência Inválido"
+        },
+        {
+          "code": "123",
+          "descricao": "Campo não Numérico"
+        },
+        {
+          "code": "124",
+          "descricao": "CNPJ zerado ou não numérico"
+        },
+        {
+          "code": "125",
+          "descricao": "Data de Gravação Inválida"
+        },
+        {
+          "code": "126",
+          "descricao": "Falta Sequência"
+        },
+        {
+          "code": "127",
+          "descricao": "ID Remessa Inválida"
+        }
+      ]
+    },
+    "V020": {
+      "codigo": "V020",
+      "nome": "Forma de Pagamento do IOF (Vendor)",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Debitado do Vendedor no ato"
+        },
+        {
+          "code": "1",
+          "descricao": "Financiado ao Comprador"
+        },
+        {
+          "code": "2",
+          "descricao": "Débito do Abatimento na Liquidação"
+        }
+      ]
+    },
+    "V021": {
+      "codigo": "V021",
+      "nome": "Tipo de Equalização",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Sem Equalização"
+        },
+        {
+          "code": "1",
+          "descricao": "No Ato"
+        },
+        {
+          "code": "2",
+          "descricao": "No Final"
+        }
+      ]
+    },
+    "V022": {
+      "codigo": "V022",
+      "nome": "Modalidade de Equalização",
+      "valores": [
+        {
+          "code": "0",
+          "descricao": "Não utilizado"
+        },
+        {
+          "code": "1",
+          "descricao": "Pré"
+        },
+        {
+          "code": "2",
+          "descricao": "Pós"
+        }
+      ]
+    },
+    "V032": {
+      "codigo": "V032",
+      "nome": "Código da Moeda do Vendedor",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "Reservado para Uso Futuro"
+        },
+        {
+          "code": "02",
+          "descricao": "Dólar Americano Comercial (Venda)"
+        },
+        {
+          "code": "03",
+          "descricao": "Dólar Americano Turismo (Venda)"
+        },
+        {
+          "code": "04",
+          "descricao": "ITRD"
+        },
+        {
+          "code": "05",
+          "descricao": "IDTR"
+        },
+        {
+          "code": "06",
+          "descricao": "UFIR Diária"
+        },
+        {
+          "code": "07",
+          "descricao": "UFIR Mensal"
+        },
+        {
+          "code": "08",
+          "descricao": "FAJ-TR"
+        },
+        {
+          "code": "09",
+          "descricao": "Real"
+        },
+        {
+          "code": "10",
+          "descricao": "TR"
+        },
+        {
+          "code": "11",
+          "descricao": "IGPM"
+        },
+        {
+          "code": "12",
+          "descricao": "CDI"
+        },
+        {
+          "code": "13",
+          "descricao": "Percentual do CDI"
+        }
+      ]
+    },
+    "V040": {
+      "codigo": "V040",
+      "nome": "Código do Desconto (Vendor)",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Valor Fixo Até a Data Informada"
+        },
+        {
+          "code": "2",
+          "descricao": "Percentual Até a Data Informada"
+        },
+        {
+          "code": "3",
+          "descricao": "Valor por Antecipação Dia Corrido"
+        },
+        {
+          "code": "4",
+          "descricao": "Valor por Antecipação Dia Útil"
+        },
+        {
+          "code": "5",
+          "descricao": "Percentual Sobre o Valor Nominal Dia Corrido"
+        },
+        {
+          "code": "6",
+          "descricao": "Percentual Sobre o Valor Nominal Dia Útil"
+        },
+        {
+          "code": "7",
+          "descricao": "Cancelamento de Desconto"
+        }
+      ]
+    },
+    "V042": {
+      "codigo": "V042",
+      "nome": "Código para Protesto (Vendor)",
+      "valores": [
+        {
+          "code": "1",
+          "descricao": "Protestar Dias Corridos"
+        },
+        {
+          "code": "2",
+          "descricao": "Protestar Dias Úteis"
+        },
+        {
+          "code": "3",
+          "descricao": "Não Protestar"
+        },
+        {
+          "code": "9",
+          "descricao": "Cancelamento Protesto Automático"
+        }
+      ]
+    },
+    "V047": {
+      "codigo": "V047",
+      "nome": "Tipo de Lançamento do Valor da Equalização",
+      "valores": [
+        {
+          "code": "D",
+          "descricao": "Débito"
+        },
+        {
+          "code": "C",
+          "descricao": "Crédito"
+        }
+      ]
+    },
+    "V051": {
+      "codigo": "V051",
+      "nome": "Espécie do Título (Vendor)",
+      "ref": "C015",
+      "note": "Usa o mesmo domínio da Espécie do Título da Cobrança (C015).",
+      "valores": [
+        {
+          "code": "01",
+          "descricao": "CH Cheque"
+        },
+        {
+          "code": "02",
+          "descricao": "DM Duplicata Mercantil"
+        },
+        {
+          "code": "03",
+          "descricao": "DMI Duplicata Mercantil p/ Indicação"
+        },
+        {
+          "code": "04",
+          "descricao": "DS Duplicata de Serviço"
+        },
+        {
+          "code": "05",
+          "descricao": "DSI Duplicata de Serviço p/ Indicação"
+        },
+        {
+          "code": "06",
+          "descricao": "DR Duplicata Rural"
+        },
+        {
+          "code": "07",
+          "descricao": "LC Letra de Câmbio"
+        },
+        {
+          "code": "08",
+          "descricao": "NCC Nota de Crédito Comercial"
+        },
+        {
+          "code": "09",
+          "descricao": "NCE Nota de Crédito a Exportação"
+        },
+        {
+          "code": "10",
+          "descricao": "NCI Nota de Crédito Industrial"
+        },
+        {
+          "code": "11",
+          "descricao": "NCR Nota de Crédito Rural"
+        },
+        {
+          "code": "12",
+          "descricao": "NP Nota Promissória"
+        },
+        {
+          "code": "13",
+          "descricao": "NPR Nota Promissória Rural"
+        },
+        {
+          "code": "14",
+          "descricao": "TM Triplicata Mercantil"
+        },
+        {
+          "code": "15",
+          "descricao": "TS Triplicata de Serviço"
+        },
+        {
+          "code": "16",
+          "descricao": "NS Nota de Seguro"
+        },
+        {
+          "code": "17",
+          "descricao": "RC Recibo"
+        },
+        {
+          "code": "18",
+          "descricao": "FAT Fatura"
+        },
+        {
+          "code": "19",
+          "descricao": "ND Nota de Débito"
+        },
+        {
+          "code": "20",
+          "descricao": "AP Apólice de Seguro"
+        },
+        {
+          "code": "21",
+          "descricao": "ME Mensalidade Escolar"
+        },
+        {
+          "code": "22",
+          "descricao": "PC Parcela de Consórcio"
+        },
+        {
+          "code": "23",
+          "descricao": "NF Nota Fiscal"
+        },
+        {
+          "code": "24",
+          "descricao": "DD Documento de Dívida"
+        },
+        {
+          "code": "25",
+          "descricao": "Cédula de Produto Rural"
+        },
+        {
+          "code": "26",
+          "descricao": "Warrant"
+        },
+        {
+          "code": "27",
+          "descricao": "Dívida Ativa de Estado"
+        },
+        {
+          "code": "28",
+          "descricao": "Dívida Ativa de Município"
+        },
+        {
+          "code": "29",
+          "descricao": "Dívida Ativa da União"
+        },
+        {
+          "code": "30",
+          "descricao": "Encargos condominiais"
+        },
+        {
+          "code": "31",
+          "descricao": "CC Cartão de Crédito"
+        },
+        {
+          "code": "32",
+          "descricao": "BDP – Boleto de Proposta"
+        },
+        {
+          "code": "99",
+          "descricao": "Outros"
+        }
+      ]
+    },
+    "A001": {
+      "codigo": "A001",
+      "nome": "Código de Ocorrência do Pagador",
+      "note": "Códigos de 4 dígitos. Alguns códigos exigem Data (03xx), Valor (05xx) ou Complemento (0409/0617) associado.",
+      "valores": [
+        {
+          "code": "0101",
+          "descricao": "Pagador alega que não recebeu a mercadoria"
+        },
+        {
+          "code": "0102",
+          "descricao": "Pagador alega que a mercadoria chegou atrasada"
+        },
+        {
+          "code": "0103",
+          "descricao": "Pagador alega que a mercadoria chegou avariada"
+        },
+        {
+          "code": "0104",
+          "descricao": "Pagador alega que a mercadoria não confere com o pedido"
+        },
+        {
+          "code": "0105",
+          "descricao": "Pagador alega que a mercadoria chegou incompleta"
+        },
+        {
+          "code": "0106",
+          "descricao": "Pagador alega que a mercadoria está à disposição do Beneficiário"
+        },
+        {
+          "code": "0107",
+          "descricao": "Pagador alega que devolveu a mercadoria"
+        },
+        {
+          "code": "0108",
+          "descricao": "Pagador alega que a mercadoria está em desacordo com a Nota Fiscal"
+        },
+        {
+          "code": "0109",
+          "descricao": "Pagador alega que nada deve ou comprou"
+        },
+        {
+          "code": "0201",
+          "descricao": "Pagador alega que não recebeu a fatura"
+        },
+        {
+          "code": "0202",
+          "descricao": "Pagador alega que o pedido de compra foi cancelado"
+        },
+        {
+          "code": "0203",
+          "descricao": "Pagador alega que a duplicata foi cancelada"
+        },
+        {
+          "code": "0204",
+          "descricao": "Pagador alega não ter recebido a mercadoria, nota fiscal, fatura"
+        },
+        {
+          "code": "0205",
+          "descricao": "Pagador alega que a duplicata/fatura está incorreta"
+        },
+        {
+          "code": "0206",
+          "descricao": "Pagador alega que o valor está incorreto"
+        },
+        {
+          "code": "0207",
+          "descricao": "Pagador alega que o faturamento é indevido"
+        },
+        {
+          "code": "0208",
+          "descricao": "Pagador alega que não localizou o pedido de compra"
+        },
+        {
+          "code": "0301",
+          "descricao": "Pagador alega que o vencimento correto é (Data)"
+        },
+        {
+          "code": "0302",
+          "descricao": "Pagador solicita a prorrogação do vencimento para (Data)"
+        },
+        {
+          "code": "0303",
+          "descricao": "Pagador aceita se o vencimento prorrogado para (Data)"
+        },
+        {
+          "code": "0304",
+          "descricao": "Pagador alega que pagará o título em (Data)"
+        },
+        {
+          "code": "0305",
+          "descricao": "Pagador pagou o título diretamente ao Beneficiário em (Data)"
+        },
+        {
+          "code": "0306",
+          "descricao": "Pagador pagará o título diretamente ao Beneficiário em (Data)"
+        },
+        {
+          "code": "0401",
+          "descricao": "Pagador não foi localizado, confirmar endereço"
+        },
+        {
+          "code": "0402",
+          "descricao": "Pagador mudou-se, transferiu de domicílio"
+        },
+        {
+          "code": "0403",
+          "descricao": "Pagador não recebe no endereço indicado"
+        },
+        {
+          "code": "0404",
+          "descricao": "Pagador desconhecido no local"
+        },
+        {
+          "code": "0405",
+          "descricao": "Pagador reside fora do perímetro"
+        },
+        {
+          "code": "0406",
+          "descricao": "Pagador com endereço incompleto"
+        },
+        {
+          "code": "0407",
+          "descricao": "Não foi localizado o número constante no endereço do título"
+        },
+        {
+          "code": "0408",
+          "descricao": "Endereço não localizado/não consta nos guias da cidade"
+        },
+        {
+          "code": "0409",
+          "descricao": "Endereço do Pagador alterado para (novo endereço)"
+        },
+        {
+          "code": "0501",
+          "descricao": "Pagador alega que tem desconto ou abatimento de (Valor)"
+        },
+        {
+          "code": "0502",
+          "descricao": "Pagador solicita desconto ou abatimento de (Valor)"
+        },
+        {
+          "code": "0503",
+          "descricao": "Pagador solicita dispensa dos juros de mora"
+        },
+        {
+          "code": "0504",
+          "descricao": "Pagador se recusa a pagar juros"
+        },
+        {
+          "code": "0505",
+          "descricao": "Pagador se recusa a pagar comissão de permanência"
+        },
+        {
+          "code": "0601",
+          "descricao": "Pagador está em regime de concordata"
+        },
+        {
+          "code": "0602",
+          "descricao": "Pagador está em regime de falência"
+        },
+        {
+          "code": "0603",
+          "descricao": "Pagador alega que mantém entendimentos com Pagador"
+        },
+        {
+          "code": "0604",
+          "descricao": "Pagador está em entendimentos com o Beneficiário"
+        },
+        {
+          "code": "0605",
+          "descricao": "Pagador está viajando"
+        },
+        {
+          "code": "0606",
+          "descricao": "Pagador recusou-se a aceitar o título"
+        },
+        {
+          "code": "0607",
+          "descricao": "Pagador sustou protesto judicialmente"
+        },
+        {
+          "code": "0608",
+          "descricao": "Empregado recusou-se a receber título"
+        },
+        {
+          "code": "0609",
+          "descricao": "Título reapresentado ao Pagador"
+        },
+        {
+          "code": "0610",
+          "descricao": "Estamos nos dirigindo ao nosso correspondente"
+        },
+        {
+          "code": "0611",
+          "descricao": "Correspondente não se interessa pelo protesto"
+        },
+        {
+          "code": "0612",
+          "descricao": "Pagador não atende aos avisos de nossos correspondentes"
+        },
+        {
+          "code": "0613",
+          "descricao": "Título está sendo encaminhado ao correspondente"
+        },
+        {
+          "code": "0614",
+          "descricao": "Entrega franco de pagamento ao Pagador"
+        },
+        {
+          "code": "0615",
+          "descricao": "Entrega franco de pagamento ao representante"
+        },
+        {
+          "code": "0616",
+          "descricao": "A entrega franco de pagamento é difícil"
+        },
+        {
+          "code": "0617",
+          "descricao": "Título recusado pelo cartório"
+        }
+      ]
+    },
+    "B002": {
+      "codigo": "B002",
+      "nome": "Somatória dos Valores",
+      "tipo": "formato",
+      "valores": []
+    },
+    "B003": {
+      "codigo": "B003",
+      "nome": "Somatória de Quantidade de Moedas",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G002": {
+      "codigo": "G002",
+      "nome": "Lote de Serviço",
+      "tipo": "formato",
+      "valores": [],
+      "note": "'0000' no Header de Arquivo, '9999' no Trailer de Arquivo, '0001'+ nos lotes."
+    },
+    "G004": {
+      "codigo": "G004",
+      "nome": "Uso Exclusivo FEBRABAN / CNAB",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Preencher com brancos."
+    },
+    "G006": {
+      "codigo": "G006",
+      "nome": "Número de Inscrição da Empresa",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G007": {
+      "codigo": "G007",
+      "nome": "Código do Convênio no Banco",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G008": {
+      "codigo": "G008",
+      "nome": "Agência Mantenedora da Conta",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G009": {
+      "codigo": "G009",
+      "nome": "Dígito Verificador da Agência",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G010": {
+      "codigo": "G010",
+      "nome": "Número da Conta Corrente",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G011": {
+      "codigo": "G011",
+      "nome": "Dígito Verificador da Conta",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G012": {
+      "codigo": "G012",
+      "nome": "Dígito Verificador da Agência / Conta Corrente",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G013": {
+      "codigo": "G013",
+      "nome": "Nome",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G014": {
+      "codigo": "G014",
+      "nome": "Nome do Banco",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G016": {
+      "codigo": "G016",
+      "nome": "Data de Geração do Arquivo",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato DDMMAAAA."
+    },
+    "G017": {
+      "codigo": "G017",
+      "nome": "Hora de Geração do Arquivo",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato HHMMSS."
+    },
+    "G018": {
+      "codigo": "G018",
+      "nome": "Número Seqüencial do Arquivo",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G019": {
+      "codigo": "G019",
+      "nome": "Número da Versão do Layout do Arquivo",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Versão (2 díg) + Release (1 díg)."
+    },
+    "G021": {
+      "codigo": "G021",
+      "nome": "Para Uso Reservado do Banco",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G022": {
+      "codigo": "G022",
+      "nome": "Para Uso Reservado da Empresa",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G030": {
+      "codigo": "G030",
+      "nome": "Número da Versão do Layout do Lote",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Versão (2 díg) + Release (1 díg)."
+    },
+    "G031": {
+      "codigo": "G031",
+      "nome": "Mensagem 1 / 2",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G032": {
+      "codigo": "G032",
+      "nome": "Endereço",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G033": {
+      "codigo": "G033",
+      "nome": "Cidade",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G034": {
+      "codigo": "G034",
+      "nome": "CEP",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G035": {
+      "codigo": "G035",
+      "nome": "Sufixo do CEP",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G036": {
+      "codigo": "G036",
+      "nome": "Estado / Unidade da Federação",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G037": {
+      "codigo": "G037",
+      "nome": "Quantidade de Contas para Conciliação (Lotes)",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G038": {
+      "codigo": "G038",
+      "nome": "Número Seqüencial do Registro no Lote",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G039": {
+      "codigo": "G039",
+      "nome": "Código de Segmento do Registro Detalhe",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G041": {
+      "codigo": "G041",
+      "nome": "Quantidade da Moeda",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G042": {
+      "codigo": "G042",
+      "nome": "Valor do Documento (Nominal)",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato numérico, moeda corrente."
+    },
+    "G043": {
+      "codigo": "G043",
+      "nome": "Número do Documento Atribuído pelo Banco (Nosso Número)",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G044": {
+      "codigo": "G044",
+      "nome": "Data de Vencimento Nominal",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato DDMMAAAA."
+    },
+    "G047": {
+      "codigo": "G047",
+      "nome": "Valor da Mora",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G048": {
+      "codigo": "G048",
+      "nome": "Valor da Multa",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G049": {
+      "codigo": "G049",
+      "nome": "Quantidade de Lotes do Arquivo",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G050": {
+      "codigo": "G050",
+      "nome": "Valor do Imposto de Renda",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G051": {
+      "codigo": "G051",
+      "nome": "Valor do Imposto sobre Serviços",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G052": {
+      "codigo": "G052",
+      "nome": "Valor do Imposto sobre Operações Financeiras",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G053": {
+      "codigo": "G053",
+      "nome": "Valor de Outras Deduções",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G054": {
+      "codigo": "G054",
+      "nome": "Valor de Outros Acréscimos",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G055": {
+      "codigo": "G055",
+      "nome": "Valor de INSS",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G056": {
+      "codigo": "G056",
+      "nome": "Quantidade de Registros do Arquivo",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G057": {
+      "codigo": "G057",
+      "nome": "Quantidade de Registros do Lote",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G058": {
+      "codigo": "G058",
+      "nome": "Somatória de Quantidade de Moedas",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G063": {
+      "codigo": "G063",
+      "nome": "Código de Barras",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G064": {
+      "codigo": "G064",
+      "nome": "Número do Documento Atribuído pela Empresa (Seu Número)",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G066": {
+      "codigo": "G066",
+      "nome": "Número do Aviso de Débito",
+      "tipo": "formato",
+      "valores": []
+    },
+    "G101": {
+      "codigo": "G101",
+      "nome": "Informação 10",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Campo composto; conteúdo depende da Forma de Lançamento (ver Informações 10/11/12 no manual)."
+    },
+    "G102": {
+      "codigo": "G102",
+      "nome": "Chave de Pagamento",
+      "tipo": "formato",
+      "valores": [],
+      "note": "URL (QR dinâmico) ou chave de endereçamento (QR estático); TXID opcional (30 pos)."
+    },
+    "L001": {
+      "codigo": "L001",
+      "nome": "Somatória dos Valores",
+      "tipo": "formato",
+      "valores": []
+    },
+    "L002": {
+      "codigo": "L002",
+      "nome": "Valor do Desconto + Abatimento",
+      "tipo": "formato",
+      "valores": []
+    },
+    "L003": {
+      "codigo": "L003",
+      "nome": "Valor da Mora + Multa",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N001": {
+      "codigo": "N001",
+      "nome": "Código de Barras",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N002": {
+      "codigo": "N002",
+      "nome": "Código da Receita do Tributo",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Código único '6106' para SIMPLES em DARF."
+    },
+    "N004": {
+      "codigo": "N004",
+      "nome": "Identificação do Contribuinte",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N006": {
+      "codigo": "N006",
+      "nome": "Período de Referência / Competência",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato MMAAAA."
+    },
+    "N007": {
+      "codigo": "N007",
+      "nome": "Valor da Atualização Monetária",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N008": {
+      "codigo": "N008",
+      "nome": "Período de Apuração",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato DDMMAAAA."
+    },
+    "N009": {
+      "codigo": "N009",
+      "nome": "Número de Referência",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N010": {
+      "codigo": "N010",
+      "nome": "Valor da Receita Bruta Acumulada",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N011": {
+      "codigo": "N011",
+      "nome": "Percentual sobre a Receita Bruta Acumulada",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N012": {
+      "codigo": "N012",
+      "nome": "Inscrição Estadual / Código do Município / Número Declaração",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N013": {
+      "codigo": "N013",
+      "nome": "Dívida Ativa / Número da Etiqueta",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N014": {
+      "codigo": "N014",
+      "nome": "Número da Parcela / Notificação",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N015": {
+      "codigo": "N015",
+      "nome": "Exercício",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato AAAA."
+    },
+    "N016": {
+      "codigo": "N016",
+      "nome": "Renavam",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N017": {
+      "codigo": "N017",
+      "nome": "Município",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N018": {
+      "codigo": "N018",
+      "nome": "Placa do Veículo",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato LLLNNNN."
+    },
+    "N021": {
+      "codigo": "N021",
+      "nome": "Identificador (Fundo de Garantia)",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N022": {
+      "codigo": "N022",
+      "nome": "Origem (Número do Documento Origem)",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N023": {
+      "codigo": "N023",
+      "nome": "Número Sequencial do Registro Complementar",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N025": {
+      "codigo": "N025",
+      "nome": "Informação Complementar 1 e 2",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N026": {
+      "codigo": "N026",
+      "nome": "Informação Complementar de Tributo",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N028": {
+      "codigo": "N028",
+      "nome": "Lacre do Conectividade Social",
+      "tipo": "formato",
+      "valores": []
+    },
+    "N029": {
+      "codigo": "N029",
+      "nome": "Dígito do Lacre do Conectividade Social",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P002": {
+      "codigo": "P002",
+      "nome": "Código do Banco do Favorecido",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P003": {
+      "codigo": "P003",
+      "nome": "Data Real da Efetivação do Lançamento",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato DDMMAAAA."
+    },
+    "P004": {
+      "codigo": "P004",
+      "nome": "Valor Real da Efetivação do Pagamento",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P007": {
+      "codigo": "P007",
+      "nome": "Somatória dos Valores",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P008": {
+      "codigo": "P008",
+      "nome": "Código / Documento do Favorecido",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P009": {
+      "codigo": "P009",
+      "nome": "Data do Pagamento",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Formato DDMMAAAA."
+    },
+    "P010": {
+      "codigo": "P010",
+      "nome": "Valor do Pagamento",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P011": {
+      "codigo": "P011",
+      "nome": "Código de Finalidade da TED",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Códigos de finalidade cliente definidos pelo BCB (Dicionário de Domínios do SPB) - lista externa.",
+      "external": true
+    },
+    "P012": {
+      "codigo": "P012",
+      "nome": "Código da UG Centralizadora",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P013": {
+      "codigo": "P013",
+      "nome": "Código Finalidade Complementar",
+      "tipo": "formato",
+      "valores": []
+    },
+    "P015": {
+      "codigo": "P015",
+      "nome": "Código ISPB da Instituição Financeira",
+      "tipo": "formato",
+      "valores": [],
+      "note": "Códigos ISPB definidos pelo BCB - lista externa.",
+      "external": true
+    },
+    "P016": {
+      "codigo": "P016",
+      "nome": "Número Conta Pagamento Creditada",
+      "tipo": "formato",
+      "valores": []
+    },
+    "Z001": {
+      "codigo": "Z001",
+      "nome": "Autenticação para atender a legislação",
+      "tipo": "formato",
+      "valores": []
+    },
+    "Z002": {
+      "codigo": "Z002",
+      "nome": "Autenticação Bancária / Protocolo",
+      "tipo": "formato",
+      "valores": []
+    }
+  }
+}
