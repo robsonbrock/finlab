@@ -66,7 +66,7 @@
     #tp-e:checked+label{ background:#633806; color:#FAC775; }
 
     /* LEFT */
-    #lp{ display:flex; flex-direction:column; width:50%; border-right:3px solid var(--border); min-width:0; }
+    #lp{ display:flex; flex-direction:column; width:70%; border-right:3px solid var(--border); min-width:0; }
     #viewer{ flex:1; overflow-y:auto; overflow-x:auto; background:var(--bg);
       font-family:'Cascadia Code','Fira Code','Consolas',monospace; font-size:12px; }
     .ph{ display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -1558,8 +1558,19 @@ document.addEventListener('mousemove',e=>{
   document.getElementById('rp').style.flex='1';
 });
 document.addEventListener('mouseup',()=>{
+  if(!dragging) return;
   dragging=false;document.body.style.cursor='';document.body.style.userSelect='';
+  const appW=document.getElementById('app').getBoundingClientRect().width;
+  const pct=leftEl.getBoundingClientRect().width/appW*100;
+  try{localStorage.setItem('cnab-split',pct.toFixed(2));}catch(e){}
 });
+(function initSplit(){
+  const saved=parseFloat(localStorage.getItem('cnab-split'));
+  if(!isNaN(saved)&&saved>=10&&saved<=90){
+    leftEl.style.width=saved+'%';leftEl.style.flex='none';
+    document.getElementById('rp').style.flex='1';
+  }
+})();
 
 // ════════════════════════════════════════════════════════════════
 //  THEME TOGGLE
