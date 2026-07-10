@@ -616,6 +616,34 @@ function detectRemRet(ls, detectedFmt){
   return null;
 }
 
+// Aplica o resultado da detecção REM/RET (campo 143 do Header de Arquivo) na UI,
+// travando o toggle quando o tipo é conhecido. Reaproveitada tanto na carga do
+// arquivo quanto após editar uma linha que seja o Header de Arquivo.
+function updateRemRetToggle(det, opts={}){
+  const {forceType=null, source='import'}=opts;
+  const tpRg=document.getElementById('tp-rg');
+  const tpR=document.getElementById('tp-r'), tpE=document.getElementById('tp-e');
+  if(det){
+    if(det==='ret'){
+      tpE.checked=true;
+      tpR.checked=false;
+    } else {
+      tpR.checked=true;
+      tpE.checked=false;
+    }
+    tpR.disabled=true; tpE.disabled=true;
+    tpRg.classList.add('locked');
+    tpRg.title=forceType
+      ?`Tipo detectado pela extensão do arquivo: ${det.toUpperCase()}`
+      :source==='edit'
+        ?`Tipo atualizado a partir do campo 143 (Código Remessa/Retorno) do Header de Arquivo: ${det.toUpperCase()}`
+        :`Tipo detectado automaticamente: ${det.toUpperCase()} — importe outro arquivo para alterar`;
+  } else {
+    tpR.disabled=false; tpE.disabled=false;
+    tpRg.classList.remove('locked'); tpRg.title='';
+  }
+}
+
 // ════════════════════════════════════════════════════════════════
 //  VALIDAÇÃO DE CAMPOS
 // ════════════════════════════════════════════════════════════════
@@ -711,26 +739,7 @@ function loadContent(text, forceType=null, fileName=''){
   document.getElementById('fileName').title=fileName;
 
   // ── Auto-detect REM/RET e travar o toggle ─────────────────────
-  const tpRg=document.getElementById('tp-rg');
-  const tpR=document.getElementById('tp-r'), tpE=document.getElementById('tp-e');
-
-  let det=forceType||detectRemRet(lines,fmt);
-
-  if(det){
-    if(det==='ret'){
-      tpE.checked=true;
-      tpR.checked=false;
-    } else {
-      tpR.checked=true;
-      tpE.checked=false;
-    }
-    tpR.disabled=true; tpE.disabled=true;
-    tpRg.classList.add('locked');
-    tpRg.title=forceType?`Tipo detectado pela extensão do arquivo: ${det.toUpperCase()}`:`Tipo detectado automaticamente: ${det.toUpperCase()} — importe outro arquivo para alterar`;
-  } else {
-    tpR.disabled=false; tpE.disabled=false;
-    tpRg.classList.remove('locked'); tpRg.title='';
-  }
+  updateRemRetToggle(forceType||detectRemRet(lines,fmt), {forceType});
 
   // ── Validação prévia de todos os campos ───────────────────────
   lines.forEach((_,i)=>validateAllFields(i));
@@ -827,12 +836,17 @@ function selectLine(idx){
   document.getElementById('einfo').textContent=`Linha ${idx+1} · ${line.length} chars`;
 
   if(!def){
-    document.getElementById('editor').innerHTML=`<div class="eph">
+    document.getElementById('editor').innerHTML=`<div class="eph" style="height:auto;padding:14px 4px 10px">
       <span style="font-size:28px;opacity:.2">❓</span>
       <p>Segmento não reconhecido: ${esc(key||'—')}</p>
-      <p style="font-size:11px;color:var(--muted)">Verifique o formato do arquivo (${fmt||'?'})</p>
-    </div>`;
-    document.getElementById('bup').disabled=true;
+      <p style="font-size:11px;color:var(--muted)">O caractere de tipo de registro (posição 8) ou o tamanho da linha não batem com nenhum layout conhecido (${fmt||'?'}). Edite o texto bruto abaixo com cuidado: aqui não há validação campo a campo.</p>
+    </div>
+    <textarea id="raw-line" rows="5" spellcheck="false" autocomplete="off"
+      style="width:100%;box-sizing:border-box;font-family:'Cascadia Code','Fira Code','Consolas',monospace;font-size:12px;line-height:1.5;background:var(--field);color:var(--lt-color);border:1px solid var(--border);border-radius:5px;padding:6px 8px;resize:vertical;white-space:pre;overflow-x:auto"
+      oninput="onRawInput(this)">${esc(line)}</textarea>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px" id="raw-count">${line.length} chars</div>`;
+    document.getElementById('bup').disabled=false;
+    clearGuidance();
     return;
   }
 
@@ -907,6 +921,14 @@ function highlightFieldInViewer(fi){
     +esc(line.substring(e));
 }
 
+// Contador de caracteres do editor de texto bruto (linha com segmento não
+// reconhecido). Não há validação de campo aqui, só o tamanho total.
+function onRawInput(ta){
+  const cnt=document.getElementById('raw-count');
+  if(cnt) cnt.textContent=`${ta.value.length} chars`;
+  document.getElementById('umsg').textContent='⚠ Alterações não aplicadas';
+}
+
 function onFocus(fi){
   document.querySelectorAll('.fr').forEach(el=>el.classList.toggle('focused',+el.dataset.fi===fi));
   const def=segDef(curSeg);
@@ -947,34 +969,50 @@ function onInput(fi,inp){
 //  APPLY LINE
 // ════════════════════════════════════════════════════════════════
 function applyLine(){
-  if(selIdx<0||!curSeg) return;
-  const def=segDef(curSeg); if(!def) return;
-  const lineLen=240;
-  let arr=lines[selIdx].split('');
-  while(arr.length<lineLen) arr.push(' ');
-  def.fields.forEach((f,fi)=>{
-    const inp=document.getElementById(`fi-${fi}`); if(!inp) return;
-    const start=f.p[0]-1, sz=f.p[1]-f.p[0]+1;
-    let val=inp.value;
-    val=f.t==='N'?val.padStart(sz,'0').slice(0,sz):val.padEnd(sz,' ').slice(0,sz);
-    for(let i=0;i<sz;i++) arr[start+i]=val[i]??' ';
-  });
+  if(selIdx<0) return;
+  const def=segDef(curSeg);
 
-  // Tratar campo de excedentes
-  const excessInp=document.getElementById('fi-__excess__');
-  if(excessInp){
-    const newExcess=excessInp.value;
-    // Se o campo está vazio, cortamos a linha em 240
-    // Se tem conteúdo, concatenamos (preserva o que o usuário digitou)
-    lines[selIdx]=(arr.join('').slice(0,lineLen)+newExcess).slice(0,lineLen+newExcess.length);
+  if(!def){
+    // Segmento não reconhecido: sem parsing de campos, aplica o texto bruto
+    // como o usuário digitou (sem padding/corte automático — risco assumido).
+    const raw=document.getElementById('raw-line');
+    if(!raw) return;
+    lines[selIdx]=raw.value;
   } else {
-    lines[selIdx]=arr.join('').slice(0,lineLen);
+    const lineLen=240;
+    let arr=lines[selIdx].split('');
+    while(arr.length<lineLen) arr.push(' ');
+    def.fields.forEach((f,fi)=>{
+      const inp=document.getElementById(`fi-${fi}`); if(!inp) return;
+      const start=f.p[0]-1, sz=f.p[1]-f.p[0]+1;
+      let val=inp.value;
+      val=f.t==='N'?val.padStart(sz,'0').slice(0,sz):val.padEnd(sz,' ').slice(0,sz);
+      for(let i=0;i<sz;i++) arr[start+i]=val[i]??' ';
+    });
+
+    // Tratar campo de excedentes
+    const excessInp=document.getElementById('fi-__excess__');
+    if(excessInp){
+      const newExcess=excessInp.value;
+      // Se o campo está vazio, cortamos a linha em 240
+      // Se tem conteúdo, concatenamos (preserva o que o usuário digitou)
+      lines[selIdx]=(arr.join('').slice(0,lineLen)+newExcess).slice(0,lineLen+newExcess.length);
+    } else {
+      lines[selIdx]=arr.join('').slice(0,lineLen);
+    }
   }
 
   modified.add(selIdx);
   // Reidentificar segmentos (edições podem alterar serviço/código) e revalidar tudo
   lineSeg=computeLineSeg(lines);
   lines.forEach((_,i)=>validateAllFields(i));
+
+  // Se a linha editada é (ou virou) o Header de Arquivo, reavaliar o campo 143
+  // (Código Remessa/Retorno) e atualizar o toggle REM/RET de acordo.
+  if(lineSeg[selIdx]==='header_arquivo'){
+    updateRemRetToggle(detectRemRet(lines,fmt), {source:'edit'});
+  }
+
   renderViewer();
   document.querySelector(`.line[data-i="${selIdx}"]`)?.classList.add('sel');
   document.querySelector(`.line[data-i="${selIdx}"]`)?.scrollIntoView({block:'nearest'});
@@ -1734,10 +1772,13 @@ function onOverlayClick(e){
   if(e.target===document.getElementById('paste-overlay')) closePasteModal();
 }
 function loadFromPaste(){
-  const ta=document.getElementById('paste-ta'); const text=(ta?ta.value:'').trim();
+  const ta=document.getElementById('paste-ta'); const raw=ta?ta.value:'';
   const msg=document.getElementById('paste-msg');
-  if(!text){ if(msg){msg.style.color='var(--danger)'; msg.textContent='\u26a0 Nenhum conte\u00fado para carregar.';} return; }
-  loadContent(text);
+  // Checagem de "vazio" usa trim s\u00f3 pra decidir se h\u00e1 conte\u00fado \u2014 o texto
+  // carregado \u00e9 o original (sem trim), sen\u00e3o os espa\u00e7os finais da \u00faltima
+  // linha (estruturais em CNAB) seriam cortados junto com o trim.
+  if(!raw.trim()){ if(msg){msg.style.color='var(--danger)'; msg.textContent='\u26a0 Nenhum conte\u00fado para carregar.';} return; }
+  loadContent(raw);
   if(ta) ta.value='';
   closePasteModal();
 }
