@@ -149,6 +149,9 @@
     .fi.invalid{ border-color:var(--danger) !important; }
     .err-dot{ color:var(--danger); font-size:13px; flex-shrink:0; display:none; line-height:1; }
     .line.err .err-dot{ display:block; }
+    .del-line{ color:var(--muted); font-size:12px; flex-shrink:0; cursor:pointer; padding:0 4px; visibility:hidden; }
+    .line:hover .del-line{ visibility:visible; }
+    .del-line:hover{ color:var(--danger); }
     /* field highlight in viewer */
     .lt mark.fhl{ background:rgba(245,158,11,.35); color:#fff; border-radius:2px; padding:0 1px; }
     /* locked toggle */
@@ -230,6 +233,7 @@
         <small style="opacity:.6">Arraste um .rem / .ret ou use o botão Importar</small>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center">
           <button class="btn btn-d" onclick="loadSample240()">▶ Exemplo CNAB 240 (Receber)</button>
+          <button class="btn btn-d" onclick="openMassaModal()">🧪 Gerar massa de teste</button>
         </div>
       </div>
     </div>
@@ -317,6 +321,38 @@
           <button class="btn btn-d" id="nn-copy" onclick="copyNossoNumero()" title="Copiar" style="padding:3px 8px; font-size:11px">📋 Copiar</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MASSA DE TESTE MODAL ══ -->
+<div id="massa-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100; display:none; align-items:center; justify-content:center;" onclick="onMassaOverlayClick(event)">
+  <div id="massa-box" style="background:var(--panel); border:1px solid var(--border); border-radius:8px;
+    width:min(360px,95vw); display:flex; flex-direction:column; overflow:hidden;">
+    <div class="tb" style="border-bottom:1px solid var(--border)">
+      <span class="lbl">🧪 Gerar massa de teste</span>
+      <div class="sp"></div>
+      <button class="btn btn-d" style="padding:2px 8px;font-size:13px" onclick="closeMassaModal()">✕</button>
+    </div>
+    <div style="padding:12px; display:flex; flex-direction:column; gap:8px">
+      <label style="font-size:10px; color:var(--muted)">Produtos a incluir num único arquivo REMESSA (valores sorteados a cada geração):</label>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer">
+        <input type="checkbox" id="massa-chk-tributos"> Tributos (Segmento O, código de barras)
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer">
+        <input type="checkbox" id="massa-chk-cobranca"> Cobrança (Segmento J + J-52, título de outros bancos)
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer">
+        <input type="checkbox" id="massa-chk-ted"> TED (Segmento A + B)
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer">
+        <input type="checkbox" id="massa-chk-pix"> Pix (Segmento A + B, chave/dados bancários)
+      </label>
+      <div id="massa-error" style="font-size:10px; color:var(--danger); display:none">Marque ao menos um produto.</div>
+    </div>
+    <div class="tb" style="border-top:1px solid var(--border); gap:8px">
+      <button class="btn btn-ok" onclick="onGerarMassaClick()">▶ Gerar</button>
+      <button class="btn btn-d" onclick="closeMassaModal()">Cancelar</button>
     </div>
   </div>
 </div>
@@ -608,6 +644,86 @@ function segCls(line){
 }
 
 // ════════════════════════════════════════════════════════════════
+//  RECÁLCULO DE TRAILERS (quantidade de registros / somatória de valores)
+// ════════════════════════════════════════════════════════════════
+const _valorFieldCache={};
+// Acha, no def do segmento, o campo numérico que representa "o valor" da linha
+// (heurística por nome, cobre Segmento A/O/J/N já usados neste app).
+function valorFieldFor(key){
+  if(!key) return null;
+  if(_valorFieldCache[key]!==undefined) return _valorFieldCache[key];
+  const def=segDef(key);
+  let result=null;
+  if(def&&def.fields){
+    const prioridades=[/valor.*pagamento/i,/valor.*lan[cç]amento/i,/valor.*nominal/i,/valor.*t[ií]tulo/i,/valor.*documento/i,/valor real/i];
+    for(const rx of prioridades){
+      const f=def.fields.find(fld=>fld.t==='N'&&(rx.test(fld.n||'')||rx.test(fld.d||'')));
+      if(f){ result=f.p; break; }
+    }
+  }
+  _valorFieldCache[key]=result;
+  return result;
+}
+function _trWriteField(line,posIni,posFim,tipo,value){
+  const len=posFim-posIni+1;
+  let s=String(value===undefined||value===null?'':value);
+  if(tipo==='N'){
+    s=s.replace(/[^0-9]/g,'');
+    if(s.length>len) s=s.slice(s.length-len);
+    while(s.length<len) s='0'+s;
+  } else {
+    if(s.length>len) s=s.slice(0,len);
+    while(s.length<len) s=s+' ';
+  }
+  return line.slice(0,posIni-1)+s+line.slice(posFim);
+}
+// Recalcula "Quantidade de Registros do Lote" + "Somatória dos Valores" em cada
+// trailer de lote, e "Quantidade de Lotes"/"Quantidade de Registros" no trailer
+// de arquivo. Limitação conhecida: o lote de Cobrança carteira própria (P/Q/R,
+// Tipo de Serviço=01, gerado pelo botão de Exemplo) tem um layout de trailer
+// diferente (Quantidade de Títulos / Valor dos Títulos em vez de Somatória
+// genérica) — a contagem de registros é recalculada normalmente, mas a soma de
+// valores desse lote específico não é tocada pra não escrever no campo errado.
+function recalcTrailers(){
+  const porLote={}, lotesVistos=new Set();
+  lines.forEach((l,i)=>{
+    if(!l||l.length<8) return;
+    const tipoReg=l[7], lote=l.slice(3,7);
+    if(tipoReg==='1'){
+      porLote[lote]={count:1,soma:0,tipoServico:l.slice(9,11)};
+      lotesVistos.add(lote);
+    } else if(tipoReg==='3'){
+      if(porLote[lote]){
+        porLote[lote].count++;
+        if(porLote[lote].tipoServico!=='01'){
+          const vp=valorFieldFor(segKey(i));
+          if(vp){
+            const raw=l.slice(vp[0]-1,vp[1]).replace(/[^0-9]/g,'');
+            if(raw) porLote[lote].soma+=parseInt(raw,10);
+          }
+        }
+      }
+    } else if(tipoReg==='5'){
+      if(porLote[lote]) porLote[lote].count++;
+    }
+  });
+  lines.forEach((l,i)=>{
+    if(!l||l.length<8) return;
+    const tipoReg=l[7], lote=l.slice(3,7);
+    if(tipoReg==='5'&&porLote[lote]){
+      const info=porLote[lote];
+      let nl=_trWriteField(l,18,23,'N',String(info.count));
+      if(info.tipoServico!=='01') nl=_trWriteField(nl,24,41,'N',String(info.soma));
+      lines[i]=nl;
+    } else if(tipoReg==='9'){
+      let nl2=_trWriteField(l,18,23,'N',String(lotesVistos.size));
+      nl2=_trWriteField(nl2,24,29,'N',String(lines.length));
+      lines[i]=nl2;
+    }
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
 //  DETECÇÃO REM / RET
 // ════════════════════════════════════════════════════════════════
 function detectRemRet(ls, detectedFmt){
@@ -775,6 +891,7 @@ function renderViewer(){
       <small style="opacity:.6">Arraste um .rem/.ret ou use o botão Importar</small>
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center">
         <button class="btn btn-d" onclick="loadSample240()">▶ Exemplo CNAB 240 (Receber)</button>
+        <button class="btn btn-d" onclick="openMassaModal()">🧪 Gerar massa de teste</button>
       </div></div>`;
     return;
   }
@@ -800,6 +917,7 @@ function renderViewer(){
       <span class="lt">${esc(l)}</span>
       <span class="dot" title="Linha modificada"></span>
       <span class="err-dot" title="${esc(errTitle)}">⚠</span>
+      <span class="del-line" title="Excluir linha" onclick="event.stopPropagation();deleteLine(${i})">✕</span>
     </div>`;
   });
   v.innerHTML=html;
@@ -817,6 +935,22 @@ function updateStats(){
 // ════════════════════════════════════════════════════════════════
 //  SELECT LINE
 // ════════════════════════════════════════════════════════════════
+function deleteLine(idx){
+  if(!lines[idx]) return;
+  if(!confirm(`Excluir a linha ${idx+1}?`)) return;
+  lines.splice(idx,1);
+  lineSeg=computeLineSeg(lines);
+  recalcTrailers();
+  modified=new Set(Array.from(modified).filter(i=>i!==idx).map(i=>i>idx?i-1:i));
+  invalidLines=new Set(); lineFieldErrors={};
+  for(let i=0;i<lines.length;i++) validateAllFields(i);
+  if(selIdx===idx){ selIdx=-1; }
+  else if(selIdx>idx){ selIdx--; }
+  renderViewer(); updateStats();
+  if(selIdx===-1) resetEditor();
+  else selectLine(selIdx);
+}
+
 function selectLine(idx){
   // Limpar highlight de campo na linha anterior
   if(selIdx>=0&&selIdx!==idx){
@@ -1029,6 +1163,33 @@ function applyLine(){
 // ════════════════════════════════════════════════════════════════
 //  GUIDANCE
 // ════════════════════════════════════════════════════════════════
+const SEG_LETRAS={
+  'A':'Dados bancários do pagamento (crédito em conta, TED, DOC, Pix, cheque)',
+  'B':'Dados complementares do favorecido (endereço, boleto, chave Pix)',
+  'C':'Dados complementares opcionais (retenção de tributos: IR, ISS, IOF, INSS)',
+  'D':'Informações adicionais (e-Social, aviso, consórcio)',
+  'E':'Dados adicionais de operações de câmbio',
+  'F':'Histórico e observações complementares',
+  'H':'Consignação (empréstimo/parcelas)',
+  'I':'Compror',
+  'J':'Cobrança/pagamento de título com código de barras (inclui variante J-52)',
+  'K':'Vendor',
+  'L':'Vendor',
+  'M':'Vendor',
+  'N':'Pagamento de tributos com concessionária (GPS, DARF, GARE-SP, IPVA, DPVAT, licenciamento, DARJ)',
+  'O':'Pagamento de tributos/concessionárias com código de barras',
+  'P':'Dados do título de cobrança (carteira própria)',
+  'Q':'Dados do sacado/cedente do título de cobrança',
+  'R':'Descontos, abatimentos, multa e mensagens do título de cobrança',
+  'S':'Informações de impressão do boleto/carnê de cobrança',
+  'T':'Dados do título de cobrança (variante)',
+  'U':'Valores e mensagens do título de cobrança (variante)',
+  'V':'Mensagens do sacador/avalista',
+  'W':'Informação complementar de tributos (ex.: FGTS)',
+  'Y':'Registro opcional diverso (câmara centralizadora, inscrição, aviso)',
+  'Z':'Autenticação e protocolo do pagamento (comum no retorno de vários produtos)'
+};
+
 function showGuidance(f){
   const sz=f.p[1]-f.p[0]+1;
   document.getElementById('gbadge').textContent=
@@ -1050,6 +1211,13 @@ function showGuidance(f){
       html+=`<div class="gvr"><span class="gc">${esc(c)}</span><span class="gvd">${esc(d)}</span></div>`;
     });
     html+=`<p style="font-size:11px;color:var(--muted);margin-top:6px">… e mais ${Object.keys(OC).length-20} códigos disponíveis.</p>`;
+  }
+  // letras de segmento para o campo "Código de Segmento no/do Registro Detalhe"
+  if(f.n.toLowerCase().includes('código de segmento')){
+    html+=`<div class="gvt" style="margin-top:8px">Letras de segmento (registro de detalhe):</div>`;
+    Object.entries(SEG_LETRAS).forEach(([c,d])=>{
+      html+=`<div class="gvr"><span class="gc">${esc(c)}</span><span class="gvd">${esc(d)}</span></div>`;
+    });
   }
   document.getElementById('gb').innerHTML=html;
 }
@@ -1781,6 +1949,277 @@ function loadFromPaste(){
   loadContent(raw);
   if(ta) ta.value='';
   closePasteModal();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MASSA DE TESTE (produtos: Tributos/Cobrança/TED/Pix, valores variados)
+// ════════════════════════════════════════════════════════════════
+function openMassaModal(){
+  const ov=document.getElementById('massa-overlay');
+  document.getElementById('massa-error').style.display='none';
+  ['massa-chk-tributos','massa-chk-cobranca','massa-chk-ted','massa-chk-pix'].forEach(id=>{
+    document.getElementById(id).checked=false;
+  });
+  ov.style.display='flex';
+}
+function closeMassaModal(){
+  document.getElementById('massa-overlay').style.display='none';
+}
+function onMassaOverlayClick(e){
+  if(e.target===document.getElementById('massa-overlay')) closeMassaModal();
+}
+function onGerarMassaClick(){
+  const produtos=[];
+  if(document.getElementById('massa-chk-tributos').checked) produtos.push('tributos');
+  if(document.getElementById('massa-chk-cobranca').checked) produtos.push('cobranca');
+  if(document.getElementById('massa-chk-ted').checked) produtos.push('ted');
+  if(document.getElementById('massa-chk-pix').checked) produtos.push('pix');
+  if(produtos.length===0){
+    document.getElementById('massa-error').style.display='block';
+    return;
+  }
+  closeMassaModal();
+  gerarMassaDeTeste(produtos);
+}
+
+function gerarMassaDeTeste(produtos) {
+  // Gerador de REMESSA CNAB240 com produtos selecionáveis (Tributos/Cobrança/TED/Pix).
+  // Reaproveita o mesmo layout de Header/Trailer de Lote de Pagamentos (idêntico ao
+  // usado por pagHeader/pagTrailer em loadSample240), variando só Tipo de Serviço (G025)
+  // e Forma de Lançamento (G029): Tributos c/ cód. barras=22/11, Pagto Título Outro Banco=20/31,
+  // TED=20/41, Pix=20/45 — códigos confirmados no domínio embutido neste arquivo.
+  // Valores/datas/nomes/documentos são sorteados a cada chamada dentro de faixas plausíveis.
+
+  var BANCO = '033';
+
+  function blank() { return new Array(240 + 1).join(' '); }
+  function putField(line, posIni, posFim, tipo, value) {
+    var len = posFim - posIni + 1;
+    var s = (value === undefined || value === null) ? '' : String(value);
+    if (tipo === 'Num') {
+      s = s.replace(/[^0-9]/g, '');
+      if (s.length > len) s = s.slice(s.length - len);
+      while (s.length < len) s = '0' + s;
+    } else {
+      if (s.length > len) s = s.slice(0, len);
+      while (s.length < len) s = s + ' ';
+    }
+    return line.slice(0, posIni - 1) + s + line.slice(posFim);
+  }
+  function build(fields) {
+    var line = blank();
+    for (var i = 0; i < fields.length; i++) {
+      var f = fields[i];
+      line = putField(line, f[0], f[1], f[2], f[3]);
+    }
+    return line;
+  }
+  function n(v, len) {
+    var s = String(v).replace(/[^0-9]/g, '');
+    while (s.length < len) s = '0' + s;
+    return s.slice(s.length - len);
+  }
+
+  function rInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function rDigits(len) { var s = ''; for (var i = 0; i < len; i++) s += rInt(0, 9); return s; }
+  function rChoice(arr) { return arr[rInt(0, arr.length - 1)]; }
+  function rValorCent(minReais, maxReais, len) { return n(rInt(minReais * 100, maxReais * 100), len); }
+  function rData(diasMin, diasMax) {
+    var d = new Date();
+    d.setDate(d.getDate() + rInt(diasMin, diasMax));
+    var dd = n(d.getDate(), 2), mm = n(d.getMonth() + 1, 2), yy = n(d.getFullYear(), 4);
+    return dd + mm + yy;
+  }
+  var NOMES = ['EMPRESA ALFA LTDA', 'JOAO DA SILVA SANTOS', 'MARIA OLIVEIRA COMERCIO',
+    'BETA SERVICOS EIRELI', 'CONSTRUTORA GAMA SA', 'PEDRO HENRIQUE COSTA', 'DISTRIBUIDORA DELTA LTDA'];
+  var CONCESSIONARIAS = ['CIA ENERGIA ELETRICA SA', 'COMPANHIA DE SANEAMENTO', 'TELECOM BRASIL SA', 'GAS NATURAL DISTRIB'];
+  var BANCOS_FAV = ['001', '033', '341', '104', '237'];
+
+  function seuNum() { return 'SEU' + rDigits(6); }
+  function nossoNum() { return 'NN' + rDigits(8); }
+  function cnpj() { return rDigits(14); }
+  function codigoBarras44() { return rDigits(44); }
+
+  // ================= HEADER DE LOTE (Pagamentos, genérico) =================
+  function mHeaderLote(lote, tipoServico, formaLancamento, mensagem) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '1'], [9, 9, 'Alfa', 'C'],
+      [10, 11, 'Num', tipoServico], [12, 13, 'Num', formaLancamento], [14, 16, 'Num', '040'],
+      [17, 17, 'Alfa', ''], [18, 18, 'Num', '2'], [19, 32, 'Num', cnpj()],
+      [33, 52, 'Alfa', 'CONVENIO01'], [53, 57, 'Num', '01234'], [58, 58, 'Alfa', '5'],
+      [59, 70, 'Num', '000000123456'], [71, 71, 'Alfa', '7'], [72, 72, 'Alfa', '8'],
+      [73, 102, 'Alfa', 'EMPRESA MODELO LTDA'], [103, 142, 'Alfa', mensagem],
+      [143, 172, 'Alfa', 'AV PAULISTA 1000'], [173, 177, 'Num', '01000'],
+      [178, 192, 'Alfa', 'SALA 10'], [193, 212, 'Alfa', 'SAO PAULO'], [213, 217, 'Num', '01310'],
+      [218, 220, 'Alfa', '100'], [221, 222, 'Alfa', 'SP'], [223, 224, 'Num', '01'],
+      [225, 230, 'Alfa', ''], [231, 240, 'Alfa', '00']
+    ]);
+  }
+  function mTrailerLote(lote, qtdRegistros, valorTotalCent) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '5'], [9, 17, 'Alfa', ''],
+      [18, 23, 'Num', qtdRegistros], [24, 41, 'Num', valorTotalCent], [42, 59, 'Num', '0'],
+      [60, 65, 'Num', '000000'], [66, 230, 'Alfa', ''], [231, 240, 'Alfa', '00']
+    ]);
+  }
+
+  // ================= TRIBUTOS - Segmento O (código de barras) =================
+  function mSegO(lote, seq, valorCent) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'O'], [15, 15, 'Num', '0'], [16, 17, 'Num', '00'],
+      [18, 61, 'Num', codigoBarras44()], [62, 91, 'Alfa', rChoice(CONCESSIONARIAS)],
+      [92, 99, 'Num', rData(5, 20)], [100, 107, 'Num', rData(0, 5)],
+      [108, 122, 'Num', valorCent], [123, 142, 'Alfa', seuNum()],
+      [143, 162, 'Alfa', nossoNum()], [163, 230, 'Alfa', ''], [231, 240, 'Alfa', '00']
+    ]);
+  }
+
+  // ================= COBRANÇA - Segmento J + J-52 (título de outros bancos) =================
+  function mSegJ(lote, seq, valorPagCent) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'J'], [15, 15, 'Num', '0'], [16, 17, 'Num', '00'],
+      [18, 61, 'Num', codigoBarras44()], [62, 91, 'Alfa', rChoice(NOMES)],
+      [92, 99, 'Num', rData(5, 20)], [100, 114, 'Num', valorPagCent],
+      [115, 129, 'Num', '0'], [130, 144, 'Num', '0'], [145, 152, 'Num', rData(0, 5)],
+      [153, 167, 'Num', valorPagCent], [168, 182, 'Num', '0'],
+      [183, 202, 'Alfa', seuNum()], [203, 222, 'Alfa', nossoNum()], [223, 224, 'Num', '09'],
+      [225, 230, 'Alfa', ''], [231, 240, 'Alfa', '00']
+    ]);
+  }
+  function mSegJ52(lote, seq) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'J'], [15, 15, 'Alfa', ''], [16, 17, 'Num', '00'], [18, 19, 'Num', '52'],
+      [20, 20, 'Num', '2'], [21, 35, 'Num', cnpj()], [36, 75, 'Alfa', 'EMPRESA MODELO LTDA'],
+      [76, 76, 'Num', '2'], [77, 91, 'Num', cnpj()], [92, 131, 'Alfa', rChoice(NOMES)],
+      [132, 132, 'Num', '2'], [133, 147, 'Num', cnpj()], [148, 187, 'Alfa', rChoice(NOMES)],
+      [188, 240, 'Alfa', '']
+    ]);
+  }
+
+  // ================= TED / PIX - Segmento A (crédito, dados bancários favorecido) =================
+  function mSegA(lote, seq, nomeFav, valorCent) {
+    return build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'A'], [15, 15, 'Num', '0'], [16, 17, 'Num', '00'], [18, 20, 'Num', '018'],
+      [21, 23, 'Num', rChoice(BANCOS_FAV)], [24, 28, 'Num', rDigits(5)], [29, 29, 'Alfa', '1'],
+      [30, 41, 'Num', rDigits(12)], [42, 42, 'Alfa', '2'], [43, 43, 'Alfa', '3'],
+      [44, 73, 'Alfa', nomeFav], [74, 93, 'Alfa', seuNum()], [94, 101, 'Num', rData(0, 15)],
+      [102, 104, 'Alfa', 'BRL'], [105, 119, 'Num', '0'], [120, 134, 'Num', valorCent],
+      [135, 154, 'Alfa', nossoNum()], [155, 162, 'Num', '0'], [163, 177, 'Num', '0'],
+      [178, 217, 'Alfa', 'PAGAMENTO TESTE'], [218, 219, 'Alfa', '01'], [220, 224, 'Alfa', '00001'],
+      [225, 226, 'Alfa', ''], [227, 229, 'Alfa', ''], [230, 230, 'Num', '0'], [231, 240, 'Alfa', '00']
+    ]);
+  }
+  // Segmento B de TED: mesmo layout do pagB existente, campo 128-226 (livre) usado
+  // pra empacotar data de vencimento + valores acessórios do documento.
+  function mSegBTed(lote, seq) {
+    var linha = build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'B'], [15, 17, 'Alfa', '01'], [18, 18, 'Num', '2'], [19, 32, 'Num', cnpj()],
+      [33, 67, 'Alfa', 'RUA TESTE 100'], [68, 127, 'Alfa', 'SAO PAULO SP'],
+      [227, 232, 'Num', '000000'], [233, 240, 'Num', '90400888']
+    ]);
+    linha = putField(linha, 128, 135, 'Num', rData(0, 15));
+    linha = putField(linha, 136, 150, 'Num', rValorCent(50, 20000, 15));
+    linha = putField(linha, 151, 165, 'Num', '0');
+    linha = putField(linha, 166, 180, 'Num', '0');
+    linha = putField(linha, 181, 195, 'Num', '0');
+    linha = putField(linha, 196, 210, 'Num', '0');
+    linha = putField(linha, 211, 226, 'Alfa', '');
+    return linha;
+  }
+  // Segmento B de Pix: mesmo layout base, forma de iniciação em 15-16 e chave de
+  // pagamento no campo livre 128-226.
+  function mSegBPix(lote, seq) {
+    var chave = rChoice(['+5511' + rDigits(9), rDigits(11) + '@pix.teste', cnpj()]);
+    var linha = build([
+      [1, 3, 'Num', BANCO], [4, 7, 'Num', lote], [8, 8, 'Num', '3'], [9, 13, 'Num', seq],
+      [14, 14, 'Alfa', 'B'], [15, 16, 'Num', '03'], [17, 17, 'Alfa', ''],
+      [18, 18, 'Num', '2'], [19, 32, 'Num', cnpj()],
+      [33, 67, 'Alfa', ''], [68, 127, 'Alfa', ''],
+      [227, 232, 'Num', '000000'], [233, 240, 'Num', '90400888']
+    ]);
+    linha = putField(linha, 128, 226, 'Alfa', chave);
+    return linha;
+  }
+
+  // ================= MONTAGEM DO ARQUIVO =================
+  var lines = [];
+  var dataArq = rData(0, 0);
+  lines.push(build([
+    [1, 3, 'Num', BANCO], [4, 7, 'Num', '0000'], [8, 8, 'Num', '0'], [9, 17, 'Alfa', ''],
+    [18, 18, 'Num', '2'], [19, 32, 'Num', cnpj()], [33, 52, 'Alfa', 'CONVENIO01'],
+    [53, 57, 'Num', '01234'], [58, 58, 'Alfa', '5'], [59, 70, 'Num', '000000123456'],
+    [71, 71, 'Alfa', '7'], [72, 72, 'Alfa', '8'], [73, 102, 'Alfa', 'EMPRESA MODELO LTDA'],
+    [103, 132, 'Alfa', 'BANCO SANTANDER'], [133, 142, 'Alfa', ''], [143, 143, 'Num', '1'],
+    [144, 151, 'Num', dataArq], [152, 157, 'Num', '120000'], [158, 163, 'Num', '000001'],
+    [164, 166, 'Num', '103'], [167, 171, 'Num', '00000'], [172, 191, 'Alfa', ''],
+    [192, 211, 'Alfa', ''], [212, 240, 'Alfa', '']
+  ]));
+
+  var totalRegistros = 1, totalLotes = 0, loteNum = 0;
+
+  function rodarLote(tipoServico, formaLancamento, mensagem, detalhes) {
+    loteNum++; totalLotes++;
+    var lote = loteNum, loteLinhas = [];
+    loteLinhas.push(mHeaderLote(lote, tipoServico, formaLancamento, mensagem));
+    var seq = 0, valorTotal = 0;
+    detalhes.forEach(function (fn) {
+      var r = fn(lote, ++seq);
+      loteLinhas.push(r.linha);
+      valorTotal += r.valorCent || 0;
+    });
+    var qtd = loteLinhas.length + 1;
+    loteLinhas.push(mTrailerLote(lote, qtd, n(valorTotal, 18)));
+    loteLinhas.forEach(function (x) { lines.push(x); });
+    totalRegistros += loteLinhas.length;
+  }
+
+  var QTD_PAGAMENTOS = 5;
+
+  if (produtos.indexOf('tributos') !== -1) {
+    var detTributos = [];
+    for (var i = 0; i < QTD_PAGAMENTOS; i++) {
+      detTributos.push(function (lote, seq) { var vc = rValorCent(10, 5000, 15); return { linha: mSegO(lote, seq, vc), valorCent: parseInt(vc, 10) }; });
+    }
+    rodarLote('22', '11', 'PAGAMENTO DE TRIBUTOS', detTributos);
+  }
+  if (produtos.indexOf('cobranca') !== -1) {
+    var detCobranca = [];
+    for (var i = 0; i < QTD_PAGAMENTOS; i++) {
+      detCobranca.push(function (lote, seq) { var vc = rValorCent(50, 20000, 15); return { linha: mSegJ(lote, seq, vc), valorCent: parseInt(vc, 10) }; });
+      detCobranca.push(function (lote, seq) { return { linha: mSegJ52(lote, seq) }; });
+    }
+    rodarLote('20', '31', 'PAGTO TITULOS OUTROS BANCOS', detCobranca);
+  }
+  if (produtos.indexOf('ted') !== -1) {
+    var detTed = [];
+    for (var i = 0; i < QTD_PAGAMENTOS; i++) {
+      detTed.push(function (lote, seq) { var vc = n(rInt(1000, 5000000), 15); return { linha: mSegA(lote, seq, rChoice(NOMES), vc), valorCent: parseInt(vc, 10) }; });
+      detTed.push(function (lote, seq) { return { linha: mSegBTed(lote, seq) }; });
+    }
+    rodarLote('20', '41', 'TRANSFERENCIA TED', detTed);
+  }
+  if (produtos.indexOf('pix') !== -1) {
+    var detPix = [];
+    for (var i = 0; i < QTD_PAGAMENTOS; i++) {
+      detPix.push(function (lote, seq) { var vc = n(rInt(1000, 5000000), 15); return { linha: mSegA(lote, seq, rChoice(NOMES), vc), valorCent: parseInt(vc, 10) }; });
+      detPix.push(function (lote, seq) { return { linha: mSegBPix(lote, seq) }; });
+    }
+    rodarLote('20', '45', 'TRANSFERENCIA PIX', detPix);
+  }
+
+  totalRegistros += 1;
+  lines.push(build([
+    [1, 3, 'Num', BANCO], [4, 7, 'Num', '9999'], [8, 8, 'Num', '9'], [9, 17, 'Alfa', ''],
+    [18, 23, 'Num', n(totalLotes, 6)], [24, 29, 'Num', n(totalRegistros, 6)],
+    [30, 35, 'Num', '000000'], [36, 240, 'Alfa', '']
+  ]));
+
+  loadContent(lines.join('\n'));
 }
 </script>
 </body>
