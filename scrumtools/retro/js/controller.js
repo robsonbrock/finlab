@@ -394,15 +394,21 @@ async function finalDeleteColumn() {
 async function addCard(columnId) {
   try {
     const card = await roomService.createCard(columnId, '', currentRoomId);
-    if (!columns[columnId].cards) columns[columnId].cards = [];
-    columns[columnId].cards.push(card);
-    await renderCard(columnId, card);
+    // Não renderizar aqui - deixar o Realtime fazer
+    // Ele vai disparar um evento INSERT e renderizar automaticamente
 
-    // Focar no textarea do novo card
+    // Aguardar um pouco para o card ser renderizado pelo Realtime
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Focar no textarea do novo card (após Realtime renderizar)
     const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
-    const textarea = newCardDiv.querySelector('.card-text');
-    textarea.focus();
-    textarea.select();
+    if (newCardDiv) {
+      const textarea = newCardDiv.querySelector('.card-text');
+      if (textarea) {
+        textarea.focus();
+        textarea.select();
+      }
+    }
   } catch (error) {
     console.error('Erro ao adicionar card:', error);
     alert('Erro: ' + error.message);
