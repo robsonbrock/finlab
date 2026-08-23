@@ -722,11 +722,23 @@ function subscribeToChanges() {
     subscriptions.push(columnsSub);
     console.log('✅ Subscribed to columns:', currentRoomId);
 
-    // Subscrever a mudanças em cards e likes de cada coluna
+    // Subscrever a mudanças em cards de cada coluna
     Object.keys(columns).forEach(columnId => {
       const cardsSub = repository.subscribeToCards(columnId, handleCardsChange);
       subscriptions.push(cardsSub);
       console.log('✅ Subscribed to cards:', columnId);
+
+      // Subscrever a mudanças de likes de cada card da coluna
+      columns[columnId].cards.forEach(card => {
+        const likesSub = repository.subscribeToLikes(card.id, handleLikesChange);
+        subscriptions.push(likesSub);
+      });
+
+      // Subscrever a mudanças de emojis de cada card da coluna
+      columns[columnId].cards.forEach(card => {
+        const emojisSub = repository.subscribeToEmojis(card.id, handleEmojisChange);
+        subscriptions.push(emojisSub);
+      });
     });
   } catch (error) {
     console.error('Erro ao subscrever:', error);
@@ -738,6 +750,44 @@ function handleRoomChange(payload) {
     currentRoom = payload.new;
     document.getElementById('roomNameSpan').textContent = payload.new.nome;
   }
+}
+
+function handleLikesChange(payload) {
+  // Qualquer mudança em likes, atualizar contador
+  const cardId = payload.new?.card_id || payload.old?.card_id;
+  if (!cardId) return;
+
+  const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
+  if (!btn) return;
+
+  // Atualizar contador assincronamente
+  repository.getLikesCount(cardId).then(likes => {
+    const countSpan = btn.querySelector('.like-count');
+    if (countSpan) countSpan.textContent = likes.length;
+    btn.setAttribute('title', likes.length + ' likes');
+
+    // Atualizar visual baseado no usuário atual
+    const userLiked = likes.some(like => like.session_id === sessionId);
+    if (userLiked) {
+      btn.classList.add('active');
+      btn.textContent = '❤️ ';
+    } else {
+      btn.classList.remove('active');
+      btn.textContent = '🤍 ';
+    }
+    btn.innerHTML += `<span class="like-count">${likes.length}</span>`;
+  });
+}
+
+function handleEmojisChange(payload) {
+  // Qualquer mudança em emojis, atualizar display
+  const cardId = payload.new?.card_id || payload.old?.card_id;
+  if (!cardId) return;
+
+  roomService.getEmojiString(cardId).then(emojiString => {
+    const span = document.getElementById(`emojis-${cardId}`);
+    if (span) span.textContent = emojiString;
+  });
 }
 
 function handleColumnsChange(payload) {
