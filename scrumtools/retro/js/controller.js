@@ -844,7 +844,6 @@ function handleCardsChange(payload) {
       if (newData.ordem !== oldData.ordem) {
         // Atualizar card no array com a nova ordem
         const columnId = newData.coluna_id;
-        console.log('📊 Order changed for card', cardId, 'ordem:', oldData.ordem, '->', newData.ordem);
 
         if (columns[columnId]) {
           const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
@@ -855,28 +854,15 @@ function handleCardsChange(payload) {
           // Reordenar o array
           columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
 
-          // Reordenar no DOM - usar insertBefore para evitar duplicação
+          // Reordenar no DOM - remover e re-renderizar todos os cards
           const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
           if (container) {
-            const currentOrder = Array.from(container.querySelectorAll('.card')).map(c => c.getAttribute('data-card-id'));
-            const newOrder = columns[columnId].cards.map(c => c.id);
+            // Remover TODOS os cards do container
+            container.querySelectorAll('.card').forEach(el => el.remove());
 
-            // Se a ordem mudou, reordenar
-            if (JSON.stringify(currentOrder) !== JSON.stringify(newOrder)) {
-              console.log('♻️ DOM precisa reordenar');
-              // Para cada card na nova ordem, mover para a posição correta
-              let lastCard = null;
-              for (const card of columns[columnId].cards) {
-                const cardEl = container.querySelector(`[data-card-id="${card.id}"]`);
-                if (cardEl) {
-                  if (lastCard) {
-                    // Inserir após o card anterior
-                    lastCard.parentNode.insertBefore(cardEl, lastCard.nextSibling);
-                  }
-                  lastCard = cardEl;
-                }
-              }
-              console.log('✅ DOM reordered');
+            // Re-renderizar cards na ordem correta
+            for (const card of columns[columnId].cards) {
+              renderCard(columnId, card);
             }
           }
         }
