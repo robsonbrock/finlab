@@ -503,10 +503,10 @@ async function addCard(columnId) {
   }
 }
 
-// Auto-resize textarea conforme digita
+// Auto-resize textarea conforme digita (mínimo 14px)
 function autoResizeTextarea(textarea) {
-  textarea.style.height = 'auto';
-  textarea.style.height = (textarea.scrollHeight) + 'px';
+  textarea.style.height = '14px';
+  textarea.style.height = Math.max(14, textarea.scrollHeight) + 'px';
 }
 
 // Salvar texto do card
