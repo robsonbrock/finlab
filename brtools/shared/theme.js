@@ -1,6 +1,6 @@
 // Sistema de temas dark/light
 (function() {
-  const STORAGE_KEY = 'scrumtools_theme';
+  const STORAGE_KEY = 'brtools_theme';
   const html = document.documentElement;
   const toggleBtn = document.getElementById('theme-toggle');
 
