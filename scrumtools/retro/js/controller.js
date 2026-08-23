@@ -767,31 +767,48 @@ function handleRoomChange(payload) {
 }
 
 async function handleLikesChange(payload) {
-  console.log('🔥 LIKE EVENT:', payload.eventType, payload.new?.card_id || payload.old?.card_id);
+  // Aguardar para garantir que o banco atualizou
+  await new Promise(resolve => setTimeout(resolve, 300));
 
   const cardId = payload.new?.card_id || payload.old?.card_id;
-  if (!cardId) return;
 
-  const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
-  if (!btn) return;
+  // Se conseguiu extrair cardId, atualiza apenas esse card
+  if (cardId) {
+    const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
+    if (btn) {
+      const likes = await repository.getLikesCount(cardId);
+      const userLiked = likes.some(like => like.session_id === sessionId);
+      const count = likes?.length || 0;
 
-  // Aguardar 500ms para garantir que o banco atualizou
-  await new Promise(resolve => setTimeout(resolve, 500));
+      btn.setAttribute('title', count + ' likes');
+      const likeIcon = userLiked ? '❤️' : '🤍';
+      btn.innerHTML = `${likeIcon} <span class="like-count">${count}</span>`;
 
-  const likes = await repository.getLikesCount(cardId);
-  console.log('📊 Likes após wait:', likes.length);
-
-  const userLiked = likes.some(like => like.session_id === sessionId);
-  const count = likes?.length || 0;
-
-  btn.setAttribute('title', count + ' likes');
-  const likeIcon = userLiked ? '❤️' : '🤍';
-  btn.innerHTML = `${likeIcon} <span class="like-count">${count}</span>`;
-
-  if (userLiked) {
-    btn.classList.add('active');
+      if (userLiked) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
   } else {
-    btn.classList.remove('active');
+    // Se não conseguiu extrair cardId (comum em DELETE), atualiza TODOS os cards
+    const allBtns = document.querySelectorAll('.card-like');
+    for (const btn of allBtns) {
+      const cid = btn.getAttribute('data-card-id');
+      const likes = await repository.getLikesCount(cid);
+      const userLiked = likes.some(like => like.session_id === sessionId);
+      const count = likes?.length || 0;
+
+      btn.setAttribute('title', count + ' likes');
+      const likeIcon = userLiked ? '❤️' : '🤍';
+      btn.innerHTML = `${likeIcon} <span class="like-count">${count}</span>`;
+
+      if (userLiked) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
   }
 }
 
