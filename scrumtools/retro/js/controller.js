@@ -523,6 +523,7 @@ async function addEmojiVote(cardId, columnId, emoji) {
 
 // ========== Drag and drop CARDS ==========
 function handleCardDragStart(e) {
+  e.stopPropagation();
   draggedCard = {
     id: this.getAttribute('data-card-id'),
     element: this,
@@ -534,6 +535,7 @@ function handleCardDragStart(e) {
 }
 
 function handleCardDragEnd(e) {
+  e.stopPropagation();
   if (draggedCard) {
     draggedCard.element.style.opacity = '1';
   }
@@ -542,6 +544,7 @@ function handleCardDragEnd(e) {
 
 function handleCardDragOver(e) {
   if (!draggedCard) return;
+  e.stopPropagation();
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
 
@@ -561,6 +564,7 @@ function handleCardDragOver(e) {
 
 async function handleCardDrop(e) {
   if (!draggedCard) return;
+  e.stopPropagation();
   e.preventDefault();
 
   const targetColumnDiv = e.target.closest('[data-column-id]');
