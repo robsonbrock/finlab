@@ -224,26 +224,33 @@ function editColumnName(columnId) {
   }
 
   nameDiv.classList.add('editing');
-  const oldName = escapeHtml(column.nome);
-  nameDiv.innerHTML = `<input type="text" class="column-name-input" value="${oldName}" maxlength="30">`;
+  const oldName = column.nome;
+  nameDiv.innerHTML = `<input type="text" class="column-name-input" value="${escapeHtml(oldName)}" maxlength="30">`;
 
   const input = nameDiv.querySelector('input');
   input.focus();
   input.select();
 
-  // Salvar ao sair do input
-  input.addEventListener('blur', () => saveColumnName(columnId));
+  // Handler para blur e escape
+  const handleBlur = () => {
+    input.removeEventListener('blur', handleBlur);
+    input.removeEventListener('keydown', handleKeyDown);
+    saveColumnNameInline(columnId, input, oldName);
+  };
 
-  // Salvar ao pressionar Enter
-  input.addEventListener('keydown', (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      saveColumnName(columnId);
+      input.blur();
     } else if (e.key === 'Escape') {
-      // Cancelar edição
-      nameDiv.textContent = oldName;
+      input.removeEventListener('blur', handleBlur);
+      input.removeEventListener('keydown', handleKeyDown);
+      nameDiv.textContent = escapeHtml(oldName);
       nameDiv.classList.remove('editing');
     }
-  });
+  };
+
+  input.addEventListener('blur', handleBlur);
+  input.addEventListener('keydown', handleKeyDown);
 
   // Prevenir propagação de cliques
   input.addEventListener('click', (e) => {
@@ -251,36 +258,41 @@ function editColumnName(columnId) {
   });
 }
 
-async function saveColumnName(columnId) {
+async function saveColumnNameInline(columnId, inputElement, oldName) {
   const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
   const nameDiv = columnDiv?.querySelector('.column-name');
-  const input = nameDiv?.querySelector('input');
 
-  if (!input || !nameDiv) {
+  if (!nameDiv) {
+    console.error('nameDiv não encontrado para coluna', columnId);
     return;
   }
 
-  const newName = input.value.trim();
-  const oldName = columns[columnId].nome;
+  const newName = inputElement.value.trim();
+
+  console.log(`Salvando nome da coluna ${columnId}: "${oldName}" -> "${newName}"`);
 
   // Se o nome não mudou, só fechar a edição
   if (!newName || newName === oldName) {
+    console.log('Nome não mudou, fechando edição');
     nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
     return;
   }
 
   try {
+    console.log('Chamando updateColumnName...');
     const updated = await roomService.updateColumnName(columnId, newName, currentRoomId);
+    console.log('Sucesso! Nome atualizado para:', updated.nome);
+
     columns[columnId].nome = updated.nome;
     nameDiv.textContent = escapeHtml(updated.nome);
     nameDiv.classList.remove('editing');
   } catch (error) {
     console.error('Erro ao salvar nome da coluna:', error);
-    // Reverter para o nome anterior sem mostrar alert
+    console.error('Stack:', error.stack);
+    // Reverter para o nome anterior
     nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
-    console.error('Detalhes do erro:', error.message);
   }
 }
 

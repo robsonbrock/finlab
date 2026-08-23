@@ -48,9 +48,10 @@ const repository = {
     const { data, error } = await window.supabaseClient
       .from('colunas')
       .update(updates)
-      .eq('id', columnId);
+      .eq('id', columnId)
+      .select();
     if (error) throw error;
-    return data;
+    return data && data.length > 0 ? data[0] : null;
   },
 
   async deleteColumn(columnId) {
