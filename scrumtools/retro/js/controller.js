@@ -51,6 +51,12 @@ async function init() {
     currentRoom = room;
     document.getElementById('roomNameSpan').textContent = room.nome;
 
+    // Definir ordenação inicial
+    if (room.sort_by) {
+      sortBy = room.sort_by;
+      document.getElementById('sortSelect').value = sortBy;
+    }
+
     // Renderizar colunas
     for (const column of loadedColumns) {
       columns[column.id] = { ...column, cards: [] };
@@ -503,8 +509,16 @@ async function toggleLike(btn) {
 
 
 // Ordenação de cards
-function handleSortChange(value) {
+async function handleSortChange(value) {
   sortBy = value;
+
+  // Atualizar no banco para sincronizar com outros participantes
+  try {
+    await repository.updateRoom(currentRoomId, { sort_by: value });
+  } catch (error) {
+    console.error('Erro ao atualizar ordenação:', error);
+  }
+
   reorderAllCards();
 }
 
@@ -789,8 +803,21 @@ function subscribeToChanges() {
 
 function handleRoomChange(payload) {
   if (payload.eventType === 'UPDATE') {
-    currentRoom = payload.new;
-    document.getElementById('roomNameSpan').textContent = payload.new.nome;
+    const newRoom = payload.new;
+
+    // Atualizar nome da sala
+    if (newRoom.nome !== currentRoom.nome) {
+      document.getElementById('roomNameSpan').textContent = newRoom.nome;
+    }
+
+    // Atualizar ordenação se mudou
+    if (newRoom.sort_by && newRoom.sort_by !== sortBy) {
+      sortBy = newRoom.sort_by;
+      document.getElementById('sortSelect').value = sortBy;
+      reorderAllCards();
+    }
+
+    currentRoom = newRoom;
   }
 }
 

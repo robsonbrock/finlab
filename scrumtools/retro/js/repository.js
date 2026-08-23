@@ -22,6 +22,17 @@ const repository = {
     return data;
   },
 
+  async updateRoom(roomId, updates) {
+    const { data, error } = await window.supabaseClient
+      .from('salas')
+      .update({ ...updates, atualizada_em: new Date().toISOString() })
+      .eq('id', roomId)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
   // Colunas
   async getColumns(roomId) {
     const { data, error } = await window.supabaseClient
