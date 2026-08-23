@@ -782,19 +782,22 @@ async function handleLikesChange(payload) {
   try {
     // Atualizar contador imediatamente
     const likes = await repository.getLikesCount(cardId);
-    console.log('getLikesCount retornou array com', likes.length, 'elementos:', likes);
+    console.log('🔍 getLikesCount retornou:', likes);
+    console.log('🔍 typeof likes:', typeof likes);
+    console.log('🔍 Array.isArray(likes):', Array.isArray(likes));
+    console.log('🔍 likes.length:', likes?.length);
 
     const userLiked = likes.some(like => like.session_id === sessionId);
-    console.log('User liked:', userLiked, '| sessionId:', sessionId);
+    console.log('🔍 User liked:', userLiked, '| sessionId:', sessionId);
 
     // Atualizar botão
-    const count = likes.length;
-    console.log('Atualizando contador com valor:', count);
+    const count = likes?.length || 0;
+    console.log('🔍 Count final:', count);
 
     btn.setAttribute('title', count + ' likes');
     const likeIcon = userLiked ? '❤️' : '🤍';
     btn.innerHTML = `${likeIcon} <span class="like-count">${count}</span>`;
-    console.log('HTML atualizado:', btn.innerHTML);
+    console.log('🔍 HTML atualizado para:', btn.innerHTML);
 
     if (userLiked) {
       btn.classList.add('active');
