@@ -747,19 +747,20 @@ function handleCardDragOver(e) {
 
   const card = e.target.closest('.card');
 
-  // Remover highlight do card anterior se existir
-  if (mergeTargetCard && mergeTargetCard !== card) {
-    mergeTargetCard.classList.remove('merge-target');
-  }
+  // Se o card target mudou
+  if (mergeTargetCard !== card) {
+    // Remover highlight do card anterior
+    if (mergeTargetCard) {
+      mergeTargetCard.classList.remove('merge-target');
+    }
 
-  if (card && card !== draggedCard.element) {
-    // Se está sobre um card, destacar para merge
-    card.classList.add('merge-target');
-    mergeTargetCard = card;
-  } else if (card === null && mergeTargetCard) {
-    // Se saiu de cima do card, remover highlight
-    mergeTargetCard.classList.remove('merge-target');
-    mergeTargetCard = null;
+    // Se agora está sobre outro card (não o mesmo que está sendo arrastado)
+    if (card && card !== draggedCard.element) {
+      card.classList.add('merge-target');
+      mergeTargetCard = card;
+    } else {
+      mergeTargetCard = null;
+    }
   }
 }
 
@@ -777,7 +778,9 @@ async function handleCardDrop(e) {
   // Se soltou sobre outro card específico, fazer merge
   if (mergeTargetCard) {
     const targetCardId = mergeTargetCard.getAttribute('data-card-id');
+    console.log('🔀 Tentando merge:', { draggedId: draggedCard.id, targetId: targetCardId, mergeTargetCard });
     if (targetCardId !== draggedCard.id) {
+      console.log('✅ Executando merge...');
       await mergeCards(draggedCard.id, targetCardId, sourceColumnId, targetColumnId);
     }
     mergeTargetCard.classList.remove('merge-target');
@@ -785,6 +788,8 @@ async function handleCardDrop(e) {
     draggedCard = null;
     return;
   }
+
+  console.log('📍 Reordenando (sem merge target)');
 
   // Caso contrário, reordenar normalmente
   try {
