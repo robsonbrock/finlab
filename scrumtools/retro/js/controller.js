@@ -133,6 +133,12 @@ async function renderColumn(column) {
     </div>
   `;
 
+  // Aplicar cor ao fundo da coluna
+  const rgbColor = hexToRgb(column.cor);
+  if (rgbColor) {
+    columnDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.2)`;
+  }
+
   // Drag-and-drop para coluna
   columnDiv.addEventListener('dragstart', handleColumnDragStart);
   columnDiv.addEventListener('dragend', handleColumnDragEnd);
@@ -427,7 +433,7 @@ async function changeColumnColor(columnId, color) {
     // Aplicar cor ao fundo inteiro da coluna
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
     if (columnDiv && rgbColor) {
-      columnDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.05)`;
+      columnDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.2)`;
     }
 
     // Atualizar bordas, background e like button de todos os cards
