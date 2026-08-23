@@ -762,23 +762,36 @@ function handleRoomChange(payload) {
 }
 
 async function handleLikesChange(payload) {
+  console.log('📱 handleLikesChange CHAMADO:', payload);
+
   // Qualquer mudança em likes, atualizar contador
   const cardId = payload.new?.card_id || payload.old?.card_id;
-  if (!cardId) return;
+  console.log('🆔 Card ID extraído:', cardId, '| payload.new:', payload.new, '| payload.old:', payload.old);
+
+  if (!cardId) {
+    console.log('⚠️ Sem cardId, retornando');
+    return;
+  }
 
   const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
+  console.log('🔘 Botão encontrado:', !!btn);
+
   if (!btn) return;
 
   try {
     // Atualizar contador imediatamente
     const likes = await repository.getLikesCount(cardId);
+    console.log('❤️ Likes count:', likes.length, '| Likes:', likes);
+
     const userLiked = likes.some(like => like.session_id === sessionId);
+    console.log('👤 User liked:', userLiked);
 
     // Atualizar botão
     btn.setAttribute('title', likes.length + ' likes');
     const likeIcon = userLiked ? '❤️' : '🤍';
 
     // FORÇAR atualização do HTML para garantir que o contador mude
+    console.log('🔄 Atualizando HTML com:', likeIcon, likes.length);
     btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
 
     if (userLiked) {
@@ -786,8 +799,9 @@ async function handleLikesChange(payload) {
     } else {
       btn.classList.remove('active');
     }
+    console.log('✅ handleLikesChange COMPLETADO');
   } catch (error) {
-    console.error('Erro ao atualizar likes:', error);
+    console.error('❌ Erro ao atualizar likes:', error);
   }
 }
 
