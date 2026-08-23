@@ -164,7 +164,10 @@ async function renderCard(columnId, card) {
   const emojiString = await roomService.getEmojiString(card.id);
 
   // Se é card novo (texto vazio), adicionar autofocus
-  const autofocusAttr = card.texto === '' ? 'autofocus' : '';
+  const isNewCard = card.texto === '';
+  const autofocusAttr = isNewCard ? 'autofocus' : '';
+
+  console.log('📝 Renderizando card:', card.id, 'novo?', isNewCard, 'autofocus?', !!autofocusAttr);
 
   cardDiv.innerHTML = `
     <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)" ${autofocusAttr}>${escapeHtml(card.texto)}</textarea>
