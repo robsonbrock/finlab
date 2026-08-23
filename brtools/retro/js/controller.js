@@ -76,6 +76,16 @@ async function init() {
       window.location.href = 'index.html';
     });
 
+    // Fechar modais com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeEditRoom();
+        closeDeleteColumnModal();
+        closeDeleteCardModal();
+        closeEmojiPicker();
+      }
+    });
+
   } catch (error) {
     console.error('Erro ao inicializar:', error);
     alert('Erro ao carregar a sala. Voltando...');

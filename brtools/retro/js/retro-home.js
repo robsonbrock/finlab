@@ -244,6 +244,13 @@ document.getElementById('columnCount').addEventListener('keypress', (e) => {
   if (e.key === 'Enter') createRoom();
 });
 
+// Fechar modais com ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCreateModal();
+  }
+});
+
 // Esperar Supabase estar pronto
 window.addEventListener('supabase-ready', () => {
   console.log('Retro home page ready');
