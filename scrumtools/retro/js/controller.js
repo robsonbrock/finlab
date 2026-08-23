@@ -604,16 +604,21 @@ async function handleColumnDrop(e) {
     const columnList = Array.from(container.querySelectorAll('.column'));
     const columnIds = columnList.map(c => c.getAttribute('data-column-id'));
 
-    // Atualizar ordem apenas dos que mudaram
+    console.log('Atualizando ordem das colunas:', columnIds);
+
+    // Atualizar ordem de cada coluna
     for (let i = 0; i < columnIds.length; i++) {
-      await repository.updateColumn(columnIds[i], { ordem: i });
+      const colId = columnIds[i];
+      console.log(`Atualizando coluna ${colId} com ordem ${i}`);
+      await repository.updateColumn(colId, { ordem: i });
     }
 
+    console.log('Ordem salva com sucesso');
     window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumn.id);
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
-    alert('Erro ao reordenar. Atualizando...');
-    location.reload();
+    console.error('Stack:', error.stack);
+    alert(`Erro ao reordenar: ${error.message}`);
   }
 }
 
