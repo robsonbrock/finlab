@@ -397,19 +397,20 @@ async function finalDeleteColumn() {
 async function addCard(columnId) {
   try {
     const card = await roomService.createCard(columnId, '', currentRoomId);
-    // Não renderizar aqui - deixar o Realtime fazer
-    // Ele vai disparar um evento INSERT e renderizar automaticamente
 
-    // Aguardar o card ser renderizado pelo Realtime
-    await new Promise(resolve => setTimeout(resolve, 150));
+    // Tentar focar no textarea até 15 vezes (total 300ms)
+    for (let i = 0; i < 15; i++) {
+      await new Promise(resolve => setTimeout(resolve, 20));
 
-    // Focar no textarea do novo card (após Realtime renderizar)
-    const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
-    if (newCardDiv) {
-      const textarea = newCardDiv.querySelector('.card-text');
-      if (textarea) {
-        textarea.focus();
-        textarea.select();
+      const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
+      if (newCardDiv) {
+        const textarea = newCardDiv.querySelector('.card-text');
+        if (textarea) {
+          textarea.focus();
+          textarea.select();
+          console.log('✅ Focus no card:', card.id);
+          break;
+        }
       }
     }
   } catch (error) {
