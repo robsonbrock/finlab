@@ -753,19 +753,24 @@ function handleRoomChange(payload) {
 }
 
 function handleLikesChange(payload) {
+  console.log('❤️ Likes change:', payload);
   // Qualquer mudança em likes, atualizar contador
   const cardId = payload.new?.card_id || payload.old?.card_id;
+  console.log('Card ID:', cardId, 'Payload:', payload);
   if (!cardId) return;
 
   const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
+  console.log('Found button:', !!btn);
   if (!btn) return;
 
   // Atualizar contador assincronamente
   repository.getLikesCount(cardId).then(likes => {
+    console.log('Likes count:', likes.length, 'Likes:', likes);
     btn.setAttribute('title', likes.length + ' likes');
 
     // Atualizar visual baseado no usuário atual
     const userLiked = likes.some(like => like.session_id === sessionId);
+    console.log('User liked:', userLiked, 'Session ID:', sessionId);
 
     // Limpar e reconstruir o botão
     if (userLiked) {
@@ -775,6 +780,7 @@ function handleLikesChange(payload) {
       btn.classList.remove('active');
       btn.innerHTML = `🤍 <span class="like-count">${likes.length}</span>`;
     }
+    console.log('Updated button HTML:', btn.innerHTML);
   });
 }
 
