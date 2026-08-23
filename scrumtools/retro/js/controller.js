@@ -596,8 +596,10 @@ function handleColumnDragOver(e) {
 }
 
 async function handleColumnDrop(e) {
-  if (!draggedColumn) return;
+  if (!draggedColumn || !draggedColumn.id) return;
   e.preventDefault();
+
+  const draggedColumnId = draggedColumn.id;
 
   try {
     const container = document.getElementById('columns-container');
@@ -609,12 +611,14 @@ async function handleColumnDrop(e) {
     // Atualizar ordem de cada coluna
     for (let i = 0; i < columnIds.length; i++) {
       const colId = columnIds[i];
-      console.log(`Atualizando coluna ${colId} com ordem ${i}`);
-      await repository.updateColumn(colId, { ordem: i });
+      if (colId) {
+        console.log(`Atualizando coluna ${colId} com ordem ${i}`);
+        await repository.updateColumn(colId, { ordem: i });
+      }
     }
 
     console.log('Ordem salva com sucesso');
-    window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumn.id);
+    window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumnId);
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
     console.error('Stack:', error.stack);
