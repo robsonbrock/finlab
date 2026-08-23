@@ -53,8 +53,8 @@ const roomService = {
 
   // Cards
   async createCard(columnId, text, roomId) {
-    if (text.length > 200) {
-      throw new Error('Máximo 200 caracteres');
+    if (text.length > 500) {
+      throw new Error('Máximo 500 caracteres');
     }
     const created = await repository.createCard(columnId, text);
     await repository.logAction(roomId, 'card_criado', { coluna_id: columnId, card_id: created.id });
@@ -63,8 +63,8 @@ const roomService = {
   },
 
   async updateCardText(cardId, text, columnId, roomId) {
-    if (text.length > 200) {
-      throw new Error('Máximo 200 caracteres');
+    if (text.length > 500) {
+      throw new Error('Máximo 500 caracteres');
     }
     const updated = await repository.updateCard(cardId, { texto: text });
     await repository.logAction(roomId, 'card_texto_editado', { card_id: cardId, coluna_id: columnId });

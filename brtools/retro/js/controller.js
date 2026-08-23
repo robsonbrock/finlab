@@ -197,7 +197,7 @@ function renderCardDirect(columnId, cardData, container) {
   const isNewCard = cardData.texto === '';
 
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${cardData.id}" maxlength="200" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(cardData.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${cardData.id}" maxlength="500" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(cardData.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${cardData.id}', '${columnId}')">😊</button>
@@ -271,7 +271,7 @@ async function renderCard(columnId, card) {
   const isNewCard = card.texto === '';
 
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(card.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${card.id}" maxlength="500" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(card.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
