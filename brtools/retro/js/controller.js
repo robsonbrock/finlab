@@ -956,10 +956,18 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
 
       // Atualizar likes
       const newLikesCount = await repository.getLikesCount(targetCardId);
+      const userCurrentlyLiked = await repository.getUserLiked(targetCardId, sessionId);
       const likeBtn = targetElement.querySelector('.card-like');
       if (likeBtn) {
-        likeBtn.innerHTML = `❤️ <span class="like-count">${newLikesCount.length}</span>`;
+        const likeIcon = userCurrentlyLiked ? '❤️' : '🤍';
+        likeBtn.innerHTML = `${likeIcon} <span class="like-count">${newLikesCount.length}</span>`;
         likeBtn.setAttribute('title', newLikesCount.length + ' likes');
+        // Atualizar classe active
+        if (userCurrentlyLiked) {
+          likeBtn.classList.add('active');
+        } else {
+          likeBtn.classList.remove('active');
+        }
       }
     }
 
