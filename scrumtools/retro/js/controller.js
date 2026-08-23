@@ -452,9 +452,11 @@ async function confirmDeleteCard() {
 
 // Like
 async function toggleLike(btn) {
+  console.log('👍 Like clicked on:', btn);
   const cardId = btn.getAttribute('data-card-id');
   const columnId = btn.closest('[data-column-id]').getAttribute('data-column-id');
   const hasLike = btn.classList.contains('active');
+  console.log('Card:', cardId, 'Column:', columnId, 'hasLike:', hasLike);
 
   try {
     await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId);
