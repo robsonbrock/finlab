@@ -762,20 +762,19 @@ function handleLikesChange(payload) {
 
   // Atualizar contador assincronamente
   repository.getLikesCount(cardId).then(likes => {
-    const countSpan = btn.querySelector('.like-count');
-    if (countSpan) countSpan.textContent = likes.length;
     btn.setAttribute('title', likes.length + ' likes');
 
     // Atualizar visual baseado no usuário atual
     const userLiked = likes.some(like => like.session_id === sessionId);
+
+    // Limpar e reconstruir o botão
     if (userLiked) {
       btn.classList.add('active');
-      btn.textContent = '❤️ ';
+      btn.innerHTML = `❤️ <span class="like-count">${likes.length}</span>`;
     } else {
       btn.classList.remove('active');
-      btn.textContent = '🤍 ';
+      btn.innerHTML = `🤍 <span class="like-count">${likes.length}</span>`;
     }
-    btn.innerHTML += `<span class="like-count">${likes.length}</span>`;
   });
 }
 
