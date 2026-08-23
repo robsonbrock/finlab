@@ -777,10 +777,17 @@ function handleCardDragOver(e) {
   if (!mergeTargetCard) {
     const columnCards = e.target.closest('.column-cards');
     if (columnCards) {
-      const allCards = columnCards.querySelectorAll('.card');
-      const draggedIndex = Array.from(allCards).indexOf(draggedCard.element);
+      const allCards = Array.from(columnCards.querySelectorAll('.card'));
 
-      // Encontrar o card mais próximo para inserir antes/depois
+      // Se coluna está vazia, apenas append o card arrastado
+      if (allCards.length === 0) {
+        if (draggedCard.element.parentNode !== columnCards) {
+          columnCards.appendChild(draggedCard.element);
+        }
+        return;
+      }
+
+      // Se há cards, encontrar o card mais próximo para inserir antes/depois
       let closestCard = null;
       let minDistance = Infinity;
 
