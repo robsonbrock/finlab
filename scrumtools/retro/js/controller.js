@@ -514,9 +514,11 @@ async function handleSortChange(value) {
 
   // Atualizar no banco para sincronizar com outros participantes
   try {
-    await repository.updateRoom(currentRoomId, { sort_by: value });
+    console.log('📊 Atualizando sort_by para:', value);
+    const result = await repository.updateRoom(currentRoomId, { sort_by: value });
+    console.log('✅ Sala atualizada:', result);
   } catch (error) {
-    console.error('Erro ao atualizar ordenação:', error);
+    console.error('❌ Erro ao atualizar ordenação:', error);
   }
 
   reorderAllCards();
