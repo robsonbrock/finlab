@@ -89,13 +89,23 @@ async function loadColumnCards(columnId) {
     const cards = await repository.getCards(columnId);
     columns[columnId].cards = cards;
 
-    // Renderizar cada card
     const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
-    if (container) {
-      for (const card of cards) {
-        await renderCard(columnId, card);
-      }
-    }
+    if (!container) return;
+
+    // Carregar dados (likes, emojis) de TODOS os cards em paralelo
+    const cardsWithData = await Promise.all(
+      cards.map(async (card) => ({
+        ...card,
+        likes: await repository.getLikesCount(card.id),
+        userLiked: await repository.getUserLiked(card.id, sessionId),
+        emojiString: await roomService.getEmojiString(card.id),
+      }))
+    );
+
+    // Renderizar todos os cards
+    cardsWithData.forEach(cardData => {
+      renderCardDirect(columnId, cardData, container);
+    });
   } catch (error) {
     console.error('Erro ao carregar cards:', error);
   }
@@ -138,7 +148,71 @@ async function renderColumn(column) {
   }
 }
 
-// Renderizar card
+// Renderizar card com dados já carregados (sem requisições)
+function renderCardDirect(columnId, cardData, container) {
+  const column = columns[columnId];
+
+  // Remover card duplicado se existir
+  const existingCard = container.querySelector(`[data-card-id="${cardData.id}"]`);
+  if (existingCard) {
+    existingCard.remove();
+  }
+
+  const cardDiv = document.createElement('div');
+  cardDiv.className = 'card';
+  cardDiv.setAttribute('data-card-id', cardData.id);
+  cardDiv.setAttribute('draggable', 'true');
+  cardDiv.setAttribute('data-col-color', column.cor);
+
+  const rgbColor = hexToRgb(column.cor);
+  cardDiv.style.borderColor = column.cor;
+  if (rgbColor) {
+    cardDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.1)`;
+  }
+
+  const isNewCard = cardData.texto === '';
+
+  cardDiv.innerHTML = `
+    <textarea class="card-text" data-card-id="${cardData.id}" maxlength="200" onblur="saveCardText(this)">${escapeHtml(cardData.texto)}</textarea>
+    <div class="card-bottom">
+      <div class="card-emojis">
+        <button class="btn-emoji" onclick="openEmojiPicker('${cardData.id}', '${columnId}')">😊</button>
+        <span id="emojis-${cardData.id}">${cardData.emojiString}</span>
+      </div>
+      <button class="card-like" data-card-id="${cardData.id}" onclick="toggleLike(this)" title="${cardData.likes.length} likes">
+        ${cardData.userLiked ? '❤️' : '🤍'}
+        <span class="like-count">${cardData.likes.length}</span>
+      </button>
+      <button class="card-delete" onclick="openDeleteCard('${cardData.id}', '${columnId}')">🗑️</button>
+    </div>
+  `;
+
+  if (cardData.userLiked) {
+    cardDiv.querySelector('.card-like').classList.add('active');
+  }
+
+  cardDiv.addEventListener('dragstart', handleCardDragStart);
+  cardDiv.addEventListener('dragend', handleCardDragEnd);
+  cardDiv.addEventListener('dragover', handleCardDragOver);
+  cardDiv.addEventListener('drop', handleCardDrop);
+
+  container.addEventListener('dragover', handleCardDragOver);
+  container.addEventListener('drop', handleCardDrop);
+
+  container.appendChild(cardDiv);
+
+  if (isNewCard) {
+    setTimeout(() => {
+      const textarea = cardDiv.querySelector('.card-text');
+      if (textarea) {
+        textarea.focus();
+        textarea.select();
+      }
+    }, 0);
+  }
+}
+
+// Renderizar card (usado pelo Realtime)
 async function renderCard(columnId, card) {
   const column = columns[columnId];
   const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
