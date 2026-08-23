@@ -452,11 +452,9 @@ async function confirmDeleteCard() {
 
 // Like
 async function toggleLike(btn) {
-  console.log('👍 Like clicked on:', btn);
   const cardId = btn.getAttribute('data-card-id');
   const columnId = btn.closest('[data-column-id]').getAttribute('data-column-id');
   const hasLike = btn.classList.contains('active');
-  console.log('Card:', cardId, 'Column:', columnId, 'hasLike:', hasLike);
 
   try {
     await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId);
@@ -466,7 +464,21 @@ async function toggleLike(btn) {
       btn.style.backgroundColor = '';
     } else {
       btn.classList.add('active');
-      btn.style.backgroundColor = columns[columnId].cor;
+
+      // Usar cor da coluna, mas com contraste se for muito clara
+      let bgColor = columns[columnId].cor;
+      const rgb = hexToRgb(bgColor);
+
+      // Calcular luminância para verificar se cor é muito clara
+      if (rgb) {
+        const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+        // Se luminância > 0.7, cor é muito clara, usar cor escura de contraste
+        if (luminance > 0.7) {
+          bgColor = '#333333'; // Cinza escuro
+        }
+      }
+
+      btn.style.backgroundColor = bgColor;
     }
 
     await updateColumnLikeCount(columnId);
