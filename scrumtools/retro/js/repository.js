@@ -48,9 +48,7 @@ const repository = {
     const { data, error } = await window.supabaseClient
       .from('colunas')
       .update(updates)
-      .eq('id', columnId)
-      .select()
-      .single();
+      .eq('id', columnId);
     if (error) throw error;
     return data;
   },
