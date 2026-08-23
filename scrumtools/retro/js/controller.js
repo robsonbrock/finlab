@@ -850,31 +850,35 @@ function handleCardsChange(payload) {
           const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
           if (cardIndex > -1) {
             columns[columnId].cards[cardIndex].ordem = newData.ordem;
-            console.log('✅ Updated card order in array');
           }
 
           // Reordenar o array
           columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
-          console.log('✅ Sorted cards array, new order:', columns[columnId].cards.map(c => c.id).slice(0, 3));
 
-          // Reordenar no DOM
+          // Reordenar no DOM - usar insertBefore para evitar duplicação
           const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
           if (container) {
-            console.log('✅ Found container, reordering DOM');
-            columns[columnId].cards.forEach(card => {
-              const cardEl = container.querySelector(`[data-card-id="${card.id}"]`);
-              if (cardEl) {
-                container.appendChild(cardEl);
-              } else {
-                console.warn('⚠️ Card element not found for', card.id);
+            const currentOrder = Array.from(container.querySelectorAll('.card')).map(c => c.getAttribute('data-card-id'));
+            const newOrder = columns[columnId].cards.map(c => c.id);
+
+            // Se a ordem mudou, reordenar
+            if (JSON.stringify(currentOrder) !== JSON.stringify(newOrder)) {
+              console.log('♻️ DOM precisa reordenar');
+              // Para cada card na nova ordem, mover para a posição correta
+              let lastCard = null;
+              for (const card of columns[columnId].cards) {
+                const cardEl = container.querySelector(`[data-card-id="${card.id}"]`);
+                if (cardEl) {
+                  if (lastCard) {
+                    // Inserir após o card anterior
+                    lastCard.parentNode.insertBefore(cardEl, lastCard.nextSibling);
+                  }
+                  lastCard = cardEl;
+                }
               }
-            });
-            console.log('✅ DOM reordered');
-          } else {
-            console.warn('⚠️ Container not found for column', columnId);
+              console.log('✅ DOM reordered');
+            }
           }
-        } else {
-          console.warn('⚠️ Column not found in state:', columnId);
         }
       }
     }
