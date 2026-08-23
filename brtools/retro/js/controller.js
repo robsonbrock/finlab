@@ -745,21 +745,62 @@ function handleCardDragOver(e) {
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
 
+  // Detectar se está DIRETAMENTE sobre um card (corpo do card)
   const card = e.target.closest('.card');
 
-  // Se o card target mudou
+  // Se mudou o card target
   if (mergeTargetCard !== card) {
     // Remover highlight do card anterior
     if (mergeTargetCard) {
       mergeTargetCard.classList.remove('merge-target');
     }
 
-    // Se agora está sobre outro card (não o mesmo que está sendo arrastado)
+    // Se está diretamente sobre outro card específico
     if (card && card !== draggedCard.element) {
+      console.log('🎯 Merge mode ativado para card:', card.getAttribute('data-card-id'));
       card.classList.add('merge-target');
       mergeTargetCard = card;
     } else {
+      console.log('📍 Reorder mode (entre cards)');
       mergeTargetCard = null;
+    }
+  }
+
+  // Se está em reorder mode (não sobre um card), fazer a reordenação visual
+  if (!mergeTargetCard) {
+    const columnCards = e.target.closest('.column-cards');
+    if (columnCards) {
+      const allCards = columnCards.querySelectorAll('.card');
+      const draggedIndex = Array.from(allCards).indexOf(draggedCard.element);
+
+      // Encontrar o card mais próximo para inserir antes/depois
+      let closestCard = null;
+      let minDistance = Infinity;
+
+      allCards.forEach((card) => {
+        if (card === draggedCard.element) return;
+
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(e.clientY - cardCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCard = card;
+        }
+      });
+
+      if (closestCard && closestCard !== draggedCard.element) {
+        const closestRect = closestCard.getBoundingClientRect();
+        const closestCenter = closestRect.top + closestRect.height / 2;
+
+        // Inserir antes ou depois baseado na posição do mouse
+        if (e.clientY < closestCenter) {
+          columnCards.insertBefore(draggedCard.element, closestCard);
+        } else {
+          columnCards.insertBefore(draggedCard.element, closestCard.nextSibling);
+        }
+      }
     }
   }
 }
