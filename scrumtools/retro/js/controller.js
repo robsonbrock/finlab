@@ -163,8 +163,11 @@ async function renderCard(columnId, card) {
   const userLiked = await repository.getUserLiked(card.id, sessionId);
   const emojiString = await roomService.getEmojiString(card.id);
 
+  // Se é card novo (texto vazio), adicionar autofocus
+  const autofocusAttr = card.texto === '' ? 'autofocus' : '';
+
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)">${escapeHtml(card.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)" ${autofocusAttr}>${escapeHtml(card.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
@@ -396,23 +399,8 @@ async function finalDeleteColumn() {
 // Adicionar card
 async function addCard(columnId) {
   try {
-    const card = await roomService.createCard(columnId, '', currentRoomId);
-
-    // Tentar focar no textarea até 15 vezes (total 300ms)
-    for (let i = 0; i < 15; i++) {
-      await new Promise(resolve => setTimeout(resolve, 20));
-
-      const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
-      if (newCardDiv) {
-        const textarea = newCardDiv.querySelector('.card-text');
-        if (textarea) {
-          textarea.focus();
-          textarea.select();
-          console.log('✅ Focus no card:', card.id);
-          break;
-        }
-      }
-    }
+    await roomService.createCard(columnId, '', currentRoomId);
+    // O Realtime vai renderizar o card com autofocus
   } catch (error) {
     console.error('Erro ao adicionar card:', error);
     alert('Erro: ' + error.message);
