@@ -400,8 +400,8 @@ async function addCard(columnId) {
     // Não renderizar aqui - deixar o Realtime fazer
     // Ele vai disparar um evento INSERT e renderizar automaticamente
 
-    // Aguardar um pouco para o card ser renderizado pelo Realtime
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Aguardar o card ser renderizado pelo Realtime
+    await new Promise(resolve => setTimeout(resolve, 150));
 
     // Focar no textarea do novo card (após Realtime renderizar)
     const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
