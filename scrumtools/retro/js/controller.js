@@ -782,7 +782,12 @@ function handleColumnsChange(payload) {
     }
   } else if (eventType === 'INSERT') {
     // Adicionar nova coluna
-    renderColumn(newData).then(() => loadColumnCards(newData.id));
+    renderColumn(newData).then(() => {
+      loadColumnCards(newData.id);
+      // Subscrever a mudanças de cards nessa coluna
+      const cardsSub = repository.subscribeToCards(newData.id, handleCardsChange);
+      subscriptions.push(cardsSub);
+    });
   }
 }
 
