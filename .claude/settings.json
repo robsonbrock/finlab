@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node /Users/robso/AppData/Local/Temp/claude/bundled-skills/2.1.240/753d01bdc2b2fbc9a337900a20dcec97/design/seed-canvas.mjs --template /Users/robso/AppData/Local/Temp/claude/bundled-skills/2.1.240/753d01bdc2b2fbc9a337900a20dcec97/design/payload.template.html --out scrum-retro-colors.html --title 'Paletas Light - Scrum Retro' --artboard Main.dc.html --artboard WarmGray.dc.html --artboard SlateBlue.dc.html --artboard Minimalist.dc.html --canvas canvas.json)",
+      "Bash(ls -la \"C:\\\\Users\\\\robso\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\bundled-skills\\\\2.1.240\" 2>/dev/null | head -20 || find /c/Users/robso/AppData/Local/Temp/claude/bundled-skills -name \"seed-canvas.mjs\" 2>/dev/null | head -1)",
+      "Read(//c/Users/robso/AppData/Local/Temp/claude/bundled-skills/2.1.240/**)",
+      "Read(//c/Users/robso/AppData/Local/Temp/claude/bundled-skills/**)",
+      "Bash(find /c/Users/robso/AppData/Local/Temp/claude/bundled-skills -name \"*.mjs\" 2>/dev/null)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

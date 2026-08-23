@@ -78,12 +78,12 @@ const roomService = {
   },
 
   // Likes
-  async toggleLike(cardId, hasLike, columnId, roomId) {
+  async toggleLike(cardId, hasLike, columnId, roomId, sessionId) {
     if (hasLike) {
-      await repository.removeLike(cardId);
+      await repository.removeLike(cardId, sessionId);
       await repository.logAction(roomId, 'like_removido', { card_id: cardId, coluna_id: columnId });
     } else {
-      await repository.addLike(cardId);
+      await repository.addLike(cardId, sessionId);
       await repository.logAction(roomId, 'like_adicionado', { card_id: cardId, coluna_id: columnId });
     }
     window.analytics.trackCardAction('like_toggled', roomId, columnId);

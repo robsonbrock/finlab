@@ -140,31 +140,37 @@ const repository = {
   },
 
   // Likes
-  async addLike(cardId) {
+  async addLike(cardId, sessionId) {
     const { data, error } = await window.supabaseClient
       .from('card_likes')
-      .insert([{ card_id: cardId }])
+      .insert([{ card_id: cardId, session_id: sessionId }])
       .select()
       .single();
     if (error) throw error;
     return data;
   },
 
-  async removeLike(cardId) {
+  async removeLike(cardId, sessionId) {
     const { error } = await window.supabaseClient
       .from('card_likes')
       .delete()
-      .eq('card_id', cardId);
+      .eq('card_id', cardId)
+      .eq('session_id', sessionId);
     if (error) throw error;
   },
 
   async getLikesCount(cardId) {
-    const { count, error } = await window.supabaseClient
+    const { data, error } = await window.supabaseClient
       .from('card_likes')
-      .select('*', { count: 'exact', head: true })
+      .select('*')
       .eq('card_id', cardId);
     if (error) throw error;
-    return count || 0;
+    return data || [];
+  },
+
+  async getUserLiked(cardId, sessionId) {
+    const likes = await this.getLikesCount(cardId);
+    return likes.some(like => like.session_id === sessionId);
   },
 
   async getColumnLikesCount(columnId) {

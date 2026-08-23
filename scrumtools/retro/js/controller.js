@@ -10,11 +10,25 @@ let emojiPickerColumnId = null;
 let draggedCard = null;
 let draggedColumn = null;
 let reorderTimeouts = {}; // Debounce timers por coluna
+let sessionId = null; // Session ID anônimo para likes
+
+// Gerar/recuperar session ID
+function getOrCreateSessionId() {
+  let id = localStorage.getItem('sessionId');
+  if (!id) {
+    id = 'session_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('sessionId', id);
+  }
+  return id;
+}
 
 const EMOJIS = ['😀', '😂', '❤️', '👍', '🔥', '✨', '🎉', '😍', '👏', '💡', '🚀', '🎯', '📈', '⭐', '💯', '🙌', '😎', '🤔', '😢', '👎', '🤮', '💪', '🏆', '🎭', '🌟'];
 
 // Inicialização
 async function init() {
+  // Gerar/recuperar session ID
+  sessionId = getOrCreateSessionId();
+
   const params = new URLSearchParams(window.location.search);
   currentRoomId = params.get('id')?.toUpperCase();
 
@@ -141,7 +155,8 @@ async function renderCard(columnId, card) {
     cardDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.1)`;
   }
 
-  const likeCount = await repository.getLikesCount(card.id);
+  const likes = await repository.getLikesCount(card.id);
+  const userLiked = await repository.getUserLiked(card.id, sessionId);
   const emojiString = await roomService.getEmojiString(card.id);
 
   cardDiv.innerHTML = `
@@ -151,13 +166,16 @@ async function renderCard(columnId, card) {
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
         <span id="emojis-${card.id}">${emojiString}</span>
       </div>
-      <button class="card-like" data-card-id="${card.id}" onclick="toggleLike(this)">👍</button>
+      <button class="card-like" data-card-id="${card.id}" onclick="toggleLike(this)">
+        <span class="like-icon">${userLiked ? '👍' : '🤍'}</span>
+        <span class="like-count">${likes.length}</span>
+      </button>
       <button class="card-delete" onclick="openDeleteCard('${card.id}', '${columnId}')">🗑️</button>
     </div>
   `;
 
   // Aplicar estilos iniciais
-  if (likeCount > 0) {
+  if (userLiked) {
     cardDiv.querySelector('.card-like').classList.add('active');
     cardDiv.querySelector('.card-like').style.backgroundColor = '#22c55e';
   }
@@ -454,15 +472,21 @@ async function toggleLike(btn) {
   const hasLike = btn.classList.contains('active');
 
   try {
-    await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId);
+    await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId, sessionId);
 
     if (hasLike) {
       btn.classList.remove('active');
       btn.style.backgroundColor = '';
+      btn.querySelector('.like-icon').textContent = '🤍';
     } else {
       btn.classList.add('active');
-      btn.style.backgroundColor = '#22c55e'; // Verde padrão para todos os likes
+      btn.style.backgroundColor = '#22c55e';
+      btn.querySelector('.like-icon').textContent = '👍';
     }
+
+    // Atualizar contador
+    const likes = await repository.getLikesCount(cardId);
+    btn.querySelector('.like-count').textContent = likes.length;
 
     await updateColumnLikeCount(columnId);
   } catch (error) {

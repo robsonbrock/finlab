@@ -76,10 +76,12 @@
       border: none; color: var(--text); outline: none; font-family: inherit; font-size: inherit; }
     .card-text:focus { outline: 1px solid var(--border); border-radius: 2px; padding: 2px; }
     .card-bottom { display: flex; align-items: center; gap: 6px; font-size: 11px; }
-    .card-like { width: 20px; height: 20px; border: 1px solid; border-radius: 2px;
+    .card-like { border: 1px solid; border-radius: 2px;
       background: transparent; cursor: pointer; display: flex; align-items: center;
-      justify-content: center; font-size: 10px; transition: all .15s; margin-left: auto; }
+      gap: 2px; font-size: 10px; transition: all .15s; margin-left: auto; padding: 2px 4px; }
     .card-like.active { color: #fff; }
+    .like-icon { font-size: 12px; }
+    .like-count { font-size: 9px; min-width: 12px; text-align: center; }
     .card-delete { width: 20px; height: 20px; border: none; background: transparent;
       cursor: pointer; font-size: 12px; color: var(--muted); transition: color .15s; }
     .card-delete:hover { color: var(--danger); }
