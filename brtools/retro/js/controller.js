@@ -156,6 +156,13 @@ async function renderColumn(column) {
   columnDiv.addEventListener('dragover', handleColumnDragOver);
   columnDiv.addEventListener('drop', handleColumnDrop);
 
+  // Drag-and-drop para cards (mesmo em coluna vazia)
+  const columnCardsDiv = columnDiv.querySelector('.column-cards');
+  if (columnCardsDiv) {
+    columnCardsDiv.addEventListener('dragover', handleCardDragOver);
+    columnCardsDiv.addEventListener('drop', handleCardDrop);
+  }
+
   // Inserir antes do botão "+ Coluna"
   const addColumnBtn = container.querySelector('.add-column-btn');
   if (addColumnBtn) {
