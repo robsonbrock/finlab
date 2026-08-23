@@ -767,16 +767,20 @@ function handleRoomChange(payload) {
 }
 
 async function handleLikesChange(payload) {
+  console.log('🔥 LIKE EVENT:', payload.eventType, payload.new?.card_id || payload.old?.card_id);
+
   const cardId = payload.new?.card_id || payload.old?.card_id;
   if (!cardId) return;
 
   const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
   if (!btn) return;
 
-  // Aguardar para garantir que o banco atualizou
-  await new Promise(resolve => setTimeout(resolve, 100));
+  // Aguardar 500ms para garantir que o banco atualizou
+  await new Promise(resolve => setTimeout(resolve, 500));
 
   const likes = await repository.getLikesCount(cardId);
+  console.log('📊 Likes após wait:', likes.length);
+
   const userLiked = likes.some(like => like.session_id === sessionId);
   const count = likes?.length || 0;
 
