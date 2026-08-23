@@ -57,12 +57,16 @@ async function init() {
       document.getElementById('sortSelect').value = sortBy;
     }
 
-    // Renderizar colunas
+    // Renderizar TODAS as colunas primeiro (paralelo)
     for (const column of loadedColumns) {
       columns[column.id] = { ...column, cards: [] };
-      await renderColumn(column);
-      await loadColumnCards(column.id);
+      renderColumn(column); // Sem await
     }
+
+    // Carregar cards de TODAS as colunas em paralelo
+    await Promise.all(
+      loadedColumns.map(column => loadColumnCards(column.id))
+    );
 
     // Assinar atualizações em tempo real
     subscribeToChanges();
