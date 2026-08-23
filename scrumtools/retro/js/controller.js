@@ -719,13 +719,179 @@ function handleRoomChange(payload) {
 }
 
 function handleColumnsChange(payload) {
-  console.log('Column change:', payload);
-  // Lidar com mudanças de coluna (nome, cor, deleção)
+  const { eventType, new: newData, old: oldData } = payload;
+
+  if (eventType === 'UPDATE') {
+    // Atualizar coluna existente
+    const columnId = newData.id;
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+
+    if (columnDiv) {
+      // Atualizar nome
+      const nameSpan = columnDiv.querySelector('.column-name');
+      if (nameSpan && newData.nome !== oldData.nome) {
+        nameSpan.textContent = escapeHtml(newData.nome);
+      }
+
+      // Atualizar cor
+      if (newData.cor !== oldData.cor) {
+        const colorPicker = columnDiv.querySelector('.btn-color');
+        if (colorPicker) colorPicker.value = newData.cor;
+
+        // Atualizar cor dos cards na coluna
+        columnDiv.querySelectorAll('.card').forEach(cardEl => {
+          cardEl.style.borderColor = newData.cor;
+          const rgbColor = hexToRgb(newData.cor);
+          if (rgbColor) {
+            cardEl.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.1)`;
+          }
+          cardEl.setAttribute('data-col-color', newData.cor);
+
+          const likeBtn = cardEl.querySelector('.card-like');
+          if (likeBtn) {
+            likeBtn.style.borderColor = newData.cor;
+            if (likeBtn.classList.contains('active')) {
+              likeBtn.style.backgroundColor = newData.cor;
+            }
+          }
+        });
+      }
+
+      // Atualizar ordem se mudou
+      if (newData.ordem !== oldData.ordem) {
+        reorderColumnsInDOM();
+      }
+
+      // Atualizar no estado local
+      if (columns[columnId]) {
+        columns[columnId] = { ...columns[columnId], ...newData };
+      }
+    }
+  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData.deletada && !oldData.deletada)) {
+    // Remover coluna (soft delete)
+    const columnId = newData?.id || oldData?.id;
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+
+    if (columnDiv) {
+      columnDiv.style.opacity = '0.5';
+      setTimeout(() => columnDiv.remove(), 300);
+    }
+
+    if (columns[columnId]) {
+      delete columns[columnId];
+    }
+  } else if (eventType === 'INSERT') {
+    // Adicionar nova coluna
+    renderColumn(newData).then(() => loadColumnCards(newData.id));
+  }
 }
 
 function handleCardsChange(payload) {
-  console.log('Cards change:', payload);
-  // Lidar com mudanças de cards
+  const { eventType, new: newData, old: oldData } = payload;
+
+  if (eventType === 'INSERT') {
+    // Novo card adicionado
+    const columnId = newData.coluna_id;
+    if (columns[columnId]) {
+      // Inserir na posição correta baseado na ordem
+      const insertIndex = columns[columnId].cards.findIndex(c => c.ordem > newData.ordem);
+      if (insertIndex === -1) {
+        columns[columnId].cards.push(newData);
+      } else {
+        columns[columnId].cards.splice(insertIndex, 0, newData);
+      }
+      renderCard(columnId, newData);
+    }
+  } else if (eventType === 'UPDATE') {
+    // Card atualizado
+    const cardId = newData.id;
+    const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
+
+    // Verificar se moveu de coluna
+    if (newData.coluna_id !== oldData.coluna_id) {
+      // Remover da coluna antiga
+      if (columns[oldData.coluna_id]) {
+        const cardIndex = columns[oldData.coluna_id].cards.findIndex(c => c.id === cardId);
+        if (cardIndex > -1) {
+          columns[oldData.coluna_id].cards.splice(cardIndex, 1);
+        }
+        const oldCardDiv = document.querySelector(`[data-column-id="${oldData.coluna_id}"] [data-card-id="${cardId}"]`);
+        if (oldCardDiv) oldCardDiv.remove();
+      }
+
+      // Adicionar na nova coluna
+      if (columns[newData.coluna_id]) {
+        columns[newData.coluna_id].cards.push(newData);
+        renderCard(newData.coluna_id, newData);
+      }
+    } else if (cardDiv) {
+      // Atualizar card na mesma coluna
+      if (newData.texto !== oldData.texto) {
+        const textarea = cardDiv.querySelector('.card-text');
+        if (textarea) textarea.value = newData.texto;
+      }
+
+      if (newData.ordem !== oldData.ordem) {
+        // Atualizar card no array com a nova ordem
+        const columnId = newData.coluna_id;
+        if (columns[columnId]) {
+          const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
+          if (cardIndex > -1) {
+            columns[columnId].cards[cardIndex].ordem = newData.ordem;
+          }
+
+          // Reordenar o array
+          columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
+
+          // Reordenar no DOM
+          const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
+          if (container) {
+            columns[columnId].cards.forEach(card => {
+              const cardEl = container.querySelector(`[data-card-id="${card.id}"]`);
+              if (cardEl) container.appendChild(cardEl);
+            });
+          }
+        }
+      }
+    }
+  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData.deletada && !oldData.deletada)) {
+    // Remover card (soft delete)
+    const cardId = newData?.id || oldData?.id;
+    const columnId = newData?.coluna_id || oldData?.coluna_id;
+    const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
+
+    if (cardDiv) {
+      cardDiv.style.opacity = '0.5';
+      setTimeout(() => cardDiv.remove(), 300);
+    }
+
+    if (columns[columnId]) {
+      const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
+      if (cardIndex > -1) {
+        columns[columnId].cards.splice(cardIndex, 1);
+      }
+    }
+  }
+}
+
+function reorderColumnsInDOM() {
+  const container = document.getElementById('columns-container');
+  const columnEls = Array.from(container.querySelectorAll('.column'));
+
+  const sortedColumns = columnEls.sort((a, b) => {
+    const colIdA = a.getAttribute('data-column-id');
+    const colIdB = b.getAttribute('data-column-id');
+    return (columns[colIdA]?.ordem || 0) - (columns[colIdB]?.ordem || 0);
+  });
+
+  sortedColumns.forEach(col => {
+    const addColumnBtn = container.querySelector('.add-column-btn');
+    if (addColumnBtn) {
+      container.insertBefore(col, addColumnBtn);
+    } else {
+      container.appendChild(col);
+    }
+  });
 }
 
 // Utils
