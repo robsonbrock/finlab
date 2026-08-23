@@ -163,14 +163,10 @@ async function renderCard(columnId, card) {
   const userLiked = await repository.getUserLiked(card.id, sessionId);
   const emojiString = await roomService.getEmojiString(card.id);
 
-  // Se é card novo (texto vazio), adicionar autofocus
   const isNewCard = card.texto === '';
-  const autofocusAttr = isNewCard ? 'autofocus' : '';
-
-  console.log('📝 Renderizando card:', card.id, 'novo?', isNewCard, 'autofocus?', !!autofocusAttr);
 
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)" ${autofocusAttr}>${escapeHtml(card.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)">${escapeHtml(card.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
@@ -200,6 +196,17 @@ async function renderCard(columnId, card) {
   container.addEventListener('drop', handleCardDrop);
 
   container.appendChild(cardDiv);
+
+  // Se é card novo, fazer focus no textarea
+  if (isNewCard) {
+    setTimeout(() => {
+      const textarea = cardDiv.querySelector('.card-text');
+      if (textarea) {
+        textarea.focus();
+        textarea.select();
+      }
+    }, 0);
+  }
 }
 
 // Editar nome da sala
