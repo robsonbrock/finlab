@@ -484,7 +484,10 @@ async function toggleLike(btn) {
     // Enviar para o servidor
     await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId, sessionId);
 
-    // Depois de confirmar no servidor, atualizar contador
+    // Aguardar um pouco para garantir que o Realtime processe
+    await new Promise(resolve => setTimeout(resolve, 200));
+
+    // Atualizar contador com dados frescos do servidor
     const likes = await repository.getLikesCount(cardId);
     const likeIcon = btn.classList.contains('active') ? '❤️' : '🤍';
     btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
@@ -758,7 +761,7 @@ function handleRoomChange(payload) {
   }
 }
 
-function handleLikesChange(payload) {
+async function handleLikesChange(payload) {
   // Qualquer mudança em likes, atualizar contador
   const cardId = payload.new?.card_id || payload.old?.card_id;
   if (!cardId) return;
@@ -766,22 +769,26 @@ function handleLikesChange(payload) {
   const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
   if (!btn) return;
 
-  // Atualizar contador assincronamente
-  repository.getLikesCount(cardId).then(likes => {
-    btn.setAttribute('title', likes.length + ' likes');
-
-    // Atualizar visual baseado no usuário atual
+  try {
+    // Atualizar contador imediatamente
+    const likes = await repository.getLikesCount(cardId);
     const userLiked = likes.some(like => like.session_id === sessionId);
 
-    // Limpar e reconstruir o botão
+    // Atualizar botão
+    btn.setAttribute('title', likes.length + ' likes');
+    const likeIcon = userLiked ? '❤️' : '🤍';
+
+    // FORÇAR atualização do HTML para garantir que o contador mude
+    btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
+
     if (userLiked) {
       btn.classList.add('active');
-      btn.innerHTML = `❤️ <span class="like-count">${likes.length}</span>`;
     } else {
       btn.classList.remove('active');
-      btn.innerHTML = `🤍 <span class="like-count">${likes.length}</span>`;
     }
-  });
+  } catch (error) {
+    console.error('Erro ao atualizar likes:', error);
+  }
 }
 
 function handleEmojisChange(payload) {
