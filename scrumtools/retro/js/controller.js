@@ -737,11 +737,20 @@ function subscribeToChanges() {
       subscriptions.push(cardsSub);
       console.log('✅ Subscribed to cards:', columnId);
 
-      // Subscrever a mudanças de likes de cada card da coluna
-      columns[columnId].cards.forEach(card => {
-        const likesSub = repository.subscribeToLikes(card.id, handleLikesChange);
-        subscriptions.push(likesSub);
-      });
+      // Subscrever a mudanças de likes GLOBAIS (para todos os cards da sala)
+    // Não filtramos por card, assinamos a toda a tabela card_likes
+    const globalLikesSub = window.supabaseClient
+      .channel(`likes:global:${currentRoomId}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'card_likes' },
+        (payload) => {
+          console.log('🌍 Global likes change:', payload);
+          handleLikesChange(payload);
+        }
+      )
+      .subscribe();
+    subscriptions.push(globalLikesSub);
 
       // Subscrever a mudanças de emojis de cada card da coluna
       columns[columnId].cards.forEach(card => {
