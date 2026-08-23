@@ -9,6 +9,7 @@ let emojiPickerCardId = null;
 let emojiPickerColumnId = null;
 let draggedCard = null;
 let draggedColumn = null;
+let reorderTimeouts = {}; // Debounce timers por coluna
 
 const EMOJIS = ['😀', '😂', '❤️', '👍', '🔥', '✨', '🎉', '😍', '👏', '💡', '🚀', '🎯', '📈', '⭐', '💯', '🙌', '😎', '🤔', '😢', '👎', '🤮', '💪', '🏆', '🎭', '🌟'];
 
@@ -860,20 +861,8 @@ function handleCardsChange(payload) {
             columns[columnId].cards[cardIndex].ordem = newData.ordem;
           }
 
-          // Reordenar o array
-          columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
-
-          // Reordenar no DOM - remover e re-renderizar todos os cards
-          const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
-          if (container) {
-            // Remover TODOS os cards do container
-            container.querySelectorAll('.card').forEach(el => el.remove());
-
-            // Re-renderizar cards na ordem correta
-            for (const card of columns[columnId].cards) {
-              renderCard(columnId, card);
-            }
-          }
+          // Usar debounce para reordenar - evita múltiplos reprocessamentos
+          scheduleColumnReorder(columnId);
         }
       }
     }
@@ -893,6 +882,39 @@ function handleCardsChange(payload) {
       if (cardIndex > -1) {
         columns[columnId].cards.splice(cardIndex, 1);
       }
+    }
+  }
+}
+
+// Debounce para reordenação de cards
+function scheduleColumnReorder(columnId) {
+  // Limpar timer anterior se existir
+  if (reorderTimeouts[columnId]) {
+    clearTimeout(reorderTimeouts[columnId]);
+  }
+
+  // Agendar novo reprocessamento após 50ms
+  reorderTimeouts[columnId] = setTimeout(() => {
+    performColumnReorder(columnId);
+    delete reorderTimeouts[columnId];
+  }, 50);
+}
+
+function performColumnReorder(columnId) {
+  if (!columns[columnId]) return;
+
+  // Reordenar o array
+  columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
+
+  // Reordenar no DOM - remover e re-renderizar todos os cards
+  const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
+  if (container) {
+    // Remover TODOS os cards do container
+    container.querySelectorAll('.card').forEach(el => el.remove());
+
+    // Re-renderizar cards na ordem correta
+    for (const card of columns[columnId].cards) {
+      renderCard(columnId, card);
     }
   }
 }
