@@ -737,7 +737,10 @@ function subscribeToChanges() {
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'card_likes' },
-        handleLikesChange
+        (payload) => {
+          console.log('⚡ EVENTO LIKES CHEGOU:', payload.eventType, payload);
+          handleLikesChange(payload);
+        }
       )
       .subscribe();
     subscriptions.push(globalLikesSub);
