@@ -66,16 +66,16 @@
     .btn-delete:hover { border-color: var(--danger); color: var(--danger); }
     .column-cards { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column;
       gap: 8px; }
-    .card { background: var(--toolbar); border: 2px solid; border-radius: 12px; padding: 10px;
-      font-size: 12px; line-height: 1.4; display: flex; flex-direction: column; gap: 6px;
+    .card { background: var(--toolbar); border: 2px solid; border-radius: 12px; padding: 6px 8px;
+      font-size: 12px; line-height: 1.2; display: flex; flex-direction: column; gap: 3px;
       cursor: grab; transition: all .15s; background-color: var(--toolbar); }
     .card[data-col-color] { background-color: var(--toolbar) !important; }
     .card:active { cursor: grabbing; opacity: 0.8; }
     .card-text { word-break: break-word; resize: none; background: transparent;
       border: none; color: var(--text); outline: none; font-family: inherit; font-size: inherit;
-      min-height: 24px; max-height: none; overflow: hidden; line-height: 1.4; }
+      min-height: 16px; max-height: none; overflow: hidden; line-height: 1.2; margin: 0; }
     .card-text:focus { outline: 1px solid var(--border); border-radius: 2px; padding: 2px; }
-    .card-bottom { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .card-bottom { display: flex; align-items: center; gap: 3px; font-size: 10px; }
     .card-like { cursor: pointer; display: flex; align-items: center; gap: 3px;
       font-size: 12px; margin-left: auto; background: none; border: none; padding: 0; }
     .like-count { font-size: 10px; min-width: 12px; color: var(--muted); opacity: 0.8; }
