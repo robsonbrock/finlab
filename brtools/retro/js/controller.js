@@ -901,15 +901,10 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
 
     // 3. Somar likes (transferir do draggedCard para targetCard)
     const draggedLikes = await repository.getLikesCount(draggedCardId);
-    const targetLikes = await repository.getLikesCount(targetCardId);
 
     // Adicionar todos os likes do card arrastado ao card alvo
     for (const like of draggedLikes) {
-      // Verificar se esse session já tem like no card alvo
-      const alreadyLiked = targetLikes.some(l => l.session_id === like.session_id);
-      if (!alreadyLiked) {
-        await repository.addLike(targetCardId, like.session_id);
-      }
+      await repository.addLike(targetCardId, like.session_id);
     }
 
     // 4. Somar emojis (transferir do draggedCard para targetCard)
