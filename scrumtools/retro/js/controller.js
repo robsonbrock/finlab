@@ -187,8 +187,16 @@ function closeEditRoom() {
 
 async function saveRoomName() {
   const newName = document.getElementById('editRoomInput').value.trim();
+  const oldName = currentRoom.nome;
+
   if (!newName) {
-    alert('Nome não pode ser vazio');
+    // Reverter para nome anterior sem mostrar alert
+    document.getElementById('editRoomInput').value = oldName;
+    return;
+  }
+
+  if (newName === oldName) {
+    closeEditRoom();
     return;
   }
 
@@ -199,7 +207,8 @@ async function saveRoomName() {
     closeEditRoom();
   } catch (error) {
     console.error('Erro ao salvar nome:', error);
-    alert('Erro ao salvar. Tente novamente.');
+    // Reverter para nome anterior sem mostrar alert
+    document.getElementById('editRoomInput').value = oldName;
   }
 }
 
@@ -209,21 +218,54 @@ function editColumnName(columnId) {
   const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
   const nameDiv = columnDiv.querySelector('.column-name');
 
+  // Verificar se já está em modo de edição
+  if (nameDiv.classList.contains('editing')) {
+    return;
+  }
+
   nameDiv.classList.add('editing');
-  nameDiv.innerHTML = `<input type="text" class="column-name-input" value="${escapeHtml(column.nome)}" maxlength="30" onblur="saveColumnName('${columnId}', this)" onkeypress="if(event.key==='Enter') saveColumnName('${columnId}', this)">`;
+  const oldName = escapeHtml(column.nome);
+  nameDiv.innerHTML = `<input type="text" class="column-name-input" value="${oldName}" maxlength="30">`;
 
   const input = nameDiv.querySelector('input');
   input.focus();
   input.select();
+
+  // Salvar ao sair do input
+  input.addEventListener('blur', () => saveColumnName(columnId));
+
+  // Salvar ao pressionar Enter
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      saveColumnName(columnId);
+    } else if (e.key === 'Escape') {
+      // Cancelar edição
+      nameDiv.textContent = oldName;
+      nameDiv.classList.remove('editing');
+    }
+  });
+
+  // Prevenir propagação de cliques
+  input.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 }
 
-async function saveColumnName(columnId, input) {
-  const newName = input.value.trim();
-  const nameDiv = input.parentElement;
+async function saveColumnName(columnId) {
+  const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+  const nameDiv = columnDiv?.querySelector('.column-name');
+  const input = nameDiv?.querySelector('input');
 
-  if (!newName) {
-    const column = columns[columnId];
-    nameDiv.textContent = escapeHtml(column.nome);
+  if (!input || !nameDiv) {
+    return;
+  }
+
+  const newName = input.value.trim();
+  const oldName = columns[columnId].nome;
+
+  // Se o nome não mudou, só fechar a edição
+  if (!newName || newName === oldName) {
+    nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
     return;
   }
@@ -235,10 +277,10 @@ async function saveColumnName(columnId, input) {
     nameDiv.classList.remove('editing');
   } catch (error) {
     console.error('Erro ao salvar nome da coluna:', error);
-    alert('Erro: ' + error.message);
-    const column = columns[columnId];
-    nameDiv.textContent = escapeHtml(column.nome);
+    // Reverter para o nome anterior sem mostrar alert
+    nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
+    console.error('Detalhes do erro:', error.message);
   }
 }
 
