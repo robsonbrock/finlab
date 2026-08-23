@@ -474,24 +474,30 @@ async function toggleLike(btn) {
   const hasLike = btn.classList.contains('active');
 
   try {
-    await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId, sessionId);
-
-    // Atualizar contador
-    const likes = await repository.getLikesCount(cardId);
-
+    // Atualizar UI IMEDIATAMENTE (otimismo)
     if (hasLike) {
       btn.classList.remove('active');
     } else {
       btn.classList.add('active');
     }
 
-    // Reconstruir o HTML do botão
+    // Enviar para o servidor
+    await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId, sessionId);
+
+    // Depois de confirmar no servidor, atualizar contador
+    const likes = await repository.getLikesCount(cardId);
     const likeIcon = btn.classList.contains('active') ? '❤️' : '🤍';
     btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
     btn.setAttribute('title', likes.length + ' likes');
 
   } catch (error) {
     console.error('Erro ao dar like:', error);
+    // Reverter UI em caso de erro
+    if (hasLike) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
   }
 }
 
@@ -753,24 +759,19 @@ function handleRoomChange(payload) {
 }
 
 function handleLikesChange(payload) {
-  console.log('❤️ Likes change:', payload);
   // Qualquer mudança em likes, atualizar contador
   const cardId = payload.new?.card_id || payload.old?.card_id;
-  console.log('Card ID:', cardId, 'Payload:', payload);
   if (!cardId) return;
 
   const btn = document.querySelector(`[data-card-id="${cardId}"].card-like`);
-  console.log('Found button:', !!btn);
   if (!btn) return;
 
   // Atualizar contador assincronamente
   repository.getLikesCount(cardId).then(likes => {
-    console.log('Likes count:', likes.length, 'Likes:', likes);
     btn.setAttribute('title', likes.length + ' likes');
 
     // Atualizar visual baseado no usuário atual
     const userLiked = likes.some(like => like.session_id === sessionId);
-    console.log('User liked:', userLiked, 'Session ID:', sessionId);
 
     // Limpar e reconstruir o botão
     if (userLiked) {
@@ -780,7 +781,6 @@ function handleLikesChange(payload) {
       btn.classList.remove('active');
       btn.innerHTML = `🤍 <span class="like-count">${likes.length}</span>`;
     }
-    console.log('Updated button HTML:', btn.innerHTML);
   });
 }
 
