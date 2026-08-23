@@ -696,15 +696,18 @@ function subscribeToChanges() {
     // Subscrever a mudanças na sala
     const roomSub = repository.subscribeToRoom(currentRoomId, handleRoomChange);
     subscriptions.push(roomSub);
+    console.log('✅ Subscribed to room:', currentRoomId);
 
     // Subscrever a mudanças nas colunas
     const columnsSub = repository.subscribeToColumns(currentRoomId, handleColumnsChange);
     subscriptions.push(columnsSub);
+    console.log('✅ Subscribed to columns:', currentRoomId);
 
     // Subscrever a mudanças em cards e likes de cada coluna
     Object.keys(columns).forEach(columnId => {
       const cardsSub = repository.subscribeToCards(columnId, handleCardsChange);
       subscriptions.push(cardsSub);
+      console.log('✅ Subscribed to cards:', columnId);
     });
   } catch (error) {
     console.error('Erro ao subscrever:', error);
@@ -719,6 +722,7 @@ function handleRoomChange(payload) {
 }
 
 function handleColumnsChange(payload) {
+  console.log('🔄 Column Realtime:', payload);
   const { eventType, new: newData, old: oldData } = payload;
 
   if (eventType === 'UPDATE') {
@@ -792,6 +796,7 @@ function handleColumnsChange(payload) {
 }
 
 function handleCardsChange(payload) {
+  console.log('🔄 Cards Realtime:', payload);
   const { eventType, new: newData, old: oldData } = payload;
 
   if (eventType === 'INSERT') {
