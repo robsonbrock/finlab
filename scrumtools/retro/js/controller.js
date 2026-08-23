@@ -121,6 +121,12 @@ async function renderCard(columnId, card) {
   const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
   if (!container) return;
 
+  // Remover card duplicado se existir
+  const existingCard = container.querySelector(`[data-card-id="${card.id}"]`);
+  if (existingCard) {
+    existingCard.remove();
+  }
+
   const cardDiv = document.createElement('div');
   cardDiv.className = 'card';
   cardDiv.setAttribute('data-card-id', card.id);
