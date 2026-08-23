@@ -233,8 +233,12 @@ const repository = {
       .channel(`room:${roomId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'salas', filter: `id=eq.${roomId}` },
-        (payload) => callback({ table: 'salas', ...payload })
+        { event: '*', schema: 'public', table: 'salas' },
+        (payload) => {
+          if (payload.new?.id === roomId || payload.old?.id === roomId) {
+            callback({ table: 'salas', ...payload });
+          }
+        }
       )
       .subscribe();
     return subscription;
@@ -245,8 +249,12 @@ const repository = {
       .channel(`columns:${roomId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'colunas', filter: `sala_id=eq.${roomId}` },
-        (payload) => callback({ table: 'colunas', ...payload })
+        { event: '*', schema: 'public', table: 'colunas' },
+        (payload) => {
+          if (payload.new?.sala_id === roomId || payload.old?.sala_id === roomId) {
+            callback({ table: 'colunas', ...payload });
+          }
+        }
       )
       .subscribe();
     return subscription;
@@ -257,8 +265,12 @@ const repository = {
       .channel(`cards:${columnId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'cards', filter: `coluna_id=eq.${columnId}` },
-        (payload) => callback({ table: 'cards', ...payload })
+        { event: '*', schema: 'public', table: 'cards' },
+        (payload) => {
+          if (payload.new?.coluna_id === columnId || payload.old?.coluna_id === columnId) {
+            callback({ table: 'cards', ...payload });
+          }
+        }
       )
       .subscribe();
     return subscription;
@@ -269,8 +281,12 @@ const repository = {
       .channel(`likes:${cardId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'card_likes', filter: `card_id=eq.${cardId}` },
-        (payload) => callback({ table: 'card_likes', ...payload })
+        { event: '*', schema: 'public', table: 'card_likes' },
+        (payload) => {
+          if (payload.new?.card_id === cardId || payload.old?.card_id === cardId) {
+            callback({ table: 'card_likes', ...payload });
+          }
+        }
       )
       .subscribe();
     return subscription;
@@ -281,8 +297,12 @@ const repository = {
       .channel(`emojis:${cardId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'card_emojis', filter: `card_id=eq.${cardId}` },
-        (payload) => callback({ table: 'card_emojis', ...payload })
+        { event: '*', schema: 'public', table: 'card_emojis' },
+        (payload) => {
+          if (payload.new?.card_id === cardId || payload.old?.card_id === cardId) {
+            callback({ table: 'card_emojis', ...payload });
+          }
+        }
       )
       .subscribe();
     return subscription;
