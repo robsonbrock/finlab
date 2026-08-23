@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrum Tools</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='32' font-size='36' font-weight='900' text-anchor='middle' dominant-baseline='middle' fill='%232563eb' font-family='monospace'>ST</text></svg>">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0d1117; --panel:    #161b22; --toolbar:  #21262d;
+      --hover:   #1f2937; --text:     #e6edf3; --muted:    #8b949e;
+      --border:  #30363d; --accent:   #2563eb; --accent-h: #3b82f6;
+    }
+    [data-theme="light"] {
+      --bg:      #f0f4f8; --panel:    #ffffff; --toolbar:  #e4e9f0;
+      --hover:   #d8e2ee; --text:     #1a2332; --muted:    #536070;
+      --border:  #c0cad6; --accent:   #1d4ed8; --accent-h: #2563eb;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 14px; }
+    body { display: flex; flex-direction: column; }
+    #header { background: var(--panel); border-bottom: 2px solid var(--border);
+      padding: 20px; display: flex; align-items: center; gap: 14px; }
+    #header-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    #header-content { display: flex; flex-direction: column; gap: 2px; }
+    #header-title { font-size: 18px; font-weight: 700; }
+    #header-desc { font-size: 12px; color: var(--muted); }
+    #content { flex: 1; padding: 20px; overflow-y: auto; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+      padding: 20px; cursor: pointer; transition: all .2s; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .card-icon { font-size: 28px; margin-bottom: 12px; }
+    .card-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .card.disabled { opacity: 0.5; cursor: not-allowed; }
+    .card.disabled:hover { border-color: var(--border); box-shadow: none; }
+    #theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px;
+      background: var(--panel); border: 1px solid var(--border); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px;
+      transition: all .2s; z-index: 50; }
+    #theme-toggle:hover { border-color: var(--accent); }
+    @media (max-width: 640px) {
+      #header { flex-direction: column; text-align: center; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-icon">
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='40' height='40'>
+      <text x='32' y='32' font-size='36' font-weight='900' text-anchor='middle' dominant-baseline='middle' fill='var(--accent)' font-family='monospace'>ST</text>
+    </svg>
+  </div>
+  <div id="header-content">
+    <h1 id="header-title">Scrum Tools</h1>
+    <p id="header-desc">Ferramentas para o framework Scrum</p>
+  </div>
+</div>
+
+<div id="content">
+  <div class="cards-grid">
+    <div class="card disabled">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Scrum Planning</div>
+      <div class="card-desc">Ferramenta para planejar sprints e organizar backlog. Em desenvolvimento.</div>
+    </div>
+    <div class="card" onclick="window.location.href='retro/index.html'">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Scrum Retrospective</div>
+      <div class="card-desc">Ferramenta colaborativa para retrospectivas de sprint. Crie salas e colete feedbacks da equipe.</div>
+    </div>
+  </div>
+</div>
+
+<button id="theme-toggle" title="Toggle tema">🌙</button>
+
+<script src="shared/analytics.js"></script>
+<script src="shared/theme.js"></script>
+</body>
+</html>

@@ -44,7 +44,7 @@ Os modelos pré-existentes devem ser:
 
 Caso o usuário escolha um dos modelos, o sistema deve criar tantas colunas quanto o modelo propõe. Caso escolher crair o próprio modelo, deve informar quantas colunas deseja, então o sistema deve criar quantas colunas forem informadas. Neste caso, o nome das colunas ficará **A preencher** na próxima tela.
 
-O sistema deve gerar uma sala com id aleatório alfanumérico de 4 caracteres no formato xxxx-xxxx, de forma que esse id será utilizado pelo restante da equipe do criador da sala para acessar a mesma sala. O link de acesso (url) da sala será no formato [.../scrumtools/retro/xxxx-xxxx](.../scrumtools/retro/xxxx). Antes de efetivamente criar uma sala, o sistema deve verificar se já existe alguma sala com este ID e então trocar caso encontre.
+O sistema deve gerar uma sala com id aleatório alfanumérico de 4 caracteres no formato xxxx, de forma que esse id será utilizado pelo restante da equipe do criador da sala para acessar a mesma sala. O link de acesso (url) da sala será no formato [.../scrumtools/retro/xxxx](.../scrumtools/retro/xxxx). Antes de efetivamente criar uma sala, o sistema deve verificar se já existe alguma sala com este ID e então trocar caso encontre.
 
 #### Sala existente
 

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrum Retro - Criar ou Acessar Sala</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='32' font-size='36' font-weight='900' text-anchor='middle' dominant-baseline='middle' fill='%232563eb' font-family='monospace'>RT</text></svg>">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0d1117; --panel:    #161b22; --toolbar:  #21262d;
+      --hover:   #1f2937; --text:     #e6edf3; --muted:    #8b949e;
+      --border:  #30363d; --accent:   #2563eb; --accent-h: #3b82f6;
+      --ok:      #22c55e; --danger:   #ef4444;
+    }
+    [data-theme="light"] {
+      --bg:      #f0f4f8; --panel:    #ffffff; --toolbar:  #e4e9f0;
+      --hover:   #d8e2ee; --text:     #1a2332; --muted:    #536070;
+      --border:  #c0cad6; --accent:   #1d4ed8; --accent-h: #2563eb;
+      --ok:      #15803d; --danger:   #dc2626;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 14px; }
+    body { display: flex; flex-direction: column; }
+    #header { background: var(--panel); border-bottom: 2px solid var(--border);
+      padding: 20px; display: flex; align-items: center; gap: 14px; }
+    #header-icon { width: 40px; height: 40px; flex-shrink: 0; }
+    #header-content { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    #header-title { font-size: 18px; font-weight: 700; }
+    #header-desc { font-size: 12px; color: var(--muted); }
+    #header-back { color: var(--accent); cursor: pointer; font-size: 16px; padding: 4px 8px;
+      border-radius: 4px; transition: background .2s; }
+    #header-back:hover { background: var(--hover); }
+    #content { flex: 1; padding: 40px 20px; display: flex; align-items: center; justify-content: center; overflow-y: auto; }
+    .container { width: 100%; max-width: 500px; }
+    .section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; display: block; }
+    .form-input, .form-select { width: 100%; padding: 8px 12px; background: var(--toolbar);
+      border: 1px solid var(--border); border-radius: 4px; color: var(--text);
+      font-family: inherit; font-size: 13px; }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); }
+    .form-input::placeholder { color: var(--muted); }
+    .btn { padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border);
+      cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; outline: none;
+      white-space: nowrap; }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-h); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-default { background: var(--toolbar); color: var(--text); }
+    .btn-default:hover { background: var(--hover); }
+    .form-row { display: flex; gap: 8px; }
+    .form-row .form-input { flex: 1; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1000;
+      display: none; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+      width: min(500px, 95vw); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
+    .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; }
+    .modal-title { font-size: 16px; font-weight: 600; }
+    .modal-close { width: 24px; height: 24px; border: none; background: transparent;
+      color: var(--muted); cursor: pointer; font-size: 18px; }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 20px; }
+    .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border);
+      display: flex; gap: 8px; justify-content: flex-end; }
+    #theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px;
+      background: var(--panel); border: 1px solid var(--border); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px;
+      transition: all .2s; z-index: 50; }
+    #theme-toggle:hover { border-color: var(--accent); }
+    .loading { text-align: center; color: var(--muted); }
+    .error { color: var(--danger); font-size: 12px; margin-top: 4px; }
+    @media (max-width: 640px) {
+      #content { padding: 20px 16px; }
+      .section { padding: 16px; }
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-back" title="Voltar para início">← Voltar</div>
+  <div id="header-icon">
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='40' height='40'>
+      <text x='32' y='32' font-size='36' font-weight='900' text-anchor='middle' dominant-baseline='middle' fill='var(--accent)' font-family='monospace'>RT</text>
+    </svg>
+  </div>
+  <div id="header-content">
+    <h1 id="header-title">Scrum Retrospective</h1>
+    <p id="header-desc">Salas colaborativas para retrospectivas</p>
+  </div>
+</div>
+
+<div id="content">
+  <div class="container">
+    <!-- Seção: Criar Sala -->
+    <div class="section">
+      <div class="section-title">Criar Nova Sala</div>
+      <button class="btn btn-primary" style="width: 100%;" onclick="openCreateModal()">+ Criar Sala</button>
+    </div>
+
+    <!-- Seção: Acessar Sala Existente -->
+    <div class="section">
+      <div class="section-title">Acessar Sala Existente</div>
+      <div class="form-group">
+        <label class="form-label">Código da Sala (ex: abcd)</label>
+        <div class="form-row">
+          <input type="text" id="accessCode" class="form-input" placeholder="Código..." maxlength="4">
+          <button class="btn btn-primary" onclick="accessRoom()">Acessar</button>
+        </div>
+        <div class="error" id="accessError"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Criar Sala - Nome -->
+<div class="modal-overlay" id="createModal1">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Criar Nova Sala</h2>
+      <button class="modal-close" onclick="closeCreateModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nome da Sala (máx 50 caracteres)</label>
+        <input type="text" id="roomName" class="form-input" placeholder="Ex: Retrospectiva Sprint 10" maxlength="50">
+        <div class="error" id="nameError"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeCreateModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="continueCreateRoom()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Criar Sala - Modelo -->
+<div class="modal-overlay" id="createModal2">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Escolher Modelo</h2>
+      <button class="modal-close" onclick="backToNameModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Modelos Pré-existentes</label>
+        <select class="form-select" id="modelSelect" onchange="onModelSelect()">
+          <option value="">-- Selecione um modelo --</option>
+          <option value="model1">Começar, Continuar, Parar</option>
+          <option value="model2">Bom, A melhorar</option>
+          <option value="model3">Bom, Nem tão bom assim, Novas ideias</option>
+          <option value="model4">Sinal, Ruído</option>
+          <option value="model5">Âncoras, Motor</option>
+          <option value="custom">Criar Modelo Customizado</option>
+        </select>
+      </div>
+      <div id="customColumnsDiv" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">Quantas colunas deseja?</label>
+          <input type="number" id="columnCount" class="form-input" min="1" max="10" placeholder="Ex: 3">
+          <div class="error" id="columnError"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="backToNameModal()">Voltar</button>
+      <button class="btn btn-primary" onclick="createRoom()" id="createBtn">Criar Sala</button>
+    </div>
+  </div>
+</div>
+
+<button id="theme-toggle" title="Toggle tema">🌙</button>
+
+<script src="../shared/analytics.js"></script>
+<script src="../shared/theme.js"></script>
+<script src="../shared/supabaseClient.js"></script>
+<script src="js/retro-home.js"></script>
+</body>
+</html>
