@@ -106,7 +106,6 @@ async function renderColumn(column) {
         <button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>
       </div>
     </div>
-    <div class="column-stats">👍 <span class="like-count">0</span></div>
     <div class="column-cards"></div>
     <div class="column-add-card">
       <button class="btn-add-card" onclick="addCard('${column.id}')">+ Adicionar Card</button>
@@ -126,8 +125,6 @@ async function renderColumn(column) {
   } else {
     container.appendChild(columnDiv);
   }
-
-  updateColumnLikeCount(column.id);
 }
 
 // Renderizar card
@@ -166,8 +163,8 @@ async function renderCard(columnId, card) {
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
         <span id="emojis-${card.id}">${emojiString}</span>
       </div>
-      <button class="card-like" data-card-id="${card.id}" onclick="toggleLike(this)">
-        <span class="like-icon">${userLiked ? '👍' : '🤍'}</span>
+      <button class="card-like" data-card-id="${card.id}" onclick="toggleLike(this)" title="${likes.length} likes">
+        ${userLiked ? '❤️' : '🤍'}
         <span class="like-count">${likes.length}</span>
       </button>
       <button class="card-delete" onclick="openDeleteCard('${card.id}', '${columnId}')">🗑️</button>
@@ -177,7 +174,6 @@ async function renderCard(columnId, card) {
   // Aplicar estilos iniciais
   if (userLiked) {
     cardDiv.querySelector('.card-like').classList.add('active');
-    cardDiv.querySelector('.card-like').style.backgroundColor = '#22c55e';
   }
 
   // Drag and drop
@@ -474,36 +470,25 @@ async function toggleLike(btn) {
   try {
     await roomService.toggleLike(cardId, hasLike, columnId, currentRoomId, sessionId);
 
-    if (hasLike) {
-      btn.classList.remove('active');
-      btn.style.backgroundColor = '';
-      btn.querySelector('.like-icon').textContent = '🤍';
-    } else {
-      btn.classList.add('active');
-      btn.style.backgroundColor = '#22c55e';
-      btn.querySelector('.like-icon').textContent = '👍';
-    }
-
     // Atualizar contador
     const likes = await repository.getLikesCount(cardId);
-    btn.querySelector('.like-count').textContent = likes.length;
 
-    await updateColumnLikeCount(columnId);
+    if (hasLike) {
+      btn.classList.remove('active');
+    } else {
+      btn.classList.add('active');
+    }
+
+    // Reconstruir o HTML do botão
+    const likeIcon = btn.classList.contains('active') ? '❤️' : '🤍';
+    btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
+    btn.setAttribute('title', likes.length + ' likes');
+
   } catch (error) {
     console.error('Erro ao dar like:', error);
   }
 }
 
-// Atualizar contador de likes da coluna
-async function updateColumnLikeCount(columnId) {
-  try {
-    const count = await repository.getColumnLikesCount(columnId);
-    const span = document.querySelector(`[data-column-id="${columnId}"] .like-count`);
-    if (span) span.textContent = count;
-  } catch (error) {
-    console.error('Erro ao atualizar contador:', error);
-  }
-}
 
 // Emoji picker
 function openEmojiPicker(cardId, columnId) {
