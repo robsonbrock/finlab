@@ -66,7 +66,7 @@ const roomService = {
     if (text.length > 200) {
       throw new Error('Máximo 200 caracteres');
     }
-    const updated = await repository.updateCard(cardId, text);
+    const updated = await repository.updateCard(cardId, { texto: text });
     await repository.logAction(roomId, 'card_texto_editado', { card_id: cardId, coluna_id: columnId });
     return updated;
   },

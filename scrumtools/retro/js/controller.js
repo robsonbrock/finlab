@@ -7,6 +7,8 @@ let pendingColumnDelete = null;
 let pendingCardDelete = null;
 let emojiPickerCardId = null;
 let emojiPickerColumnId = null;
+let draggedCard = null;
+let draggedColumn = null;
 
 const EMOJIS = ['😀', '😂', '❤️', '👍', '🔥', '✨', '🎉', '😍', '👏', '💡', '🚀', '🎯', '📈', '⭐', '💯', '🙌', '😎', '🤔', '😢', '👎', '🤮', '💪', '🏆', '🎭', '🌟'];
 
@@ -80,6 +82,7 @@ async function renderColumn(column) {
   const columnDiv = document.createElement('div');
   columnDiv.className = 'column';
   columnDiv.setAttribute('data-column-id', column.id);
+  columnDiv.setAttribute('draggable', 'true');
   columnDiv.innerHTML = `
     <div class="column-header">
       <div class="column-name" onclick="editColumnName('${column.id}')">${escapeHtml(column.nome)}</div>
@@ -94,6 +97,12 @@ async function renderColumn(column) {
       <button class="btn-add-card" onclick="addCard('${column.id}')">+ Adicionar Card</button>
     </div>
   `;
+
+  // Drag-and-drop para coluna
+  columnDiv.addEventListener('dragstart', handleColumnDragStart);
+  columnDiv.addEventListener('dragend', handleColumnDragEnd);
+  columnDiv.addEventListener('dragover', handleColumnDragOver);
+  columnDiv.addEventListener('drop', handleColumnDrop);
 
   container.insertBefore(columnDiv, container.lastElementChild);
   updateColumnLikeCount(column.id);
@@ -143,10 +152,14 @@ async function renderCard(columnId, card) {
   }
 
   // Drag and drop
-  cardDiv.addEventListener('dragstart', handleDragStart);
-  cardDiv.addEventListener('dragend', handleDragEnd);
-  cardDiv.addEventListener('dragover', handleDragOver);
-  cardDiv.addEventListener('drop', handleDrop);
+  cardDiv.addEventListener('dragstart', handleCardDragStart);
+  cardDiv.addEventListener('dragend', handleCardDragEnd);
+  cardDiv.addEventListener('dragover', handleCardDragOver);
+  cardDiv.addEventListener('drop', handleCardDrop);
+
+  // Permitir drop de cards neste container
+  container.addEventListener('dragover', handleCardDragOver);
+  container.addEventListener('drop', handleCardDrop);
 
   container.appendChild(cardDiv);
 }
@@ -447,25 +460,144 @@ async function addEmojiVote(cardId, columnId, emoji) {
   }
 }
 
-// Drag and drop
-function handleDragStart(e) {
+// ========== Drag and drop CARDS ==========
+function handleCardDragStart(e) {
+  draggedCard = {
+    id: this.getAttribute('data-card-id'),
+    element: this,
+    sourceColumnId: this.closest('[data-column-id]').getAttribute('data-column-id')
+  };
   e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/html', this.innerHTML);
+  e.dataTransfer.setData('text/plain', draggedCard.id);
   this.style.opacity = '0.5';
 }
 
-function handleDragEnd(e) {
-  this.style.opacity = '1';
+function handleCardDragEnd(e) {
+  if (draggedCard) {
+    draggedCard.element.style.opacity = '1';
+  }
+  draggedCard = null;
 }
 
-function handleDragOver(e) {
+function handleCardDragOver(e) {
+  if (!draggedCard) return;
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
+
+  const card = e.target.closest('.card');
+  if (card && card !== draggedCard.element) {
+    const allCards = e.target.closest('.column-cards').querySelectorAll('.card');
+    const draggedIndex = Array.from(allCards).indexOf(draggedCard.element);
+    const targetIndex = Array.from(allCards).indexOf(card);
+
+    if (draggedIndex < targetIndex) {
+      card.parentNode.insertBefore(draggedCard.element, card.nextSibling);
+    } else {
+      card.parentNode.insertBefore(draggedCard.element, card);
+    }
+  }
 }
 
-function handleDrop(e) {
+async function handleCardDrop(e) {
+  if (!draggedCard) return;
   e.preventDefault();
-  // Simplificado: reordenação básica
+
+  const targetColumnDiv = e.target.closest('[data-column-id]');
+  if (!targetColumnDiv) return;
+
+  const targetColumnId = targetColumnDiv.getAttribute('data-column-id');
+  const sourceColumnId = draggedCard.sourceColumnId;
+
+  try {
+    // Se moveu para coluna diferente
+    if (sourceColumnId !== targetColumnId) {
+      await repository.updateCard(draggedCard.id, { coluna_id: targetColumnId });
+      // Atualizar array local
+      const cardIndex = columns[sourceColumnId].cards.findIndex(c => c.id === draggedCard.id);
+      if (cardIndex > -1) {
+        const card = columns[sourceColumnId].cards.splice(cardIndex, 1)[0];
+        columns[targetColumnId].cards.push(card);
+      }
+    }
+
+    // Reordenar cards
+    const container = targetColumnDiv.querySelector('.column-cards');
+    const cards = Array.from(container.querySelectorAll('.card'));
+    const cardIds = cards.map(c => c.getAttribute('data-card-id'));
+
+    await repository.reorderCards(targetColumnId, cardIds);
+
+    // Atualizar array local com nova ordem
+    columns[targetColumnId].cards.sort((a, b) => {
+      return cardIds.indexOf(a.id) - cardIds.indexOf(b.id);
+    });
+
+    window.analytics.trackCardAction('card_reordered', currentRoomId, targetColumnId);
+  } catch (error) {
+    console.error('Erro ao reordenar card:', error);
+    // Reverter visual
+    location.reload();
+  }
+}
+
+// ========== Drag and drop COLUNAS ==========
+function handleColumnDragStart(e) {
+  draggedColumn = {
+    id: this.getAttribute('data-column-id'),
+    element: this
+  };
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', draggedColumn.id);
+  this.style.opacity = '0.5';
+}
+
+function handleColumnDragEnd(e) {
+  if (draggedColumn) {
+    draggedColumn.element.style.opacity = '1';
+  }
+  draggedColumn = null;
+}
+
+function handleColumnDragOver(e) {
+  if (!draggedColumn) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+
+  const column = e.target.closest('.column');
+  if (column && column !== draggedColumn.element) {
+    const container = document.getElementById('columns-container');
+    const allColumns = container.querySelectorAll('.column');
+    const draggedIndex = Array.from(allColumns).indexOf(draggedColumn.element);
+    const targetIndex = Array.from(allColumns).indexOf(column);
+
+    if (draggedIndex < targetIndex) {
+      column.parentNode.insertBefore(draggedColumn.element, column.nextSibling);
+    } else {
+      column.parentNode.insertBefore(draggedColumn.element, column);
+    }
+  }
+}
+
+async function handleColumnDrop(e) {
+  if (!draggedColumn) return;
+  e.preventDefault();
+
+  try {
+    const container = document.getElementById('columns-container');
+    const columns_list = Array.from(container.querySelectorAll('.column'));
+    const columnIds = columns_list.map(c => c.getAttribute('data-column-id'));
+
+    // Atualizar ordem no banco
+    for (let i = 0; i < columnIds.length; i++) {
+      await repository.updateColumn(columnIds[i], { ordem: i });
+    }
+
+    window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumn.id);
+  } catch (error) {
+    console.error('Erro ao reordenar coluna:', error);
+    // Reverter visual
+    location.reload();
+  }
 }
 
 // Copiar código da sala

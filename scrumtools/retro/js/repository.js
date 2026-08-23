@@ -95,10 +95,14 @@ const repository = {
     return data;
   },
 
-  async updateCard(cardId, text) {
+  async updateCard(cardId, updates) {
+    // Se recebe apenas uma string, é o texto
+    if (typeof updates === 'string') {
+      updates = { texto: updates };
+    }
     const { data, error } = await window.supabaseClient
       .from('cards')
-      .update({ texto: text })
+      .update(updates)
       .eq('id', cardId)
       .select()
       .single();
