@@ -835,6 +835,23 @@ function handleCardsChange(payload) {
     // Card atualizado
     const cardId = newData.id;
 
+    // Verificar se foi deletado (soft delete)
+    if (newData.deletada && !oldData.deletada) {
+      // Remover card do DOM
+      const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
+      if (cardDiv) {
+        cardDiv.style.opacity = '0.5';
+        setTimeout(() => cardDiv.remove(), 300);
+      }
+
+      // Remover do array
+      const columnId = oldData.coluna_id;
+      if (columns[columnId]) {
+        columns[columnId].cards = columns[columnId].cards.filter(c => c.id !== cardId);
+      }
+      return; // Parar aqui, não processar outras atualizações
+    }
+
     // Verificar se moveu de coluna
     if (newData.coluna_id !== oldData.coluna_id) {
       // Remover da coluna antiga
@@ -878,8 +895,8 @@ function handleCardsChange(payload) {
         }
       }
     }
-  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData.deletada && !oldData.deletada)) {
-    // Remover card (soft delete)
+  } else if (eventType === 'DELETE') {
+    // Remover card (hard delete - raramente acontece)
     const cardId = newData?.id || oldData?.id;
     const columnId = newData?.coluna_id || oldData?.coluna_id;
     const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
@@ -890,10 +907,7 @@ function handleCardsChange(payload) {
     }
 
     if (columns[columnId]) {
-      const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
-      if (cardIndex > -1) {
-        columns[columnId].cards.splice(cardIndex, 1);
-      }
+      columns[columnId].cards = columns[columnId].cards.filter(c => c.id !== cardId);
     }
   }
 }
