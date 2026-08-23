@@ -104,7 +104,14 @@ async function renderColumn(column) {
   columnDiv.addEventListener('dragover', handleColumnDragOver);
   columnDiv.addEventListener('drop', handleColumnDrop);
 
-  container.insertBefore(columnDiv, container.lastElementChild);
+  // Inserir antes do botão "+ Coluna"
+  const addColumnBtn = container.querySelector('.add-column-btn');
+  if (addColumnBtn) {
+    container.insertBefore(columnDiv, addColumnBtn);
+  } else {
+    container.appendChild(columnDiv);
+  }
+
   updateColumnLikeCount(column.id);
 }
 
@@ -544,8 +551,15 @@ async function handleCardDrop(e) {
 function handleColumnDragStart(e) {
   draggedColumn = {
     id: this.getAttribute('data-column-id'),
-    element: this
+    element: this,
+    originalIndex: null
   };
+
+  // Guardar índice original
+  const container = document.getElementById('columns-container');
+  const allColumns = Array.from(container.querySelectorAll('.column'));
+  draggedColumn.originalIndex = allColumns.indexOf(this);
+
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/plain', draggedColumn.id);
   this.style.opacity = '0.5';
@@ -563,17 +577,20 @@ function handleColumnDragOver(e) {
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
 
-  const column = e.target.closest('.column');
-  if (column && column !== draggedColumn.element) {
-    const container = document.getElementById('columns-container');
-    const allColumns = container.querySelectorAll('.column');
-    const draggedIndex = Array.from(allColumns).indexOf(draggedColumn.element);
-    const targetIndex = Array.from(allColumns).indexOf(column);
+  const targetColumn = e.target.closest('.column');
+  if (!targetColumn || targetColumn === draggedColumn.element) return;
 
+  const container = document.getElementById('columns-container');
+  const allColumns = Array.from(container.querySelectorAll('.column'));
+  const draggedIndex = allColumns.indexOf(draggedColumn.element);
+  const targetIndex = allColumns.indexOf(targetColumn);
+
+  // Só reordenar visualmente se conseguir encontrar índices válidos
+  if (draggedIndex !== -1 && targetIndex !== -1) {
     if (draggedIndex < targetIndex) {
-      column.parentNode.insertBefore(draggedColumn.element, column.nextSibling);
+      targetColumn.parentNode.insertBefore(draggedColumn.element, targetColumn.nextSibling);
     } else {
-      column.parentNode.insertBefore(draggedColumn.element, column);
+      targetColumn.parentNode.insertBefore(draggedColumn.element, targetColumn);
     }
   }
 }
@@ -584,10 +601,10 @@ async function handleColumnDrop(e) {
 
   try {
     const container = document.getElementById('columns-container');
-    const columns_list = Array.from(container.querySelectorAll('.column'));
-    const columnIds = columns_list.map(c => c.getAttribute('data-column-id'));
+    const columnList = Array.from(container.querySelectorAll('.column'));
+    const columnIds = columnList.map(c => c.getAttribute('data-column-id'));
 
-    // Atualizar ordem no banco
+    // Atualizar ordem apenas dos que mudaram
     for (let i = 0; i < columnIds.length; i++) {
       await repository.updateColumn(columnIds[i], { ordem: i });
     }
@@ -595,7 +612,7 @@ async function handleColumnDrop(e) {
     window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumn.id);
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
-    // Reverter visual
+    alert('Erro ao reordenar. Atualizando...');
     location.reload();
   }
 }
