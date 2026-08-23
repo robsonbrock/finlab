@@ -173,7 +173,7 @@ function renderCardDirect(columnId, cardData, container) {
   const isNewCard = cardData.texto === '';
 
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${cardData.id}" maxlength="200" onblur="saveCardText(this)">${escapeHtml(cardData.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${cardData.id}" maxlength="200" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(cardData.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${cardData.id}', '${columnId}')">😊</button>
@@ -201,14 +201,17 @@ function renderCardDirect(columnId, cardData, container) {
 
   container.appendChild(cardDiv);
 
-  if (isNewCard) {
-    setTimeout(() => {
-      const textarea = cardDiv.querySelector('.card-text');
-      if (textarea) {
+  // Auto-resize inicial
+  const textarea = cardDiv.querySelector('.card-text');
+  if (textarea) {
+    autoResizeTextarea(textarea);
+
+    if (isNewCard) {
+      setTimeout(() => {
         textarea.focus();
         textarea.select();
-      }
-    }, 0);
+      }, 0);
+    }
   }
 }
 
@@ -244,7 +247,7 @@ async function renderCard(columnId, card) {
   const isNewCard = card.texto === '';
 
   cardDiv.innerHTML = `
-    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)">${escapeHtml(card.texto)}</textarea>
+    <textarea class="card-text" data-card-id="${card.id}" maxlength="200" onblur="saveCardText(this)" oninput="autoResizeTextarea(this)">${escapeHtml(card.texto)}</textarea>
     <div class="card-bottom">
       <div class="card-emojis">
         <button class="btn-emoji" onclick="openEmojiPicker('${card.id}', '${columnId}')">😊</button>
@@ -275,10 +278,15 @@ async function renderCard(columnId, card) {
 
   container.appendChild(cardDiv);
 
+  // Auto-resize inicial
+  const textarea = cardDiv.querySelector('.card-text');
+  if (textarea) {
+    autoResizeTextarea(textarea);
+  }
+
   // Se é card novo, fazer focus no textarea
   if (isNewCard) {
     setTimeout(() => {
-      const textarea = cardDiv.querySelector('.card-text');
       if (textarea) {
         textarea.focus();
         textarea.select();
@@ -493,6 +501,12 @@ async function addCard(columnId) {
     console.error('Erro ao adicionar card:', error);
     alert('Erro: ' + error.message);
   }
+}
+
+// Auto-resize textarea conforme digita
+function autoResizeTextarea(textarea) {
+  textarea.style.height = 'auto';
+  textarea.style.height = (textarea.scrollHeight) + 'px';
 }
 
 // Salvar texto do card
