@@ -422,9 +422,16 @@ async function changeColumnColor(columnId, color) {
     const updated = await roomService.updateColumnColor(columnId, color, currentRoomId);
     columns[columnId].cor = color;
 
+    const rgbColor = hexToRgb(color);
+
+    // Aplicar cor ao fundo inteiro da coluna
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+    if (columnDiv && rgbColor) {
+      columnDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.05)`;
+    }
+
     // Atualizar bordas, background e like button de todos os cards
     const cards = document.querySelectorAll(`[data-column-id="${columnId}"] .card`);
-    const rgbColor = hexToRgb(color);
 
     cards.forEach(card => {
       card.style.borderColor = color;
