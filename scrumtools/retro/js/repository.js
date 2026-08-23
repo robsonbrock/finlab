@@ -71,6 +71,7 @@ const repository = {
       .from('cards')
       .select('*')
       .eq('coluna_id', columnId)
+      .eq('deletada', false)
       .order('ordem', { ascending: true });
     if (error) throw error;
     return data;
@@ -112,7 +113,7 @@ const repository = {
   async deleteCard(cardId) {
     const { error } = await window.supabaseClient
       .from('cards')
-      .delete()
+      .update({ deletada: true })
       .eq('id', cardId);
     if (error) throw error;
   },
