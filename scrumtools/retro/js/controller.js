@@ -9,8 +9,9 @@ let emojiPickerCardId = null;
 let emojiPickerColumnId = null;
 let draggedCard = null;
 let draggedColumn = null;
-let reorderTimeouts = {}; // Debounce timers por coluna
-let sessionId = null; // Session ID anônimo para likes
+let reorderTimeouts = {};
+let sessionId = null;
+let sortBy = 'data-criacao';
 
 // Gerar/recuperar session ID
 function getOrCreateSessionId() {
@@ -287,20 +288,16 @@ async function saveColumnNameInline(columnId, inputElement, oldName) {
 
   const newName = inputElement.value.trim();
 
-  console.log(`Salvando nome da coluna ${columnId}: "${oldName}" -> "${newName}"`);
 
   // Se o nome não mudou, só fechar a edição
   if (!newName || newName === oldName) {
-    console.log('Nome não mudou, fechando edição');
     nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
     return;
   }
 
   try {
-    console.log('Chamando updateColumnName...');
     const updated = await roomService.updateColumnName(columnId, newName, currentRoomId);
-    console.log('Sucesso! Nome atualizado para:', updated.nome);
 
     columns[columnId].nome = updated.nome;
     nameDiv.textContent = escapeHtml(updated.nome);
@@ -505,6 +502,43 @@ async function toggleLike(btn) {
 }
 
 
+// Ordenação de cards
+function handleSortChange(value) {
+  sortBy = value;
+  reorderAllCards();
+}
+
+async function reorderAllCards() {
+  for (const columnId in columns) {
+    const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
+    if (!container) continue;
+
+    const cards = columns[columnId].cards;
+    let sortedCards = [...cards];
+
+    if (sortBy === 'votos') {
+      // Ordenar por votos (DESC) - mais votos no topo
+      const cardLikes = {};
+      for (const card of cards) {
+        const likes = await repository.getLikesCount(card.id);
+        cardLikes[card.id] = likes.length;
+      }
+      sortedCards.sort((a, b) => cardLikes[b.id] - cardLikes[a.id]);
+    } else {
+      // Ordenar por data criação (ASC) - mais antigos no topo
+      sortedCards.sort((a, b) => new Date(a.criado_em) - new Date(b.criado_em));
+    }
+
+    // Reorganizar DOM
+    sortedCards.forEach(card => {
+      const cardDiv = container.querySelector(`[data-card-id="${card.id}"]`);
+      if (cardDiv) {
+        container.appendChild(cardDiv);
+      }
+    });
+  }
+}
+
 // Emoji picker
 function openEmojiPicker(cardId, columnId) {
   emojiPickerCardId = cardId;
@@ -692,18 +726,15 @@ async function handleColumnDrop(e) {
     const columnList = Array.from(container.querySelectorAll('.column'));
     const columnIds = columnList.map(c => c.getAttribute('data-column-id'));
 
-    console.log('Atualizando ordem das colunas:', columnIds);
 
     // Atualizar ordem de cada coluna
     for (let i = 0; i < columnIds.length; i++) {
       const colId = columnIds[i];
       if (colId) {
-        console.log(`Atualizando coluna ${colId} com ordem ${i}`);
         await repository.updateColumn(colId, { ordem: i });
       }
     }
 
-    console.log('Ordem salva com sucesso');
     window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumnId);
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
@@ -724,12 +755,10 @@ function subscribeToChanges() {
     // Subscrever a mudanças na sala
     const roomSub = repository.subscribeToRoom(currentRoomId, handleRoomChange);
     subscriptions.push(roomSub);
-    console.log('✅ Subscribed to room:', currentRoomId);
 
     // Subscrever a mudanças nas colunas
     const columnsSub = repository.subscribeToColumns(currentRoomId, handleColumnsChange);
     subscriptions.push(columnsSub);
-    console.log('✅ Subscribed to columns:', currentRoomId);
 
     // Subscrever a mudanças de likes GLOBAIS (UMA ÚNICA VEZ por sala)
     const globalLikesSub = window.supabaseClient
@@ -746,7 +775,6 @@ function subscribeToChanges() {
     Object.keys(columns).forEach(columnId => {
       const cardsSub = repository.subscribeToCards(columnId, handleCardsChange);
       subscriptions.push(cardsSub);
-      console.log('✅ Subscribed to cards:', columnId);
 
       // Subscrever a mudanças de emojis de cada card da coluna
       columns[columnId].cards.forEach(card => {
@@ -824,7 +852,6 @@ function handleEmojisChange(payload) {
 }
 
 function handleColumnsChange(payload) {
-  console.log('🔄 Column Realtime:', payload);
   const { eventType, new: newData, old: oldData } = payload;
 
   if (eventType === 'UPDATE') {
@@ -898,7 +925,6 @@ function handleColumnsChange(payload) {
 }
 
 function handleCardsChange(payload) {
-  console.log('🔄 Cards Realtime:', payload);
   const { eventType, new: newData, old: oldData } = payload;
 
   if (eventType === 'INSERT') {
