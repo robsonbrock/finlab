@@ -159,10 +159,7 @@ async function renderCard(columnId, card) {
   // Aplicar estilos iniciais
   if (likeCount > 0) {
     cardDiv.querySelector('.card-like').classList.add('active');
-  }
-  cardDiv.querySelector('.card-like').style.borderColor = column.cor;
-  if (likeCount > 0) {
-    cardDiv.querySelector('.card-like').style.backgroundColor = column.cor;
+    cardDiv.querySelector('.card-like').style.backgroundColor = '#22c55e';
   }
 
   // Drag and drop
@@ -464,21 +461,7 @@ async function toggleLike(btn) {
       btn.style.backgroundColor = '';
     } else {
       btn.classList.add('active');
-
-      // Usar cor da coluna, mas com contraste se for muito clara
-      let bgColor = columns[columnId].cor;
-      const rgb = hexToRgb(bgColor);
-
-      // Calcular luminância para verificar se cor é muito clara
-      if (rgb) {
-        const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
-        // Se luminância > 0.7, cor é muito clara, usar cor escura de contraste
-        if (luminance > 0.7) {
-          bgColor = '#333333'; // Cinza escuro
-        }
-      }
-
-      btn.style.backgroundColor = bgColor;
+      btn.style.backgroundColor = '#22c55e'; // Verde padrão para todos os likes
     }
 
     await updateColumnLikeCount(columnId);
