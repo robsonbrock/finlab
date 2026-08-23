@@ -124,12 +124,18 @@ const repository = {
       ordem: index
     }));
 
+    console.log('🔄 Reordering cards:', updates);
+
     for (const update of updates) {
       const { error } = await window.supabaseClient
         .from('cards')
         .update({ ordem: update.ordem })
         .eq('id', update.id);
-      if (error) throw error;
+      if (error) {
+        console.error('❌ Error reordering card:', update.id, error);
+        throw error;
+      }
+      console.log('✅ Updated card order:', update.id, 'ordem:', update.ordem);
     }
   },
 
@@ -235,12 +241,16 @@ const repository = {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'salas' },
         (payload) => {
+          console.log('📡 Raw room payload:', payload);
           if (payload.new?.id === roomId || payload.old?.id === roomId) {
+            console.log('✅ Room callback called with:', payload);
             callback({ table: 'salas', ...payload });
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Room subscription status:', status);
+      });
     return subscription;
   },
 
@@ -251,12 +261,16 @@ const repository = {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'colunas' },
         (payload) => {
+          console.log('📡 Raw column payload:', payload);
           if (payload.new?.sala_id === roomId || payload.old?.sala_id === roomId) {
+            console.log('✅ Column callback called with:', payload);
             callback({ table: 'colunas', ...payload });
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Columns subscription status:', status);
+      });
     return subscription;
   },
 
@@ -267,12 +281,16 @@ const repository = {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'cards' },
         (payload) => {
+          console.log('📡 Raw card payload:', payload);
           if (payload.new?.coluna_id === columnId || payload.old?.coluna_id === columnId) {
+            console.log('✅ Card callback called with:', payload);
             callback({ table: 'cards', ...payload });
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log(`Cards subscription status for ${columnId}:`, status);
+      });
     return subscription;
   },
 
