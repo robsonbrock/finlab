@@ -844,23 +844,37 @@ function handleCardsChange(payload) {
       if (newData.ordem !== oldData.ordem) {
         // Atualizar card no array com a nova ordem
         const columnId = newData.coluna_id;
+        console.log('📊 Order changed for card', cardId, 'ordem:', oldData.ordem, '->', newData.ordem);
+
         if (columns[columnId]) {
           const cardIndex = columns[columnId].cards.findIndex(c => c.id === cardId);
           if (cardIndex > -1) {
             columns[columnId].cards[cardIndex].ordem = newData.ordem;
+            console.log('✅ Updated card order in array');
           }
 
           // Reordenar o array
           columns[columnId].cards.sort((a, b) => a.ordem - b.ordem);
+          console.log('✅ Sorted cards array, new order:', columns[columnId].cards.map(c => c.id).slice(0, 3));
 
           // Reordenar no DOM
           const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
           if (container) {
+            console.log('✅ Found container, reordering DOM');
             columns[columnId].cards.forEach(card => {
               const cardEl = container.querySelector(`[data-card-id="${card.id}"]`);
-              if (cardEl) container.appendChild(cardEl);
+              if (cardEl) {
+                container.appendChild(cardEl);
+              } else {
+                console.warn('⚠️ Card element not found for', card.id);
+              }
             });
+            console.log('✅ DOM reordered');
+          } else {
+            console.warn('⚠️ Container not found for column', columnId);
           }
+        } else {
+          console.warn('⚠️ Column not found in state:', columnId);
         }
       }
     }
