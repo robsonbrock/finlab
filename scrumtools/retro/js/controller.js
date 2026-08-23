@@ -821,7 +821,6 @@ function handleCardsChange(payload) {
   } else if (eventType === 'UPDATE') {
     // Card atualizado
     const cardId = newData.id;
-    const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
 
     // Verificar se moveu de coluna
     if (newData.coluna_id !== oldData.coluna_id) {
@@ -831,20 +830,24 @@ function handleCardsChange(payload) {
         if (cardIndex > -1) {
           columns[oldData.coluna_id].cards.splice(cardIndex, 1);
         }
-        const oldCardDiv = document.querySelector(`[data-column-id="${oldData.coluna_id}"] [data-card-id="${cardId}"]`);
-        if (oldCardDiv) oldCardDiv.remove();
       }
+
+      // Remover card do DOM de TODAS as colunas
+      document.querySelectorAll(`[data-card-id="${cardId}"]`).forEach(el => el.remove());
 
       // Adicionar na nova coluna
       if (columns[newData.coluna_id]) {
         columns[newData.coluna_id].cards.push(newData);
         renderCard(newData.coluna_id, newData);
       }
-    } else if (cardDiv) {
+    } else {
       // Atualizar card na mesma coluna
-      if (newData.texto !== oldData.texto) {
-        const textarea = cardDiv.querySelector('.card-text');
-        if (textarea) textarea.value = newData.texto;
+      const cardDiv = document.querySelector(`[data-card-id="${cardId}"]`);
+      if (cardDiv) {
+        if (newData.texto !== oldData.texto) {
+          const textarea = cardDiv.querySelector('.card-text');
+          if (textarea) textarea.value = newData.texto;
+        }
       }
 
       if (newData.ordem !== oldData.ordem) {
