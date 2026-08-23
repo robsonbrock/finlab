@@ -9,6 +9,7 @@ let emojiPickerCardId = null;
 let emojiPickerColumnId = null;
 let draggedCard = null;
 let draggedColumn = null;
+let mergeTargetCard = null;
 let reorderTimeouts = {};
 let sessionId = null;
 let sortBy = 'data-criacao';
@@ -731,6 +732,10 @@ function handleCardDragEnd(e) {
   if (draggedCard) {
     draggedCard.element.style.opacity = '1';
   }
+  if (mergeTargetCard) {
+    mergeTargetCard.classList.remove('merge-target');
+    mergeTargetCard = null;
+  }
   draggedCard = null;
 }
 
@@ -741,16 +746,20 @@ function handleCardDragOver(e) {
   e.dataTransfer.dropEffect = 'move';
 
   const card = e.target.closest('.card');
-  if (card && card !== draggedCard.element) {
-    const allCards = e.target.closest('.column-cards').querySelectorAll('.card');
-    const draggedIndex = Array.from(allCards).indexOf(draggedCard.element);
-    const targetIndex = Array.from(allCards).indexOf(card);
 
-    if (draggedIndex < targetIndex) {
-      card.parentNode.insertBefore(draggedCard.element, card.nextSibling);
-    } else {
-      card.parentNode.insertBefore(draggedCard.element, card);
-    }
+  // Remover highlight do card anterior se existir
+  if (mergeTargetCard && mergeTargetCard !== card) {
+    mergeTargetCard.classList.remove('merge-target');
+  }
+
+  if (card && card !== draggedCard.element) {
+    // Se está sobre um card, destacar para merge
+    card.classList.add('merge-target');
+    mergeTargetCard = card;
+  } else if (card === null && mergeTargetCard) {
+    // Se saiu de cima do card, remover highlight
+    mergeTargetCard.classList.remove('merge-target');
+    mergeTargetCard = null;
   }
 }
 
@@ -765,6 +774,19 @@ async function handleCardDrop(e) {
   const targetColumnId = targetColumnDiv.getAttribute('data-column-id');
   const sourceColumnId = draggedCard.sourceColumnId;
 
+  // Se soltou sobre outro card específico, fazer merge
+  if (mergeTargetCard) {
+    const targetCardId = mergeTargetCard.getAttribute('data-card-id');
+    if (targetCardId !== draggedCard.id) {
+      await mergeCards(draggedCard.id, targetCardId, sourceColumnId, targetColumnId);
+    }
+    mergeTargetCard.classList.remove('merge-target');
+    mergeTargetCard = null;
+    draggedCard = null;
+    return;
+  }
+
+  // Caso contrário, reordenar normalmente
   try {
     // Se moveu para coluna diferente
     if (sourceColumnId !== targetColumnId) {
@@ -793,6 +815,100 @@ async function handleCardDrop(e) {
   } catch (error) {
     console.error('Erro ao reordenar card:', error);
     // Reverter visual
+    location.reload();
+  }
+}
+
+// Mesclar dois cards
+async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetColumnId) {
+  try {
+    console.log(`🔀 Mesclando card ${draggedCardId} em ${targetCardId}`);
+
+    // Encontrar os cards nos arrays
+    const draggedCard = columns[sourceColumnId].cards.find(c => c.id === draggedCardId);
+    const targetCard = columns[targetColumnId].cards.find(c => c.id === targetCardId);
+
+    if (!draggedCard || !targetCard) {
+      throw new Error('Cards não encontrados');
+    }
+
+    // 1. Concatenar textos
+    const newText = targetCard.texto + '\n---\n' + draggedCard.texto;
+
+    // 2. Atualizar texto do card alvo
+    await repository.updateCard(targetCardId, { texto: newText });
+    targetCard.texto = newText;
+
+    // 3. Somar likes (transferir do draggedCard para targetCard)
+    const draggedLikes = await repository.getLikesCount(draggedCardId);
+    const targetLikes = await repository.getLikesCount(targetCardId);
+
+    // Adicionar todos os likes do card arrastado ao card alvo
+    for (const like of draggedLikes) {
+      // Verificar se esse session já tem like no card alvo
+      const alreadyLiked = targetLikes.some(l => l.session_id === like.session_id);
+      if (!alreadyLiked) {
+        await repository.addLike(targetCardId, like.session_id);
+      }
+    }
+
+    // 4. Somar emojis (transferir do draggedCard para targetCard)
+    const draggedEmojis = await repository.getEmojiCounts(draggedCardId);
+    const targetEmojis = await repository.getEmojiCounts(targetCardId);
+
+    for (const emoji in draggedEmojis) {
+      const count = draggedEmojis[emoji];
+      for (let i = 0; i < count; i++) {
+        await repository.addEmoji(targetCardId, emoji);
+      }
+    }
+
+    // 5. Soft-delete o card arrastado
+    await repository.deleteCard(draggedCardId);
+
+    // 6. Remover do array local
+    const draggedIndex = columns[sourceColumnId].cards.findIndex(c => c.id === draggedCardId);
+    if (draggedIndex > -1) {
+      columns[sourceColumnId].cards.splice(draggedIndex, 1);
+    }
+
+    // 7. Remover visualmente da tela
+    const draggedElement = document.querySelector(`[data-card-id="${draggedCardId}"]`);
+    if (draggedElement) {
+      draggedElement.remove();
+    }
+
+    // 8. Atualizar o card alvo na tela
+    const targetElement = document.querySelector(`[data-card-id="${targetCardId}"]`);
+    if (targetElement) {
+      const textarea = targetElement.querySelector('.card-text');
+      if (textarea) {
+        textarea.value = newText;
+        autoResizeTextarea(textarea);
+      }
+
+      // Atualizar emojis
+      const newEmojiString = await roomService.getEmojiString(targetCardId);
+      const emojiSpan = targetElement.querySelector(`#emojis-${targetCardId}`);
+      if (emojiSpan) {
+        emojiSpan.textContent = newEmojiString;
+      }
+
+      // Atualizar likes
+      const newLikesCount = await repository.getLikesCount(targetCardId);
+      const likeBtn = targetElement.querySelector('.card-like');
+      if (likeBtn) {
+        likeBtn.innerHTML = `❤️ <span class="like-count">${newLikesCount.length}</span>`;
+        likeBtn.setAttribute('title', newLikesCount.length + ' likes');
+      }
+    }
+
+    console.log('✅ Cards mesclados com sucesso!');
+    window.analytics.trackCardAction('card_merged', currentRoomId, targetColumnId);
+
+  } catch (error) {
+    console.error('❌ Erro ao mesclar cards:', error);
+    alert('Erro ao mesclar cards: ' + error.message);
     location.reload();
   }
 }
