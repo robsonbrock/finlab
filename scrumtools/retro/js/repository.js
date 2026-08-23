@@ -200,13 +200,13 @@ const repository = {
   async getEmojiCounts(cardId) {
     const { data, error } = await window.supabaseClient
       .from('card_emojis')
-      .select('emoji, count(*) as count')
+      .select('emoji')
       .eq('card_id', cardId);
     if (error) throw error;
 
     const counts = {};
     data?.forEach(row => {
-      counts[row.emoji] = row.count;
+      counts[row.emoji] = (counts[row.emoji] || 0) + 1;
     });
     return counts;
   },

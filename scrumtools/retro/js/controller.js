@@ -109,7 +109,14 @@ async function renderCard(columnId, card) {
   cardDiv.className = 'card';
   cardDiv.setAttribute('data-card-id', card.id);
   cardDiv.setAttribute('draggable', 'true');
+  cardDiv.setAttribute('data-col-color', column.cor);
+
+  // Aplicar cor com transparência
+  const rgbColor = hexToRgb(column.cor);
   cardDiv.style.borderColor = column.cor;
+  if (rgbColor) {
+    cardDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.1)`;
+  }
 
   const likeCount = await repository.getLikesCount(card.id);
   const emojiString = await roomService.getEmojiString(card.id);
@@ -221,10 +228,16 @@ async function changeColumnColor(columnId, color) {
     const updated = await roomService.updateColumnColor(columnId, color, currentRoomId);
     columns[columnId].cor = color;
 
-    // Atualizar bordas de todos os cards
+    // Atualizar bordas, background e like button de todos os cards
     const cards = document.querySelectorAll(`[data-column-id="${columnId}"] .card`);
+    const rgbColor = hexToRgb(color);
+
     cards.forEach(card => {
       card.style.borderColor = color;
+      if (rgbColor) {
+        card.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.1)`;
+      }
+
       const likeBtn = card.querySelector('.card-like');
       likeBtn.style.borderColor = color;
       if (likeBtn.classList.contains('active')) {
@@ -287,14 +300,17 @@ async function finalDeleteColumn() {
 
 // Adicionar card
 async function addCard(columnId) {
-  const text = prompt('Texto do card (máx 200 caracteres):');
-  if (!text) return;
-
   try {
-    const card = await roomService.createCard(columnId, text, currentRoomId);
+    const card = await roomService.createCard(columnId, '', currentRoomId);
     if (!columns[columnId].cards) columns[columnId].cards = [];
     columns[columnId].cards.push(card);
     await renderCard(columnId, card);
+
+    // Focar no textarea do novo card
+    const newCardDiv = document.querySelector(`[data-card-id="${card.id}"]`);
+    const textarea = newCardDiv.querySelector('.card-text');
+    textarea.focus();
+    textarea.select();
   } catch (error) {
     console.error('Erro ao adicionar card:', error);
     alert('Erro: ' + error.message);
@@ -501,6 +517,22 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+function hexToRgb(hex) {
+  // Remove # if present
+  hex = hex.replace('#', '');
+
+  // Handle 8-character hex (with alpha)
+  if (hex.length === 8) {
+    hex = hex.substring(0, 6);
+  }
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return { r, g, b };
 }
 
 // Iniciar quando Supabase estiver pronto
