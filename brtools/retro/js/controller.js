@@ -1434,13 +1434,16 @@ function handleColumnsChange(payload) {
       delete columns[columnId];
     }
   } else if (eventType === 'INSERT') {
-    // Adicionar nova coluna
-    renderColumn(newData).then(() => {
-      loadColumnCards(newData.id);
-      // Subscrever a mudanças de cards nessa coluna
-      const cardsSub = repository.subscribeToCards(newData.id, handleCardsChange);
-      subscriptions.push(cardsSub);
-    });
+    // Adicionar nova coluna (apenas se ainda não foi renderizada)
+    if (!columns[newData.id]) {
+      columns[newData.id] = { ...newData, cards: [] };
+      renderColumn(newData, false).then(() => {
+        loadColumnCards(newData.id);
+        // Subscrever a mudanças de cards nessa coluna
+        const cardsSub = repository.subscribeToCards(newData.id, handleCardsChange);
+        subscriptions.push(cardsSub);
+      });
+    }
   }
 }
 
