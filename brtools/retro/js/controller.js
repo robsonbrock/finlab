@@ -87,6 +87,7 @@ async function init() {
         closeEditRoom();
         closeDeleteColumnModal();
         closeDeleteCardModal();
+        closeEmptyCardDeleteModal();
         closeEmojiPicker();
       }
     });
@@ -576,22 +577,8 @@ async function saveCardText(textarea) {
   const newText = textarea.value.trim();
 
   if (!newText) {
-    // Se está vazio, pedir confirmação para deletar
-    const confirmDelete = confirm('Este card está vazio. Deseja excluir? (OK para excluir, Cancelar para manter)');
-
-    if (confirmDelete) {
-      // Deletar o card
-      await roomService.deleteCard(cardId, columnId, currentRoomId);
-      const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
-      if (cardElement) cardElement.remove();
-    } else {
-      // Restaurar texto anterior e focar
-      const card = columns[columnId].cards.find(c => c.id === cardId);
-      if (card) {
-        textarea.value = card.texto;
-        textarea.focus();
-      }
-    }
+    // Se está vazio, abrir modal para confirmar deleção
+    openEmptyCardDeleteModal(textarea, cardId, columnId);
     return;
   }
 
@@ -605,6 +592,9 @@ async function saveCardText(textarea) {
   }
 }
 
+// Variável para card vazio que será deletado
+let pendingEmptyCardDelete = null;
+
 // Deletar card
 function openDeleteCard(cardId, columnId) {
   pendingCardDelete = { cardId, columnId };
@@ -614,6 +604,36 @@ function openDeleteCard(cardId, columnId) {
 function closeDeleteCardModal() {
   document.getElementById('deleteCardModal').classList.remove('open');
   pendingCardDelete = null;
+}
+
+// Deletar card vazio
+function openEmptyCardDeleteModal(textarea, cardId, columnId) {
+  pendingEmptyCardDelete = { textarea, cardId, columnId };
+  document.getElementById('emptyCardDeleteModal').classList.add('open');
+}
+
+function closeEmptyCardDeleteModal() {
+  document.getElementById('emptyCardDeleteModal').classList.remove('open');
+  if (pendingEmptyCardDelete?.textarea) {
+    pendingEmptyCardDelete.textarea.focus();
+  }
+  pendingEmptyCardDelete = null;
+}
+
+async function confirmEmptyCardDelete() {
+  if (!pendingEmptyCardDelete) return;
+
+  const { cardId, columnId } = pendingEmptyCardDelete;
+
+  try {
+    await roomService.deleteCard(cardId, columnId, currentRoomId);
+    const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+    if (cardElement) cardElement.remove();
+    closeEmptyCardDeleteModal();
+  } catch (error) {
+    console.error('Erro ao deletar card vazio:', error);
+    alert('Erro ao deletar card');
+  }
 }
 
 async function confirmDeleteCard() {
