@@ -21,6 +21,8 @@ Gemfile.lock
 .env
 .env.local
 .env.*.local
+brtools/retro/setup-env.js
+brtools/index/setup-env.js
 
 # IDE
 .vscode/
