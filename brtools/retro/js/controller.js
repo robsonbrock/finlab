@@ -52,6 +52,10 @@ async function init() {
     currentRoom = room;
     document.getElementById('roomNameSpan').textContent = room.nome;
 
+    // Definir limite de votos por coluna
+    const maxLikes = room.max_likes_per_column || 5;
+    document.getElementById('maxLikesInput').value = maxLikes;
+
     // Definir ordenação inicial
     if (room.sort_by) {
       sortBy = room.sort_by;
@@ -599,6 +603,17 @@ async function toggleLike(btn) {
   const hasLike = btn.classList.contains('active');
 
   try {
+    // Se está tentando ADICIONAR like, verificar limite
+    if (!hasLike) {
+      const maxLikes = currentRoom.max_likes_per_column || 5;
+      const columnLikes = await repository.getLikesCountBySessionInColumn(columnId, sessionId);
+
+      if (columnLikes >= maxLikes) {
+        alert(`Limite de ${maxLikes} votos por coluna atingido!`);
+        return;
+      }
+    }
+
     // Atualizar UI IMEDIATAMENTE (otimismo)
     if (hasLike) {
       btn.classList.remove('active');
@@ -1056,6 +1071,162 @@ async function handleColumnDrop(e) {
 function copyRoomCode() {
   navigator.clipboard.writeText(currentRoomId);
   alert('Código copiado: ' + currentRoomId);
+}
+
+// ========== Votos por coluna ==========
+async function handleMaxLikesChange(value) {
+  const maxLikes = parseInt(value);
+  if (!maxLikes || maxLikes < 1) {
+    alert('Valor inválido');
+    return;
+  }
+
+  try {
+    await repository.updateRoom(currentRoomId, { max_likes_per_column: maxLikes });
+    currentRoom.max_likes_per_column = maxLikes;
+    console.log('✅ Limite de votos atualizado para:', maxLikes);
+  } catch (error) {
+    console.error('❌ Erro ao atualizar limite de votos:', error);
+    alert('Erro ao atualizar limite');
+  }
+}
+
+// ========== Limpar Resultados ==========
+function handleClearChange(value) {
+  if (value === 'clear-likes') {
+    document.getElementById('clearLikesModal1').classList.add('open');
+  } else if (value === 'clear-cards') {
+    document.getElementById('clearCardsModal1').classList.add('open');
+  } else if (value === 'clear-all') {
+    document.getElementById('clearAllModal1').classList.add('open');
+  }
+}
+
+function closeClearModals() {
+  document.getElementById('clearLikesModal1').classList.remove('open');
+  document.getElementById('clearLikesModal2').classList.remove('open');
+  document.getElementById('clearCardsModal1').classList.remove('open');
+  document.getElementById('clearCardsModal2').classList.remove('open');
+  document.getElementById('clearAllModal1').classList.remove('open');
+  document.getElementById('clearAllModal2').classList.remove('open');
+}
+
+function showClearLikesModal2() {
+  document.getElementById('clearLikesModal1').classList.remove('open');
+  document.getElementById('clearLikesModal2').classList.add('open');
+}
+
+function showClearCardsModal2() {
+  document.getElementById('clearCardsModal1').classList.remove('open');
+  document.getElementById('clearCardsModal2').classList.add('open');
+}
+
+function showClearAllModal2() {
+  document.getElementById('clearAllModal1').classList.remove('open');
+  document.getElementById('clearAllModal2').classList.add('open');
+}
+
+async function confirmClearLikes() {
+  try {
+    console.log('🗑️ Zerando todos os votos...');
+
+    // Deletar todos os likes da sala
+    const { error } = await window.supabaseClient
+      .from('card_likes')
+      .delete()
+      .in('card_id',
+        Object.values(columns).flatMap(col => col.cards.map(c => c.id))
+      );
+
+    if (error) throw error;
+
+    // Atualizar UI
+    Object.values(columns).forEach(column => {
+      column.cards.forEach(card => {
+        const cardElement = document.querySelector(`[data-card-id="${card.id}"]`);
+        if (cardElement) {
+          const likeBtn = cardElement.querySelector('.card-like');
+          if (likeBtn) {
+            likeBtn.innerHTML = `🤍 <span class="like-count">0</span>`;
+            likeBtn.classList.remove('active');
+          }
+        }
+      });
+    });
+
+    console.log('✅ Todos os votos foram zerados');
+    closeClearModals();
+    window.analytics.trackRoomAction('likes_cleared', currentRoomId);
+  } catch (error) {
+    console.error('❌ Erro ao zerar votos:', error);
+    alert('Erro ao zerar votos');
+    closeClearModals();
+  }
+}
+
+async function confirmClearCards() {
+  try {
+    console.log('🗑️ Excluindo todos os cards...');
+
+    const allCardIds = Object.values(columns).flatMap(col => col.cards.map(c => c.id));
+
+    // Soft-delete todos os cards
+    const { error } = await window.supabaseClient
+      .from('cards')
+      .update({ deletada: true })
+      .in('id', allCardIds);
+
+    if (error) throw error;
+
+    // Limpar UI
+    Object.keys(columns).forEach(columnId => {
+      const container = document.querySelector(`[data-column-id="${columnId}"] .column-cards`);
+      if (container) {
+        container.innerHTML = '';
+        columns[columnId].cards = [];
+      }
+    });
+
+    console.log('✅ Todos os cards foram excluídos');
+    closeClearModals();
+    window.analytics.trackRoomAction('cards_cleared', currentRoomId);
+  } catch (error) {
+    console.error('❌ Erro ao excluir cards:', error);
+    alert('Erro ao excluir cards');
+    closeClearModals();
+  }
+}
+
+async function confirmClearAll() {
+  try {
+    console.log('🗑️ Excluindo colunas e cards...');
+
+    const columnIds = Object.keys(columns);
+
+    // Soft-delete todas as colunas
+    const { error } = await window.supabaseClient
+      .from('colunas')
+      .update({ deletada: true })
+      .in('id', columnIds);
+
+    if (error) throw error;
+
+    // Remover colunas visualmente
+    columnIds.forEach(columnId => {
+      const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+      if (columnDiv) columnDiv.remove();
+    });
+
+    columns = {};
+
+    console.log('✅ Todas as colunas e cards foram excluídos');
+    closeClearModals();
+    window.analytics.trackRoomAction('all_cleared', currentRoomId);
+  } catch (error) {
+    console.error('❌ Erro ao excluir colunas:', error);
+    alert('Erro ao excluir colunas');
+    closeClearModals();
+  }
 }
 
 // Subscribe to realtime changes

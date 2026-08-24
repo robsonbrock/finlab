@@ -169,12 +169,25 @@
     <div class="room-code">Código: <strong id="roomCode">-</strong></div>
   </div>
   <div class="header-actions">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="maxLikesInput" style="font-size: 12px; color: var(--text);">Votos por coluna</label>
+      <input type="number" id="maxLikesInput" value="5" min="1" max="100" onchange="handleMaxLikesChange(this.value)" style="width: 50px; padding: 6px 8px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px;">
+    </div>
     <button class="btn btn-copy-code" onclick="copyRoomCode()">Copiar código da sala</button>
     <div style="display: flex; align-items: center; gap: 8px;">
       <label for="sortSelect" style="font-size: 12px; color: var(--text);">Ordenar por</label>
       <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
         <option value="data-criacao">Data criação</option>
         <option value="votos">Votos</option>
+      </select>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="clearSelect" style="font-size: 12px; color: var(--text);">Limpar resultados</label>
+      <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
+        <option value="">-- Selecione --</option>
+        <option value="clear-likes">Zerar todos os votos</option>
+        <option value="clear-cards">Excluir todos os cards</option>
+        <option value="clear-all">Excluir colunas e cards</option>
       </select>
     </div>
     <button id="theme-toggle" title="Toggle tema">🌙</button>
@@ -244,6 +257,78 @@
     <div class="modal-header">Escolher Emoji</div>
     <div class="modal-body" id="emojiGrid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-height: 300px; overflow-y: auto;">
       <!-- Emojis serão adicionados dinamicamente -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 1 - Zerar Votos -->
+<div class="modal-overlay" id="clearLikesModal1">
+  <div class="modal">
+    <div class="modal-header">Zerar Todos os Votos?</div>
+    <div class="modal-body">Todos os votos (likes) serão removidos. Deseja continuar?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="showClearLikesModal2()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 2 - Zerar Votos (dupla confirmação) -->
+<div class="modal-overlay" id="clearLikesModal2">
+  <div class="modal">
+    <div class="modal-header">Confirmar: Zerar Todos os Votos</div>
+    <div class="modal-body">Esta ação é irreversível. Tem certeza absoluta?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmClearLikes()">Zerar Permanentemente</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 1 - Excluir Cards -->
+<div class="modal-overlay" id="clearCardsModal1">
+  <div class="modal">
+    <div class="modal-header">Excluir Todos os Cards?</div>
+    <div class="modal-body">Todos os cards serão removidos. As colunas permanecerão. Deseja continuar?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="showClearCardsModal2()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 2 - Excluir Cards (dupla confirmação) -->
+<div class="modal-overlay" id="clearCardsModal2">
+  <div class="modal">
+    <div class="modal-header">Confirmar: Excluir Todos os Cards</div>
+    <div class="modal-body">Esta ação é irreversível. Tem certeza absoluta?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmClearCards()">Excluir Permanentemente</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 1 - Excluir Tudo -->
+<div class="modal-overlay" id="clearAllModal1">
+  <div class="modal">
+    <div class="modal-header">Excluir Colunas e Cards?</div>
+    <div class="modal-body">Todas as colunas e cards serão removidos. A sala ficará vazia. Deseja continuar?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="showClearAllModal2()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 2 - Excluir Tudo (dupla confirmação) -->
+<div class="modal-overlay" id="clearAllModal2">
+  <div class="modal">
+    <div class="modal-header">Confirmar: Excluir Colunas e Cards</div>
+    <div class="modal-body">Esta ação é irreversível. Tem certeza absoluta?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmClearAll()">Excluir Permanentemente</button>
     </div>
   </div>
 </div>

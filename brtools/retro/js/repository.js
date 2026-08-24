@@ -185,6 +185,27 @@ const repository = {
     return likes.some(like => like.session_id === sessionId);
   },
 
+  async getLikesCountBySessionInColumn(columnId, sessionId) {
+    // Contar likes que esse session deu em todos os cards dessa coluna
+    const { data: cards } = await window.supabaseClient
+      .from('cards')
+      .select('id')
+      .eq('coluna_id', columnId)
+      .eq('deletada', false);
+
+    if (!cards || cards.length === 0) return 0;
+
+    const cardIds = cards.map(c => c.id);
+    const { data: likes, error } = await window.supabaseClient
+      .from('card_likes')
+      .select('*')
+      .eq('session_id', sessionId)
+      .in('card_id', cardIds);
+
+    if (error) throw error;
+    return likes ? likes.length : 0;
+  },
+
   async getColumnLikesCount(columnId) {
     // Contar likes em todos os cards da coluna
     const { data: cards } = await window.supabaseClient
