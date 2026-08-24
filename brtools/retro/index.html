@@ -204,7 +204,14 @@
 
 <button id="theme-toggle" title="Toggle tema">🌙</button>
 
-<script src="setup-env.js"></script>
+<script>
+  // Load setup-env.js only in development (localhost)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    const script = document.createElement('script');
+    script.src = 'setup-env.js';
+    document.head.appendChild(script);
+  }
+</script>
 <script src="../shared/config.js"></script>
 <script src="../shared/analytics.js"></script>
 <script src="../shared/theme.js"></script>
