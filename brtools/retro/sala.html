@@ -348,15 +348,31 @@
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     const script = document.createElement('script');
     script.src = 'setup-env.js';
+    script.onload = () => {
+      loadConfigScripts();
+    };
     document.head.appendChild(script);
+  } else {
+    loadConfigScripts();
+  }
+
+  function loadConfigScripts() {
+    const scripts = [
+      '../shared/config.js',
+      '../shared/analytics.js',
+      '../shared/theme.js',
+      '../shared/supabaseClient.js',
+      'js/repository.js',
+      'js/roomService.js',
+      'js/controller.js'
+    ];
+
+    scripts.forEach(src => {
+      const script = document.createElement('script');
+      script.src = src;
+      document.head.appendChild(script);
+    });
   }
 </script>
-<script src="../shared/config.js"></script>
-<script src="../shared/analytics.js"></script>
-<script src="../shared/theme.js"></script>
-<script src="../shared/supabaseClient.js"></script>
-<script src="js/repository.js"></script>
-<script src="js/roomService.js"></script>
-<script src="js/controller.js"></script>
 </body>
 </html>
