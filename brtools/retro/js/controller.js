@@ -508,10 +508,8 @@ async function changeColumnColor(columnId, color) {
 // Adicionar coluna
 async function addColumn() {
   try {
-    const column = await roomService.createColumn(currentRoomId);
-    columns[column.id] = { ...column, cards: [] };
-    // Renderizar com isNewColumn=true para deixar em modo edit
-    await renderColumn(column, true);
+    await roomService.createColumn(currentRoomId);
+    // NÃO renderizar aqui - deixar o Realtime cuidar para evitar duplicação
   } catch (error) {
     console.error('Erro ao adicionar coluna:', error);
     alert('Erro ao adicionar coluna.');
@@ -1457,7 +1455,9 @@ function handleColumnsChange(payload) {
     // Adicionar nova coluna (apenas se ainda não foi renderizada)
     if (!columns[newData.id]) {
       columns[newData.id] = { ...newData, cards: [] };
-      renderColumn(newData, false).then(() => {
+      // Se nome é "A preencher", deixar em modo edit (coluna recém-criada)
+      const isNewColumn = newData.nome === 'A preencher';
+      renderColumn(newData, isNewColumn).then(() => {
         loadColumnCards(newData.id);
         // Subscrever a mudanças de cards nessa coluna
         const cardsSub = repository.subscribeToCards(newData.id, handleCardsChange);
