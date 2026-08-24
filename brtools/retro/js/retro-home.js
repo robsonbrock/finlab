@@ -266,5 +266,5 @@ document.addEventListener('keydown', (e) => {
 
 // Esperar Supabase estar pronto
 window.addEventListener('supabase-ready', () => {
-  console.log('Retro home page ready');
+
 });

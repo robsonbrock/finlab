@@ -464,7 +464,7 @@ async function saveColumnNameInline(columnId, inputElement, oldName) {
     nameDiv.classList.remove('editing');
   } catch (error) {
     console.error('Erro ao salvar nome da coluna:', error);
-    console.error('Stack:', error.stack);
+
     // Reverter para o nome anterior
     nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
@@ -1112,7 +1112,7 @@ async function handleColumnDrop(e) {
     window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumnId);
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
-    console.error('Stack:', error.stack);
+
     alert(`Erro ao reordenar: ${error.message}`);
   }
 }
