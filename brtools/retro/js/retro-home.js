@@ -11,6 +11,44 @@ const MODELS = {
 let currentRoomName = '';
 let selectedModel = '';
 
+// Room history management (localStorage only, 5 rooms max)
+function getRoomHistory() {
+  try {
+    const data = localStorage.getItem('roomHistory');
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRoomToHistory(id, nome) {
+  const history = getRoomHistory();
+  // Remove if already exists (avoid duplicates)
+  const filtered = history.filter(r => r.id !== id);
+  // Insert at beginning and keep only 5 most recent
+  const updated = [{ id, nome }, ...filtered].slice(0, 5);
+  localStorage.setItem('roomHistory', JSON.stringify(updated));
+}
+
+function renderRoomHistory() {
+  const history = getRoomHistory();
+  const section = document.getElementById('historySection');
+  const list = document.getElementById('historyList');
+
+  if (!history.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  list.innerHTML = history.map(room => `
+    <div class="history-item" onclick="window.location.href='sala.html?id=${room.id}'">
+      <div class="history-item-name">${room.nome}</div>
+      <div class="history-item-code">${room.id}</div>
+    </div>
+  `).join('');
+}
+
 // Voltar para a página inicial
 document.getElementById('header-back').addEventListener('click', () => {
   window.location.href = '../index.html';
@@ -180,6 +218,9 @@ async function createRoom() {
         detalhe: { nome: currentRoomName, colunas: columnNames.length }
       }]);
 
+    // Save to history before redirect
+    saveRoomToHistory(roomId, currentRoomName);
+
     // Redirecionar para a sala
     window.location.href = `sala.html?id=${roomId}`;
   } catch (error) {
@@ -216,7 +257,7 @@ async function accessRoom() {
     // Verificar se sala existe
     const { data: room, error: roomError } = await window.supabaseClient
       .from('salas')
-      .select('id')
+      .select('id, nome')
       .eq('id', code)
       .single();
 
@@ -235,6 +276,9 @@ async function accessRoom() {
         sala_id: code,
         detalhe: null
       }]);
+
+    // Save to history before redirect
+    saveRoomToHistory(code, room.nome);
 
     // Redirecionar para a sala
     window.location.href = `sala.html?id=${code}`;
@@ -266,5 +310,10 @@ document.addEventListener('keydown', (e) => {
 
 // Esperar Supabase estar pronto
 window.addEventListener('supabase-ready', () => {
-
+  renderRoomHistory();
 });
+
+// Load history on page init if Supabase is already ready
+if (window.supabaseClient) {
+  renderRoomHistory();
+}

@@ -75,7 +75,18 @@
     #theme-toggle:hover { border-color: var(--accent); }
     .loading { text-align: center; color: var(--muted); }
     .error { color: var(--danger); font-size: 12px; margin-top: 4px; }
+    #content-wrapper { display: flex; gap: 20px; align-items: flex-start; }
+    .history-section { flex: 1; }
+    .history-item { background: var(--toolbar); border: 1px solid var(--border); border-radius: 4px;
+      padding: 10px 12px; margin-bottom: 8px; cursor: pointer; transition: all .2s;
+      display: flex; flex-direction: column; gap: 4px; }
+    .history-item:hover { background: var(--hover); border-color: var(--accent); }
+    .history-item-name { font-size: 13px; font-weight: 500; color: var(--text); }
+    .history-item-code { font-size: 11px; color: var(--muted); font-family: 'Courier New', monospace;
+      letter-spacing: 1px; }
     @media (max-width: 768px) {
+      #content-wrapper { flex-direction: column; }
+      .history-section { flex: none; width: 100%; }
       #header { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
       #header-icon { width: 32px; height: 32px; }
       #header-title { font-size: 16px; }
@@ -124,24 +135,32 @@
 </div>
 
 <div id="content">
-  <div class="container">
-    <!-- Seção: Criar Sala -->
-    <div class="section">
-      <div class="section-title">Criar Nova Sala</div>
-      <button class="btn btn-primary" style="width: 100%;" onclick="openCreateModal()">+ Criar Sala</button>
+  <div id="content-wrapper">
+    <div class="container">
+      <!-- Seção: Criar Sala -->
+      <div class="section">
+        <div class="section-title">Criar Nova Sala</div>
+        <button class="btn btn-primary" style="width: 100%;" onclick="openCreateModal()">+ Criar Sala</button>
+      </div>
+
+      <!-- Seção: Acessar Sala Existente -->
+      <div class="section">
+        <div class="section-title">Acessar Sala Existente</div>
+        <div class="form-group">
+          <label class="form-label">Código da Sala (ex: abcd)</label>
+          <div class="form-row">
+            <input type="text" id="accessCode" class="form-input" placeholder="Código..." maxlength="4">
+            <button class="btn btn-primary" onclick="accessRoom()">Acessar</button>
+          </div>
+          <div class="error" id="accessError"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Seção: Acessar Sala Existente -->
-    <div class="section">
-      <div class="section-title">Acessar Sala Existente</div>
-      <div class="form-group">
-        <label class="form-label">Código da Sala (ex: abcd)</label>
-        <div class="form-row">
-          <input type="text" id="accessCode" class="form-input" placeholder="Código..." maxlength="4">
-          <button class="btn btn-primary" onclick="accessRoom()">Acessar</button>
-        </div>
-        <div class="error" id="accessError"></div>
-      </div>
+    <!-- Seção: Minhas últimas salas acessadas -->
+    <div class="section history-section" id="historySection" style="display: none;">
+      <div class="section-title">Minhas últimas salas</div>
+      <div id="historyList"></div>
     </div>
   </div>
 </div>
