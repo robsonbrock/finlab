@@ -127,16 +127,19 @@ async function loadColumnCards(columnId) {
 }
 
 // Renderizar coluna
-async function renderColumn(column) {
+async function renderColumn(column, isNewColumn = false) {
   const container = document.getElementById('columns-container');
 
   const columnDiv = document.createElement('div');
   columnDiv.className = 'column';
   columnDiv.setAttribute('data-column-id', column.id);
   columnDiv.setAttribute('draggable', 'true');
+
+  const nameClass = isNewColumn ? 'column-name editing' : 'column-name';
+
   columnDiv.innerHTML = `
     <div class="column-header">
-      <div class="column-name" onclick="editColumnName('${column.id}')">${escapeHtml(column.nome)}</div>
+      <div class="${nameClass}" onclick="editColumnName('${column.id}')">${escapeHtml(column.nome)}</div>
       <div class="column-actions">
         <input type="color" class="btn-color" value="${column.cor}" onchange="changeColumnColor('${column.id}', this.value)">
         <button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>
@@ -173,6 +176,29 @@ async function renderColumn(column) {
     container.insertBefore(columnDiv, addColumnBtn);
   } else {
     container.appendChild(columnDiv);
+  }
+
+  // Se é coluna nova, focar no nome e deixar editável
+  if (isNewColumn) {
+    setTimeout(() => {
+      const nameDiv = columnDiv.querySelector('.column-name');
+      if (nameDiv) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'column-name-input';
+        input.value = column.nome;
+        input.maxLength = 30;
+
+        nameDiv.replaceWith(input);
+        input.focus();
+        input.select();
+
+        input.addEventListener('blur', () => saveColumnName(column.id));
+        input.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') saveColumnName(column.id);
+        });
+      }
+    }, 0);
   }
 }
 
@@ -482,8 +508,10 @@ async function changeColumnColor(columnId, color) {
 // Adicionar coluna
 async function addColumn() {
   try {
-    await roomService.createColumn(currentRoomId);
-    // NÃO renderizar aqui - deixar o Realtime cuidar para evitar duplicação
+    const column = await roomService.createColumn(currentRoomId);
+    columns[column.id] = { ...column, cards: [] };
+    // Renderizar com isNewColumn=true para deixar em modo edit
+    await renderColumn(column, true);
   } catch (error) {
     console.error('Erro ao adicionar coluna:', error);
     alert('Erro ao adicionar coluna.');
