@@ -127,6 +127,8 @@
       .room-code { font-size: 11px; }
       .header-actions { width: 100%; gap: 6px; flex-wrap: wrap; }
       .btn-copy-code { flex: 1; padding: 6px 8px; font-size: 11px; }
+      #maxLikesInput { flex: 1; min-width: 80px; width: auto; }
+      #sortSelect, #clearSelect { flex: 1; min-width: 100px; width: auto; }
       #columns-container { flex-direction: column; overflow-y: auto; overflow-x: hidden; gap: 8px; }
       .column { min-width: 100%; flex: 0 0 auto; height: auto; max-height: 300px; }
       .column-header { padding: 8px; gap: 6px; }
@@ -169,28 +171,20 @@
     <div class="room-code">Código: <strong id="roomCode">-</strong></div>
   </div>
   <div class="header-actions">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <label for="maxLikesInput" style="font-size: 12px; color: var(--text);">Votos por coluna</label>
-      <input type="number" id="maxLikesInput" value="5" min="1" max="100" onchange="handleMaxLikesChange(this.value)" style="width: 50px; padding: 6px 8px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px;">
-    </div>
+    <input type="number" id="maxLikesInput" value="5" min="1" max="100" placeholder="Votos por coluna" onchange="handleMaxLikesChange(this.value)" style="width: 120px; padding: 6px 8px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px;">
     <button class="btn btn-copy-code" onclick="exportToCSV()">Exportar CSV</button>
     <button class="btn btn-copy-code" onclick="copyRoomCode()">Copiar código da sala</button>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <label for="sortSelect" style="font-size: 12px; color: var(--text);">Ordenar por</label>
-      <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-        <option value="data-criacao">Data criação</option>
-        <option value="votos">Votos</option>
-      </select>
-    </div>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <label for="clearSelect" style="font-size: 12px; color: var(--text);">Limpar resultados</label>
-      <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-        <option value="">-- Selecione --</option>
-        <option value="clear-likes">Zerar todos os votos</option>
-        <option value="clear-cards">Excluir todos os cards</option>
-        <option value="clear-all">Excluir colunas e cards</option>
-      </select>
-    </div>
+    <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
+      <option value="" disabled selected>Ordenar por</option>
+      <option value="data-criacao">Data criação</option>
+      <option value="votos">Votos</option>
+    </select>
+    <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
+      <option value="" disabled selected>Limpar resultados</option>
+      <option value="clear-likes">Zerar todos os votos</option>
+      <option value="clear-cards">Excluir todos os cards</option>
+      <option value="clear-all">Excluir colunas e cards</option>
+    </select>
     <button id="theme-toggle" title="Toggle tema">🌙</button>
   </div>
 </div>
