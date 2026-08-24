@@ -1423,13 +1423,18 @@ function handleColumnsChange(payload) {
   } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData.deletada && !oldData.deletada)) {
     // Remover coluna (soft delete)
     const columnId = newData?.id || oldData?.id;
-    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+    console.log('🗑️ Removendo coluna:', columnId);
 
+    // Remover visualmente
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
     if (columnDiv) {
       columnDiv.style.opacity = '0.5';
-      setTimeout(() => columnDiv.remove(), 300);
+      setTimeout(() => {
+        if (columnDiv.parentNode) columnDiv.remove();
+      }, 300);
     }
 
+    // Remover do estado local
     if (columns[columnId]) {
       delete columns[columnId];
     }
