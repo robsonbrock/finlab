@@ -1425,15 +1425,22 @@ function handleColumnsChange(payload) {
   } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData?.deletada === true && oldData?.deletada !== true)) {
     // Remover coluna (soft delete)
     const columnId = newData?.id || oldData?.id;
-    console.log('🗑️ Removendo coluna:', columnId, 'eventType:', eventType, 'newData.deletada:', newData?.deletada, 'oldData.deletada:', oldData?.deletada);
+    console.log('🗑️ Removendo coluna:', columnId);
 
     // Remover visualmente
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
     if (columnDiv) {
+      console.log('✅ Encontrado columnDiv, removendo...');
       columnDiv.style.opacity = '0.5';
       setTimeout(() => {
-        if (columnDiv.parentNode) columnDiv.remove();
+        console.log('⏱️ Removendo após timeout...');
+        if (columnDiv.parentNode) {
+          columnDiv.remove();
+          console.log('✅ Coluna removida!');
+        }
       }, 300);
+    } else {
+      console.log('❌ columnDiv não encontrado!');
     }
 
     // Remover do estado local
