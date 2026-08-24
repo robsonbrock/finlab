@@ -710,11 +710,9 @@ async function handleSortChange(value) {
 
   // Atualizar no banco para sincronizar com outros participantes
   try {
-    console.log('📊 Atualizando sort_by para:', value);
     const result = await repository.updateRoom(currentRoomId, { sort_by: value });
-    console.log('✅ Sala atualizada:', result);
   } catch (error) {
-    console.error('❌ Erro ao atualizar ordenação:', error);
+    console.error('Erro ao atualizar ordenação:', error);
   }
 
   reorderAllCards();
@@ -838,11 +836,9 @@ function handleCardDragOver(e) {
 
     // Se está diretamente sobre outro card específico
     if (card && card !== draggedCard.element) {
-      console.log('🎯 Merge mode ativado para card:', card.getAttribute('data-card-id'));
       card.classList.add('merge-target');
       mergeTargetCard = card;
     } else {
-      console.log('📍 Reorder mode (entre cards)');
       mergeTargetCard = null;
     }
   }
@@ -907,9 +903,7 @@ async function handleCardDrop(e) {
   // Se soltou sobre outro card específico, fazer merge
   if (mergeTargetCard) {
     const targetCardId = mergeTargetCard.getAttribute('data-card-id');
-    console.log('🔀 Tentando merge:', { draggedId: draggedCard.id, targetId: targetCardId, mergeTargetCard });
     if (targetCardId !== draggedCard.id) {
-      console.log('✅ Executando merge...');
       await mergeCards(draggedCard.id, targetCardId, sourceColumnId, targetColumnId);
     }
     mergeTargetCard.classList.remove('merge-target');
@@ -918,7 +912,6 @@ async function handleCardDrop(e) {
     return;
   }
 
-  console.log('📍 Reordenando (sem merge target)');
 
   // Caso contrário, reordenar normalmente
   try {
@@ -956,7 +949,6 @@ async function handleCardDrop(e) {
 // Mesclar dois cards
 async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetColumnId) {
   try {
-    console.log(`🔀 Mesclando card ${draggedCardId} em ${targetCardId}`);
 
     // Encontrar os cards nos arrays
     const draggedCard = columns[sourceColumnId].cards.find(c => c.id === draggedCardId);
@@ -1040,7 +1032,6 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
       }
     }
 
-    console.log('✅ Cards mesclados com sucesso!');
     window.analytics.trackCardAction('card_merged', currentRoomId, targetColumnId);
 
   } catch (error) {
@@ -1127,6 +1118,71 @@ async function handleColumnDrop(e) {
 }
 
 // Copiar código da sala
+// Exportar para CSV
+async function exportToCSV() {
+  try {
+    const rows = [];
+
+    // Cabeçalho
+    rows.push(['Coluna', 'Card', 'Likes', 'Emojis']);
+
+    // Dados de cada coluna e card
+    for (const columnId in columns) {
+      const column = columns[columnId];
+      const cards = column.cards || [];
+
+      if (cards.length === 0) {
+        rows.push([column.nome, '', '', '']);
+      } else {
+        for (let i = 0; i < cards.length; i++) {
+          const card = cards[i];
+          const likes = card.likes || 0;
+          const emojisStr = card.emojiString || '';
+          rows.push([
+            i === 0 ? column.nome : '',
+            card.texto || '',
+            likes,
+            emojisStr
+          ]);
+        }
+      }
+    }
+
+    // Converter para CSV
+    const csvContent = rows.map(row =>
+      row.map(cell => {
+        const str = String(cell);
+        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+          return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+      }).join(',')
+    ).join('\n');
+
+    // Gerar nome do arquivo: sala-nome_YYYYMMDD.csv
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const dateStr = `${year}${month}${day}`;
+    const filename = `${currentRoom.nome.replace(/\s+/g, '-')}_${dateStr}.csv`;
+
+    // Fazer download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Erro ao exportar CSV:', error);
+    alert('Erro ao exportar arquivo');
+  }
+}
+
 function copyRoomCode() {
   navigator.clipboard.writeText(currentRoomId);
   alert('Código copiado: ' + currentRoomId);
@@ -1143,7 +1199,6 @@ async function handleMaxLikesChange(value) {
   try {
     await repository.updateRoom(currentRoomId, { max_likes_per_column: maxLikes });
     currentRoom.max_likes_per_column = maxLikes;
-    console.log('✅ Limite de votos atualizado para:', maxLikes);
   } catch (error) {
     console.error('❌ Erro ao atualizar limite de votos:', error);
     alert('Erro ao atualizar limite');
@@ -1187,7 +1242,6 @@ function showClearAllModal2() {
 
 async function confirmClearLikes() {
   try {
-    console.log('🗑️ Zerando todos os votos...');
 
     // Deletar todos os likes da sala
     const { error } = await window.supabaseClient
@@ -1213,7 +1267,6 @@ async function confirmClearLikes() {
       });
     });
 
-    console.log('✅ Todos os votos foram zerados');
     closeClearModals();
     window.analytics.trackRoomAction('likes_cleared', currentRoomId);
   } catch (error) {
@@ -1225,7 +1278,6 @@ async function confirmClearLikes() {
 
 async function confirmClearCards() {
   try {
-    console.log('🗑️ Excluindo todos os cards...');
 
     const allCardIds = Object.values(columns).flatMap(col => col.cards.map(c => c.id));
 
@@ -1246,7 +1298,6 @@ async function confirmClearCards() {
       }
     });
 
-    console.log('✅ Todos os cards foram excluídos');
     closeClearModals();
     window.analytics.trackRoomAction('cards_cleared', currentRoomId);
   } catch (error) {
@@ -1258,7 +1309,6 @@ async function confirmClearCards() {
 
 async function confirmClearAll() {
   try {
-    console.log('🗑️ Excluindo colunas e cards...');
 
     const columnIds = Object.keys(columns);
 
@@ -1278,7 +1328,6 @@ async function confirmClearAll() {
 
     columns = {};
 
-    console.log('✅ Todas as colunas e cards foram excluídos');
     closeClearModals();
     window.analytics.trackRoomAction('all_cleared', currentRoomId);
   } catch (error) {
@@ -1406,27 +1455,21 @@ function handleEmojisChange(payload) {
 function handleColumnsChange(payload) {
   const { eventType, new: newData, old: oldData } = payload;
 
-  console.log('📋 handleColumnsChange:', { eventType, newDataDeletada: newData?.deletada, oldDataDeletada: oldData?.deletada });
 
   if (eventType === 'UPDATE' && newData?.deletada === true && oldData?.deletada !== true) {
     // Remover coluna (soft delete) - VERIFICAR PRIMEIRO
     const columnId = newData?.id || oldData?.id;
-    console.log('🗑️ Removendo coluna:', columnId);
 
     // Remover visualmente
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
     if (columnDiv) {
-      console.log('✅ Encontrado columnDiv, removendo...');
       columnDiv.style.opacity = '0.5';
       setTimeout(() => {
-        console.log('⏱️ Removendo após timeout...');
         if (columnDiv.parentNode) {
           columnDiv.remove();
-          console.log('✅ Coluna removida!');
         }
       }, 300);
     } else {
-      console.log('❌ columnDiv não encontrado!');
     }
 
     // Remover do estado local
