@@ -1420,10 +1420,10 @@ function handleColumnsChange(payload) {
         columns[columnId] = { ...columns[columnId], ...newData };
       }
     }
-  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData.deletada && !oldData.deletada)) {
+  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData?.deletada === true && oldData?.deletada !== true)) {
     // Remover coluna (soft delete)
     const columnId = newData?.id || oldData?.id;
-    console.log('🗑️ Removendo coluna:', columnId);
+    console.log('🗑️ Removendo coluna:', columnId, 'eventType:', eventType, 'newData.deletada:', newData?.deletada, 'oldData.deletada:', oldData?.deletada);
 
     // Remover visualmente
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
