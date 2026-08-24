@@ -1374,6 +1374,8 @@ function handleEmojisChange(payload) {
 function handleColumnsChange(payload) {
   const { eventType, new: newData, old: oldData } = payload;
 
+  console.log('📋 handleColumnsChange:', { eventType, newDataDeletada: newData?.deletada, oldDataDeletada: oldData?.deletada });
+
   if (eventType === 'UPDATE') {
     // Atualizar coluna existente
     const columnId = newData.id;
