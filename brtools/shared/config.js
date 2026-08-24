@@ -3,7 +3,8 @@ let config = {
   supabase: {
     url: null,
     anonKey: null,
-  }
+  },
+  ready: false
 };
 
 // Initialize config (sync sources, async API fallback)
@@ -45,6 +46,8 @@ async function initConfig() {
     );
   }
 
+  config.ready = true;
+  window.dispatchEvent(new CustomEvent('config-ready', { detail: config }));
   return config;
 }
 
