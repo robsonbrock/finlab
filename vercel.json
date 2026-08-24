@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm install || true",
+  "outputDirectory": "brtools",
+  "public": "brtools",
+  "functions": {
+    "api/**/*.js": {
+      "memory": 128,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "/api/:match*"
+    }
+  ]
+}
