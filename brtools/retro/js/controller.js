@@ -576,8 +576,22 @@ async function saveCardText(textarea) {
   const newText = textarea.value.trim();
 
   if (!newText) {
-    const card = columns[columnId].cards.find(c => c.id === cardId);
-    textarea.value = card.texto;
+    // Se está vazio, pedir confirmação para deletar
+    const confirmDelete = confirm('Este card está vazio. Deseja excluir? (OK para excluir, Cancelar para manter)');
+
+    if (confirmDelete) {
+      // Deletar o card
+      await roomService.deleteCard(cardId, columnId, currentRoomId);
+      const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+      if (cardElement) cardElement.remove();
+    } else {
+      // Restaurar texto anterior e focar
+      const card = columns[columnId].cards.find(c => c.id === cardId);
+      if (card) {
+        textarea.value = card.texto;
+        textarea.focus();
+      }
+    }
     return;
   }
 
