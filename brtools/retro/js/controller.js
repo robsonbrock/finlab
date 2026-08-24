@@ -482,9 +482,8 @@ async function changeColumnColor(columnId, color) {
 // Adicionar coluna
 async function addColumn() {
   try {
-    const column = await roomService.createColumn(currentRoomId);
-    columns[column.id] = { ...column, cards: [] };
-    await renderColumn(column);
+    await roomService.createColumn(currentRoomId);
+    // NÃO renderizar aqui - deixar o Realtime cuidar para evitar duplicação
   } catch (error) {
     console.error('Erro ao adicionar coluna:', error);
     alert('Erro ao adicionar coluna.');
