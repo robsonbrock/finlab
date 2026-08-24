@@ -80,6 +80,15 @@ function onModelSelect() {
 
 // Gerar código de sala único (4 caracteres alfanuméricos)
 async function generateUniqueRoomId() {
+  // Esperar Supabase estar pronto
+  if (!window.supabaseClient) {
+    await new Promise(resolve => window.addEventListener('supabase-ready', resolve, { once: true }));
+  }
+
+  if (!window.supabaseClient) {
+    throw new Error('Erro de conexão: Supabase não inicializado. Verifique as variáveis de ambiente.');
+  }
+
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = '';
 
@@ -175,7 +184,11 @@ async function createRoom() {
     window.location.href = `sala.html?id=${roomId}`;
   } catch (error) {
     console.error('Erro ao criar sala:', error);
-    document.getElementById('columnError').textContent = 'Erro ao criar sala. Tente novamente.';
+    let errorMsg = 'Erro ao criar sala. Tente novamente.';
+    if (error.message?.includes('Supabase')) {
+      errorMsg = 'Erro de conexão: Verifique as variáveis de ambiente de Supabase.';
+    }
+    document.getElementById('columnError').textContent = errorMsg;
   } finally {
     createBtn.disabled = false;
     createBtn.textContent = originalText;
