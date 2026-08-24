@@ -1376,7 +1376,32 @@ function handleColumnsChange(payload) {
 
   console.log('📋 handleColumnsChange:', { eventType, newDataDeletada: newData?.deletada, oldDataDeletada: oldData?.deletada });
 
-  if (eventType === 'UPDATE') {
+  if (eventType === 'UPDATE' && newData?.deletada === true && oldData?.deletada !== true) {
+    // Remover coluna (soft delete) - VERIFICAR PRIMEIRO
+    const columnId = newData?.id || oldData?.id;
+    console.log('🗑️ Removendo coluna:', columnId);
+
+    // Remover visualmente
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+    if (columnDiv) {
+      console.log('✅ Encontrado columnDiv, removendo...');
+      columnDiv.style.opacity = '0.5';
+      setTimeout(() => {
+        console.log('⏱️ Removendo após timeout...');
+        if (columnDiv.parentNode) {
+          columnDiv.remove();
+          console.log('✅ Coluna removida!');
+        }
+      }, 300);
+    } else {
+      console.log('❌ columnDiv não encontrado!');
+    }
+
+    // Remover do estado local
+    if (columns[columnId]) {
+      delete columns[columnId];
+    }
+  } else if (eventType === 'UPDATE') {
     // Atualizar coluna existente
     const columnId = newData.id;
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
@@ -1422,31 +1447,12 @@ function handleColumnsChange(payload) {
         columns[columnId] = { ...columns[columnId], ...newData };
       }
     }
-  } else if (eventType === 'DELETE' || (eventType === 'UPDATE' && newData?.deletada === true && oldData?.deletada !== true)) {
-    // Remover coluna (soft delete)
+  } else if (eventType === 'DELETE') {
+    // Remover coluna (hard delete)
     const columnId = newData?.id || oldData?.id;
-    console.log('🗑️ Removendo coluna:', columnId);
-
-    // Remover visualmente
     const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
-    if (columnDiv) {
-      console.log('✅ Encontrado columnDiv, removendo...');
-      columnDiv.style.opacity = '0.5';
-      setTimeout(() => {
-        console.log('⏱️ Removendo após timeout...');
-        if (columnDiv.parentNode) {
-          columnDiv.remove();
-          console.log('✅ Coluna removida!');
-        }
-      }, 300);
-    } else {
-      console.log('❌ columnDiv não encontrado!');
-    }
-
-    // Remover do estado local
-    if (columns[columnId]) {
-      delete columns[columnId];
-    }
+    if (columnDiv) columnDiv.remove();
+    if (columns[columnId]) delete columns[columnId];
   } else if (eventType === 'INSERT') {
     // Adicionar nova coluna (apenas se ainda não foi renderizada)
     if (!columns[newData.id]) {
