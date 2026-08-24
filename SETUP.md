@@ -16,26 +16,23 @@ supabase_anon_key=your-anon-key-here
 
 1. Acesse o Dashboard do Vercel
 2. Vá em **Settings** → **Environment Variables**
-3. Adicione as variáveis **COM PREFIXO** `NEXT_PUBLIC_` (Vercel usa isso para injetar em cliente):
+3. Adicione as variáveis (use UPPERCASE com underscore):
 
 ```
-NEXT_PUBLIC_SUPABASE_URL = https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY = your-anon-key-here
+SUPABASE_URL = https://your-project.supabase.co
+SUPABASE_ANON_KEY = your-anon-key-here
 ```
 
-4. Ou, se usar lowercase:
-```
-supabase_url = https://your-project.supabase.co
-supabase_anon_key = your-anon-key-here
-```
+4. Deploy / Redeploy do projeto
 
-⚠️ **Importante**: Vercel só aceita:
-- lowercase letters
-- digits (0-9)
-- dashes (-)
-- underscores (_)
+O app usa uma **Serverless Function** (`/api/config.js`) que retorna as variáveis de ambiente de forma segura:
+- Em produção, lê de `process.env` (variáveis Vercel)
+- Em desenvolvimento local, lê de `window.__SUPABASE_*__` ou `localStorage`
 
-❌ Não use: UPPERCASE, VITE_, pontos, outros caracteres
+⚠️ **Importante**: 
+- Use UPPERCASE com underscore (Vercel padrão)
+- Serverless function está em `api/config.js`
+- Não coloque variáveis diretamente no HTML (segurança)
 
 ## Como Funciona
 
