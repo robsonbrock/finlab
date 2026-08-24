@@ -12,7 +12,8 @@ export default function handler(req, res) {
   }
 
   res.status(200).json({
-    supabase_url: process.env.SUPABASE_URL,
-    supabase_anon_key: process.env.SUPABASE_ANON_KEY,
+    // Try both uppercase and lowercase env var names
+    supabase_url: process.env.SUPABASE_URL || process.env.supabase_url,
+    supabase_anon_key: process.env.SUPABASE_ANON_KEY || process.env.supabase_anon_key,
   });
 }
