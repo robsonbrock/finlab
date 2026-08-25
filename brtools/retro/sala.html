@@ -120,6 +120,16 @@
     .btn-default:hover { background: var(--hover); }
     .btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
     .btn-danger:hover { opacity: 0.8; }
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px;
+      font-size: 13px; color: var(--text); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.3s ease-out; pointer-events: auto; max-width: 300px; }
+    .toast.success { border-left: 4px solid var(--ok); }
+    .toast.info { border-left: 4px solid var(--accent); }
+    .toast.error { border-left: 4px solid var(--danger); }
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { to { transform: translateX(400px); opacity: 0; } }
+    .toast.removing { animation: slideOut 0.3s ease-in forwards; }
     @media (max-width: 768px) {
       #header { flex-direction: column; align-items: flex-start; padding: 12px 16px; gap: 8px; }
       .header-title { font-size: 14px; }
@@ -172,18 +182,32 @@
   </div>
   <div class="header-actions">
     <div style="display: flex; align-items: center; gap: 4px;">
-      <span style="font-size: 11px; color: var(--muted); white-space: nowrap;">Votos por coluna:</span>
-      <input type="number" id="maxLikesInput" value="5" min="1" max="100" onchange="handleMaxLikesChange(this.value)" style="width: 45px; padding: 6px 8px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px;">
+      <span style="font-size: 11px; color: var(--muted); white-space: nowrap;">Meus votos:</span>
+      <span id="voteCounter" style="font-size: 13px; font-weight: 600; min-width: 20px;">0</span>
     </div>
-    <button class="btn btn-copy-code" onclick="exportToCSV()">Exportar CSV</button>
-    <button class="btn btn-copy-code" onclick="copyRoomCode()">Copiar código da sala</button>
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <span style="font-size: 11px; color: var(--muted); white-space: nowrap;">Votos por coluna:</span>
+      <select id="maxLikesInput" onchange="handleMaxLikesChange(this.value)" style="width: 50px; padding: 6px 8px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px; cursor: pointer;">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+    <button class="btn btn-copy-code" onclick="exportToCSV()">📥 Exportar CSV</button>
+    <button class="btn btn-copy-code" onclick="copyRoomCode()">📋 Copiar código</button>
     <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-      <option value="" disabled selected>Ordenar por</option>
+      <option value="" disabled selected>📊 Ordenar por</option>
       <option value="data-criacao">Data criação</option>
       <option value="votos">Votos</option>
     </select>
     <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-      <option value="" disabled selected>Limpar resultados</option>
+      <option value="" disabled selected>🗑️ Limpar resultados</option>
       <option value="clear-likes">Zerar todos os votos</option>
       <option value="clear-cards">Excluir todos os cards</option>
       <option value="clear-all">Excluir colunas e cards</option>
@@ -198,6 +222,8 @@
     <button class="btn-add-column" onclick="addColumn()">+ Coluna</button>
   </div>
 </div>
+
+<div id="toast-container"></div>
 
 <!-- Modal: Editar nome da sala -->
 <div class="modal-overlay" id="editRoomModal">

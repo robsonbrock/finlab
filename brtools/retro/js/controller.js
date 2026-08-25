@@ -13,6 +13,28 @@ let mergeTargetCard = null;
 let reorderTimeouts = {};
 let sessionId = null;
 let sortBy = 'data-criacao';
+let voteCount = 0;
+
+// Toast notifications
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+// Atualizar display do contador de votos
+function updateVoteCounter() {
+  const counter = document.getElementById('voteCounter');
+  if (counter) counter.textContent = voteCount;
+}
 
 // Gerar/recuperar session ID
 function getOrCreateSessionId() {
@@ -40,6 +62,11 @@ async function init() {
   }
 
   document.getElementById('roomCode').textContent = currentRoomId;
+
+  // Restaurar contador de votos do localStorage
+  const savedVoteCount = localStorage.getItem(`votesCount_${currentRoomId}`);
+  voteCount = savedVoteCount ? parseInt(savedVoteCount) : 0;
+  updateVoteCounter();
 
   try {
     // Esperar Supabase estar pronto
@@ -347,6 +374,7 @@ async function renderCard(columnId, card) {
         textarea.select();
       }
     }, 0);
+    showToast('Card criado', 'success');
   }
 }
 
@@ -546,6 +574,7 @@ async function finalDeleteColumn() {
     if (columnDiv) columnDiv.remove();
 
     closeDeleteColumnModal();
+    showToast('Coluna excluída', 'success');
   } catch (error) {
     console.error('Erro ao deletar coluna:', error);
     alert('Erro ao deletar coluna.');
@@ -630,6 +659,7 @@ async function confirmEmptyCardDelete() {
     const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
     if (cardElement) cardElement.remove();
     closeEmptyCardDeleteModal();
+    showToast('Card apagado', 'success');
   } catch (error) {
     console.error('Erro ao deletar card vazio:', error);
     alert('Erro ao deletar card');
@@ -648,6 +678,7 @@ async function confirmDeleteCard() {
     if (cardDiv) cardDiv.remove();
 
     closeDeleteCardModal();
+    showToast('Card apagado', 'success');
   } catch (error) {
     console.error('Erro ao deletar card:', error);
     alert('Erro ao deletar card.');
@@ -691,6 +722,18 @@ async function toggleLike(btn) {
     const likeIcon = btn.classList.contains('active') ? '❤️' : '🤍';
     btn.innerHTML = `${likeIcon} <span class="like-count">${likes.length}</span>`;
     btn.setAttribute('title', likes.length + ' likes');
+
+    // Toast e contador de votos
+    if (!hasLike) {
+      voteCount++;
+      localStorage.setItem(`votesCount_${currentRoomId}`, voteCount);
+      updateVoteCounter();
+      showToast(`Voto dado! (${voteCount})`, 'success');
+    } else {
+      voteCount = Math.max(0, voteCount - 1);
+      localStorage.setItem(`votesCount_${currentRoomId}`, voteCount);
+      updateVoteCounter();
+    }
 
   } catch (error) {
     console.error('Erro ao dar like:', error);
@@ -939,6 +982,7 @@ async function handleCardDrop(e) {
     });
 
     window.analytics.trackCardAction('card_reordered', currentRoomId, targetColumnId);
+    showToast('Card reordenado', 'success');
   } catch (error) {
     console.error('Erro ao reordenar card:', error);
     // Reverter visual
@@ -1033,6 +1077,7 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
     }
 
     window.analytics.trackCardAction('card_merged', currentRoomId, targetColumnId);
+    showToast('Cards unificados', 'success');
 
   } catch (error) {
     console.error('❌ Erro ao mesclar cards:', error);
@@ -1110,6 +1155,7 @@ async function handleColumnDrop(e) {
     }
 
     window.analytics.trackCardAction('column_reordered', currentRoomId, draggedColumnId);
+    showToast('Coluna reordenada', 'success');
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
 
@@ -1540,6 +1586,7 @@ function handleColumnsChange(payload) {
         const cardsSub = repository.subscribeToCards(newData.id, handleCardsChange);
         subscriptions.push(cardsSub);
       });
+      if (isNewColumn) showToast('Coluna criada', 'success');
     }
   }
 }

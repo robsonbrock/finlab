@@ -186,3 +186,18 @@ brtools/
 - [ ] Theme toggle (dark/light)
 - [ ] Responsive: desktop, tablet, mobile
 - [ ] Cross-browser: Chrome, Firefox, Safari, Edge
+
+# Novas features 26/08
+
+- lista Minhas últimas salas: duplicar a largura, para caber o nome da sala
+- exibir Toast no canto sup dir para:
+  - card criado, apagado, reordenado, unificados
+  - coluna criada, reordenada, exluída
+  - Voto dado, com mensagem
+- exibir um contador dos meus votos -> deve ser armazenado em local storage
+- exibir ícone nos botões:
+  - ordenar por
+  - limpar resultados
+  - exportar csv
+  - copiar cod sala
+- alterar o tipo do camo 'Votos por coluna' de text para combobox, com valores de 1 a 9
