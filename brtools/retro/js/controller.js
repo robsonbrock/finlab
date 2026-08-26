@@ -1688,6 +1688,18 @@ async function handleLikesChange(payload) {
       }
     }
   }
+
+  // Recalcular voteCount do usuário contando likes em todos os cards
+  let userVoteCount = 0;
+  const allBtns = document.querySelectorAll('.card-like');
+  for (const btn of allBtns) {
+    if (btn.classList.contains('active')) {
+      userVoteCount++;
+    }
+  }
+  voteCount = userVoteCount;
+  localStorage.setItem(`votesCount_${currentRoomId}`, voteCount);
+  updateVoteCounter();
 }
 
 function handleEmojisChange(payload) {
