@@ -1729,6 +1729,12 @@ function handleColumnsChange(payload) {
         const colorPicker = columnDiv.querySelector('.btn-color');
         if (colorPicker) colorPicker.value = newData.cor;
 
+        // Atualizar cor de fundo da coluna
+        const rgbColor = hexToRgb(newData.cor);
+        if (rgbColor) {
+          columnDiv.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.2)`;
+        }
+
         // Atualizar cor dos cards na coluna
         columnDiv.querySelectorAll('.card').forEach(cardEl => {
           cardEl.style.borderColor = newData.cor;
