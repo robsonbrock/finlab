@@ -36,6 +36,19 @@ function updateVoteCounter() {
   if (counter) counter.textContent = voteCount;
 }
 
+// Modal de limite de votos
+function showVoteLimitModal(maxLikes) {
+  const message = document.getElementById('voteLimitMessage');
+  if (message) {
+    message.textContent = `Limite de ${maxLikes} votos por coluna atingido!`;
+  }
+  document.getElementById('voteLimitModal').classList.add('open');
+}
+
+function closeVoteLimitModal() {
+  document.getElementById('voteLimitModal').classList.remove('open');
+}
+
 // Gerar/recuperar session ID
 function getOrCreateSessionId() {
   let id = localStorage.getItem('sessionId');
@@ -116,6 +129,7 @@ async function init() {
         closeDeleteCardModal();
         closeEmptyCardDeleteModal();
         closeEmojiPicker();
+        closeVoteLimitModal();
       }
     });
 
@@ -699,7 +713,7 @@ async function toggleLike(btn) {
       const columnLikes = await repository.getLikesCountBySessionInColumn(columnId, sessionId);
 
       if (columnLikes >= maxLikes) {
-        alert(`Limite de ${maxLikes} votos por coluna atingido!`);
+        showVoteLimitModal(maxLikes);
         return;
       }
     }
