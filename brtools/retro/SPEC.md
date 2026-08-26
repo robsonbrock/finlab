@@ -201,3 +201,4 @@ brtools/
   - exportar csv
   - copiar cod sala
 - alterar o tipo do camo 'Votos por coluna' de text para combobox, com valores de 1 a 9
+- mude a posição do botão adicionar card para a parte superior da coluna, logo abaio no me da coluna.

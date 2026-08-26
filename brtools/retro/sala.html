@@ -200,18 +200,24 @@
       </select>
     </div>
     <button class="btn btn-copy-code" onclick="exportToCSV()">📥 Exportar CSV</button>
-    <button class="btn btn-copy-code" onclick="copyRoomCode()">📋 Copiar código</button>
-    <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-      <option value="" disabled selected>📊 Ordenar por</option>
-      <option value="data-criacao">Data criação</option>
-      <option value="votos">Votos</option>
-    </select>
-    <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
-      <option value="" disabled selected>🗑️ Limpar resultados</option>
-      <option value="clear-likes">Zerar todos os votos</option>
-      <option value="clear-cards">Excluir todos os cards</option>
-      <option value="clear-all">Excluir colunas e cards</option>
-    </select>
+    <button class="btn btn-copy-code" onclick="copyRoomCode()">📑 Copiar código</button>
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <span style="font-size: 12px;">📊</span>
+      <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
+        <option value="" disabled selected>Ordenar por</option>
+        <option value="data-criacao">Data criação</option>
+        <option value="votos">Votos</option>
+      </select>
+    </div>
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <span style="font-size: 12px;">🗑️</span>
+      <select id="clearSelect" onchange="handleClearChange(this.value); this.value = ''" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
+        <option value="" disabled selected>Limpar resultados</option>
+        <option value="clear-likes">Zerar todos os votos</option>
+        <option value="clear-cards">Excluir todos os cards</option>
+        <option value="clear-all">Excluir colunas e cards</option>
+      </select>
+    </div>
     <button id="theme-toggle" title="Toggle tema">🌙</button>
   </div>
 </div>
@@ -311,11 +317,41 @@
   </div>
 </div>
 
+<!-- Modal: Confirmação 1 - Mudar Limite de Votos (limpa votos) -->
+<div class="modal-overlay" id="changeLikesLimitModal1">
+  <div class="modal">
+    <div class="modal-header">Alterar Limite de Votos?</div>
+    <div class="modal-body">
+      <p>Ao alterar a quantidade de votos por coluna, todos os votos (likes) serão removidos. Deseja continuar?</p>
+      <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic;">💡 Recomendação: Esta ação é importante demais para deixar de forma descontrolada. Idealmente, apenas o facilitador da sala deve fazer esta mudança.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeChangeLikesLimitModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="showChangeLikesLimitModal2()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmação 2 - Mudar Limite de Votos (dupla confirmação) -->
+<div class="modal-overlay" id="changeLikesLimitModal2">
+  <div class="modal">
+    <div class="modal-header">Confirmar: Alterar Limite de Votos</div>
+    <div class="modal-body">Esta ação é irreversível. Todos os votos serão perdidos. Tem certeza absoluta?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeChangeLikesLimitModals()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmChangeLikesLimit()">Alterar Permanentemente</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal: Confirmação 1 - Zerar Votos -->
 <div class="modal-overlay" id="clearLikesModal1">
   <div class="modal">
     <div class="modal-header">Zerar Todos os Votos?</div>
-    <div class="modal-body">Todos os votos (likes) serão removidos. Deseja continuar?</div>
+    <div class="modal-body">
+      <p>Todos os votos (likes) serão removidos. Deseja continuar?</p>
+      <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic;">💡 Recomendação: Esta ação é importante demais para deixar de forma descontrolada. Idealmente, apenas o facilitador da sala deve fazer esta limpeza.</p>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
       <button class="btn btn-danger" onclick="showClearLikesModal2()">Continuar</button>
@@ -339,7 +375,10 @@
 <div class="modal-overlay" id="clearCardsModal1">
   <div class="modal">
     <div class="modal-header">Excluir Todos os Cards?</div>
-    <div class="modal-body">Todos os cards serão removidos. As colunas permanecerão. Deseja continuar?</div>
+    <div class="modal-body">
+      <p>Todos os cards serão removidos. As colunas permanecerão. Deseja continuar?</p>
+      <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic;">💡 Recomendação: Esta ação é importante demais para deixar de forma descontrolada. Idealmente, apenas o facilitador da sala deve fazer esta limpeza.</p>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
       <button class="btn btn-danger" onclick="showClearCardsModal2()">Continuar</button>
@@ -363,7 +402,10 @@
 <div class="modal-overlay" id="clearAllModal1">
   <div class="modal">
     <div class="modal-header">Excluir Colunas e Cards?</div>
-    <div class="modal-body">Todas as colunas e cards serão removidos. A sala ficará vazia. Deseja continuar?</div>
+    <div class="modal-body">
+      <p>Todas as colunas e cards serão removidos. A sala ficará vazia. Deseja continuar?</p>
+      <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic;">💡 Recomendação: Esta ação é importante demais para deixar de forma descontrolada. Idealmente, apenas o facilitador da sala deve fazer esta limpeza.</p>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-default" onclick="closeClearModals()">Cancelar</button>
       <button class="btn btn-danger" onclick="showClearAllModal2()">Continuar</button>

@@ -14,6 +14,7 @@ let reorderTimeouts = {};
 let sessionId = null;
 let sortBy = 'data-criacao';
 let voteCount = 0;
+let pendingMaxLikesChange = null;
 
 // Toast notifications
 function showToast(message, type = 'info', duration = 3000) {
@@ -47,6 +48,64 @@ function showVoteLimitModal(maxLikes) {
 
 function closeVoteLimitModal() {
   document.getElementById('voteLimitModal').classList.remove('open');
+}
+
+// Modal de mudança de limite de votos
+function showChangeLikesLimitModal1(newValue) {
+  pendingMaxLikesChange = parseInt(newValue);
+  document.getElementById('changeLikesLimitModal1').classList.add('open');
+}
+
+function closeChangeLikesLimitModals() {
+  document.getElementById('changeLikesLimitModal1').classList.remove('open');
+  document.getElementById('changeLikesLimitModal2').classList.remove('open');
+  pendingMaxLikesChange = null;
+}
+
+function showChangeLikesLimitModal2() {
+  document.getElementById('changeLikesLimitModal1').classList.remove('open');
+  document.getElementById('changeLikesLimitModal2').classList.add('open');
+}
+
+async function confirmChangeLikesLimit() {
+  if (!pendingMaxLikesChange) return;
+
+  try {
+    // Atualizar limite no banco
+    await repository.updateRoom(currentRoomId, { max_likes_per_column: pendingMaxLikesChange });
+    currentRoom.max_likes_per_column = pendingMaxLikesChange;
+
+    // Deletar todos os likes da sala
+    const allCardIds = Object.values(columns).flatMap(col => col.cards.map(c => c.id));
+    const { error } = await window.supabaseClient
+      .from('card_likes')
+      .delete()
+      .in('card_id', allCardIds);
+
+    if (error) throw error;
+
+    // Atualizar UI
+    Object.values(columns).forEach(column => {
+      column.cards.forEach(card => {
+        const cardElement = document.querySelector(`[data-card-id="${card.id}"]`);
+        if (cardElement) {
+          const likeBtn = cardElement.querySelector('.card-like');
+          if (likeBtn) {
+            likeBtn.innerHTML = `🤍 <span class="like-count">0</span>`;
+            likeBtn.classList.remove('active');
+          }
+        }
+      });
+    });
+
+    closeChangeLikesLimitModals();
+    window.analytics.trackRoomAction('likes_limit_changed', currentRoomId);
+    showToast(`Limite alterado para ${pendingMaxLikesChange} votos`, 'success');
+  } catch (error) {
+    console.error('❌ Erro ao alterar limite de votos:', error);
+    alert('Erro ao alterar limite');
+    closeChangeLikesLimitModals();
+  }
 }
 
 // Gerar/recuperar session ID
@@ -130,6 +189,7 @@ async function init() {
         closeEmptyCardDeleteModal();
         closeEmojiPicker();
         closeVoteLimitModal();
+        closeChangeLikesLimitModals();
       }
     });
 
@@ -1249,20 +1309,20 @@ function copyRoomCode() {
 }
 
 // ========== Votos por coluna ==========
-async function handleMaxLikesChange(value) {
-  const maxLikes = parseInt(value);
-  if (!maxLikes || maxLikes < 1) {
-    alert('Valor inválido');
+function handleMaxLikesChange(value) {
+  const newValue = parseInt(value);
+  if (!newValue || newValue < 1 || newValue > 9) {
+    document.getElementById('maxLikesInput').value = currentRoom.max_likes_per_column || 5;
     return;
   }
 
-  try {
-    await repository.updateRoom(currentRoomId, { max_likes_per_column: maxLikes });
-    currentRoom.max_likes_per_column = maxLikes;
-  } catch (error) {
-    console.error('❌ Erro ao atualizar limite de votos:', error);
-    alert('Erro ao atualizar limite');
+  // Se o valor é igual ao atual, não faz nada
+  if (newValue === (currentRoom.max_likes_per_column || 5)) {
+    return;
   }
+
+  // Mostrar modal de confirmação
+  showChangeLikesLimitModal1(newValue);
 }
 
 // ========== Limpar Resultados ==========
