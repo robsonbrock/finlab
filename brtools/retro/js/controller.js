@@ -171,13 +171,21 @@ async function init() {
   // Verificar se é facilitador (criador da sala)
   const isFacilitador = localStorage.getItem(`facilitador_${currentRoomId}`) === 'true';
 
-  // Se não for facilitador, esconder comboboxes de controle
-  if (!isFacilitador) {
-    document.getElementById('sortSelect').style.display = 'none';
-    const clearSelect = document.getElementById('clearSelect');
-    if (clearSelect?.parentElement) clearSelect.parentElement.style.display = 'none';
-    const maxLikesInput = document.getElementById('maxLikesInput');
-    if (maxLikesInput?.parentElement) maxLikesInput.parentElement.style.display = 'none';
+  // Configurar visibilidade dos comboboxes baseado no facilitador
+  const sortSelectParent = document.getElementById('sortSelect')?.parentElement;
+  const clearSelectParent = document.getElementById('clearSelect')?.parentElement;
+  const maxLikesInputParent = document.getElementById('maxLikesInput')?.parentElement;
+
+  if (isFacilitador) {
+    // Mostrar comboboxes para facilitador
+    if (sortSelectParent) sortSelectParent.style.display = 'flex';
+    if (clearSelectParent) clearSelectParent.style.display = 'flex';
+    if (maxLikesInputParent) maxLikesInputParent.style.display = 'flex';
+  } else {
+    // Esconder comboboxes para não-facilitadores
+    if (sortSelectParent) sortSelectParent.style.display = 'none';
+    if (clearSelectParent) clearSelectParent.style.display = 'none';
+    if (maxLikesInputParent) maxLikesInputParent.style.display = 'none';
   }
 
   try {
