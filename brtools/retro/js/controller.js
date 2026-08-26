@@ -1962,3 +1962,9 @@ function hexToRgb(hex) {
 
 // Iniciar quando Supabase estiver pronto
 window.addEventListener('supabase-ready', init);
+
+// Se Supabase já estava pronto antes deste listener ser registrado, chamar init() agora
+// (evita race condition onde o evento é disparado antes do listener estar registrado)
+if (window.supabaseClient) {
+  init();
+}
