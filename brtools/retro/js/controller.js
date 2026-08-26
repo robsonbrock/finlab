@@ -1434,18 +1434,26 @@ function copyRoomCode() {
 // ========== Votos por coluna ==========
 function handleMaxLikesChange(value) {
   const newValue = parseInt(value);
+  const currentValue = currentRoom.max_likes_per_column || 5;
+
   if (!newValue || newValue < 1 || newValue > 9) {
-    document.getElementById('maxLikesInput').value = currentRoom.max_likes_per_column || 5;
+    document.getElementById('maxLikesInput').value = currentValue;
     return;
   }
 
   // Se o valor é igual ao atual, não faz nada
-  if (newValue === (currentRoom.max_likes_per_column || 5)) {
+  if (newValue === currentValue) {
     return;
   }
 
-  // Mostrar modal de confirmação
-  showChangeLikesLimitModal1(newValue);
+  // Se for AUMENTAR o limite: confirmação simples
+  if (newValue > currentValue) {
+    pendingMaxLikesChange = newValue;
+    confirmChangeLikesLimit();
+  } else {
+    // Se for DIMINUIR: dupla confirmação
+    showChangeLikesLimitModal1(newValue);
+  }
 }
 
 // ========== Limpar Resultados ==========
