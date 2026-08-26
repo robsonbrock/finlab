@@ -15,6 +15,7 @@ let sessionId = null;
 let sortBy = 'data-criacao';
 let voteCount = 0;
 let pendingMaxLikesChange = null;
+let pendingEmptyColumnDelete = null;
 
 // Toast notifications
 function showToast(message, type = 'info', duration = 3000) {
@@ -187,6 +188,7 @@ async function init() {
         closeDeleteColumnModal();
         closeDeleteCardModal();
         closeEmptyCardDeleteModal();
+        closeEmptyColumnDeleteModal();
         closeEmojiPicker();
         closeVoteLimitModal();
         closeChangeLikesLimitModals();
@@ -550,9 +552,14 @@ async function saveColumnNameInline(columnId, inputElement, oldName) {
 
   const newName = inputElement.value.trim();
 
+  // Se o nome ficou vazio, perguntar se deseja excluir
+  if (!newName) {
+    openEmptyColumnDeleteModal(columnId, inputElement, oldName);
+    return;
+  }
 
   // Se o nome não mudou, só fechar a edição
-  if (!newName || newName === oldName) {
+  if (newName === oldName) {
     nameDiv.textContent = escapeHtml(oldName);
     nameDiv.classList.remove('editing');
     return;
@@ -723,6 +730,20 @@ function closeEmptyCardDeleteModal() {
   pendingEmptyCardDelete = null;
 }
 
+// Deletar coluna vazia
+function openEmptyColumnDeleteModal(columnId, inputElement, oldName) {
+  pendingEmptyColumnDelete = { columnId, inputElement, oldName };
+  document.getElementById('emptyColumnDeleteModal').classList.add('open');
+}
+
+function closeEmptyColumnDeleteModal() {
+  document.getElementById('emptyColumnDeleteModal').classList.remove('open');
+  if (pendingEmptyColumnDelete?.inputElement) {
+    pendingEmptyColumnDelete.inputElement.focus();
+  }
+  pendingEmptyColumnDelete = null;
+}
+
 async function confirmEmptyCardDelete() {
   if (!pendingEmptyCardDelete) return;
 
@@ -737,6 +758,27 @@ async function confirmEmptyCardDelete() {
   } catch (error) {
     console.error('Erro ao deletar card vazio:', error);
     alert('Erro ao deletar card');
+  }
+}
+
+async function confirmEmptyColumnDelete() {
+  if (!pendingEmptyColumnDelete) return;
+
+  const { columnId, inputElement, oldName } = pendingEmptyColumnDelete;
+
+  try {
+    await roomService.deleteColumn(columnId, currentRoomId);
+    delete columns[columnId];
+
+    const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
+    if (columnDiv) columnDiv.remove();
+
+    closeEmptyColumnDeleteModal();
+    showToast('Coluna excluída', 'success');
+  } catch (error) {
+    console.error('Erro ao deletar coluna vazia:', error);
+    alert('Erro ao deletar coluna');
+    closeEmptyColumnDeleteModal();
   }
 }
 

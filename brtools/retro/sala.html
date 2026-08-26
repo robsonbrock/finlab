@@ -293,6 +293,18 @@
   </div>
 </div>
 
+<!-- Modal: Deletar Coluna Vazia -->
+<div class="modal-overlay" id="emptyColumnDeleteModal">
+  <div class="modal">
+    <div class="modal-header">Coluna Vazia</div>
+    <div class="modal-body">Esta coluna está com o nome vazio. Deseja excluir?</div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeEmptyColumnDeleteModal()">Manter</button>
+      <button class="btn btn-danger" onclick="confirmEmptyColumnDelete()">Excluir</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal: Emoji Picker -->
 <div class="modal-overlay" id="emojiPickerModal">
   <div class="modal">
