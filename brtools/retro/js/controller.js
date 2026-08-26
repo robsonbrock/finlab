@@ -17,6 +17,7 @@ let sortBy = 'data-criacao';
 let voteCount = 0;
 let pendingMaxLikesChange = null;
 let pendingEmptyColumnDelete = null;
+let isFacilitador = false;
 
 // Toast notifications
 function showToast(message, type = 'info', duration = 3000) {
@@ -169,7 +170,7 @@ async function init() {
   updateVoteCounter();
 
   // Verificar se é facilitador (criador da sala)
-  const isFacilitador = localStorage.getItem(`facilitador_${currentRoomId}`) === 'true';
+  isFacilitador = localStorage.getItem(`facilitador_${currentRoomId}`) === 'true';
 
   // Configurar visibilidade dos comboboxes baseado no facilitador
   const sortSelectParent = document.getElementById('sortSelect')?.parentElement;
@@ -285,13 +286,15 @@ async function renderColumn(column, isNewColumn = false) {
   const columnDiv = document.createElement('div');
   columnDiv.className = 'column';
   columnDiv.setAttribute('data-column-id', column.id);
-  columnDiv.setAttribute('draggable', 'true');
+  columnDiv.setAttribute('draggable', isFacilitador ? 'true' : 'false');
 
   const nameClass = isNewColumn ? 'column-name editing' : 'column-name';
+  const nameOnclick = isFacilitador ? `onclick="editColumnName('${column.id}')"` : '';
+  const nameAttrClass = isFacilitador ? nameClass : `${nameClass} column-name-readonly`;
 
   columnDiv.innerHTML = `
     <div class="column-header">
-      <div class="${nameClass}" onclick="editColumnName('${column.id}')">${escapeHtml(column.nome)}</div>
+      <div class="${nameAttrClass}" ${nameOnclick}>${escapeHtml(column.nome)}</div>
       <div class="column-actions">
         <input type="color" class="btn-color" value="${column.cor}" onchange="changeColumnColor('${column.id}', this.value)">
         <button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>
@@ -545,6 +548,8 @@ async function saveRoomName() {
 
 // Editar nome da coluna
 function editColumnName(columnId) {
+  if (!isFacilitador) return;
+
   const column = columns[columnId];
   const columnDiv = document.querySelector(`[data-column-id="${columnId}"]`);
   const nameDiv = columnDiv.querySelector('.column-name');
@@ -1272,6 +1277,11 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
 
 // ========== Drag and drop COLUNAS ==========
 function handleColumnDragStart(e) {
+  if (!isFacilitador) {
+    e.preventDefault();
+    return;
+  }
+
   draggedColumn = {
     id: this.getAttribute('data-column-id'),
     element: this,
