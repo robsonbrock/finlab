@@ -174,8 +174,10 @@ async function init() {
   // Se não for facilitador, esconder comboboxes de controle
   if (!isFacilitador) {
     document.getElementById('sortSelect').style.display = 'none';
-    document.getElementById('clearSelect')?.parentElement?.style.display = 'none';
-    document.getElementById('maxLikesInput')?.parentElement?.style.display = 'none';
+    const clearSelect = document.getElementById('clearSelect');
+    if (clearSelect?.parentElement) clearSelect.parentElement.style.display = 'none';
+    const maxLikesInput = document.getElementById('maxLikesInput');
+    if (maxLikesInput?.parentElement) maxLikesInput.parentElement.style.display = 'none';
   }
 
   try {
