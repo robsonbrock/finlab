@@ -200,7 +200,7 @@
       </select>
     </div>
     <button class="btn btn-copy-code" onclick="exportToCSV()">📥 Exportar CSV</button>
-    <button class="btn btn-copy-code" onclick="copyRoomCode()">📑 Copiar código</button>
+    <button class="btn btn-copy-code" onclick="copyRoomCode()">⬜ Copiar código</button>
     <div style="display: flex; align-items: center; gap: 4px;">
       <span style="font-size: 12px;">📊</span>
       <select id="sortSelect" onchange="handleSortChange(this.value)" style="padding: 6px 12px; background: var(--toolbar); color: var(--text); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 12px;">
@@ -230,6 +230,28 @@
 </div>
 
 <div id="toast-container"></div>
+
+<!-- Modal: Erro Genérico -->
+<div class="modal-overlay" id="errorModal">
+  <div class="modal">
+    <div class="modal-header">Erro</div>
+    <div class="modal-body" id="errorModalMessage">Ocorreu um erro. Tente novamente.</div>
+    <div class="modal-footer" style="justify-content: center;">
+      <button class="btn btn-primary" onclick="closeErrorModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Sucesso de Cópia -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-header">Sucesso</div>
+    <div class="modal-body" id="successModalMessage">Operação realizada com sucesso.</div>
+    <div class="modal-footer" style="justify-content: center;">
+      <button class="btn btn-primary" onclick="closeSuccessModal()">OK</button>
+    </div>
+  </div>
+</div>
 
 <!-- Modal: Editar nome da sala -->
 <div class="modal-overlay" id="editRoomModal">

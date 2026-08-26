@@ -32,6 +32,27 @@ function showToast(message, type = 'info', duration = 3000) {
   }, duration);
 }
 
+// Modal notifications
+function showErrorModal(message) {
+  const errorMsg = document.getElementById('errorModalMessage');
+  if (errorMsg) errorMsg.textContent = message;
+  document.getElementById('errorModal').classList.add('open');
+}
+
+function closeErrorModal() {
+  document.getElementById('errorModal').classList.remove('open');
+}
+
+function showSuccessModal(message) {
+  const successMsg = document.getElementById('successModalMessage');
+  if (successMsg) successMsg.textContent = message;
+  document.getElementById('successModal').classList.add('open');
+}
+
+function closeSuccessModal() {
+  document.getElementById('successModal').classList.remove('open');
+}
+
 // Atualizar display do contador de votos
 function updateVoteCounter() {
   const counter = document.getElementById('voteCounter');
@@ -99,12 +120,17 @@ async function confirmChangeLikesLimit() {
       });
     });
 
+    // Resetar contador de votos
+    voteCount = 0;
+    localStorage.setItem(`votesCount_${currentRoomId}`, 0);
+    updateVoteCounter();
+
     closeChangeLikesLimitModals();
     window.analytics.trackRoomAction('likes_limit_changed', currentRoomId);
-    showToast(`Limite alterado para ${pendingMaxLikesChange} votos`, 'success');
+    showToast(`Limite alterado para ${pendingMaxLikesChange} votos. Todos os votos foram zerados.`, 'success');
   } catch (error) {
     console.error('❌ Erro ao alterar limite de votos:', error);
-    alert('Erro ao alterar limite');
+    showErrorModal('Erro ao alterar limite de votos.');
     closeChangeLikesLimitModals();
   }
 }
@@ -197,7 +223,7 @@ async function init() {
 
   } catch (error) {
     console.error('Erro ao inicializar:', error);
-    alert('Erro ao carregar a sala. Voltando...');
+    showErrorModal('Erro ao carregar a sala. Redirecionando...');
     window.location.href = 'index.html';
   }
 }
@@ -611,7 +637,7 @@ async function changeColumnColor(columnId, color) {
     });
   } catch (error) {
     console.error('Erro ao mudar cor:', error);
-    alert('Erro ao mudar cor.');
+    showErrorModal('Erro ao mudar a cor da coluna.');
   }
 }
 
@@ -622,7 +648,7 @@ async function addColumn() {
     // NÃO renderizar aqui - deixar o Realtime cuidar para evitar duplicação
   } catch (error) {
     console.error('Erro ao adicionar coluna:', error);
-    alert('Erro ao adicionar coluna.');
+    showErrorModal('Erro ao adicionar coluna.');
   }
 }
 
@@ -658,7 +684,7 @@ async function finalDeleteColumn() {
     showToast('Coluna excluída', 'success');
   } catch (error) {
     console.error('Erro ao deletar coluna:', error);
-    alert('Erro ao deletar coluna.');
+    showErrorModal('Erro ao deletar a coluna.');
     closeDeleteColumnModal();
   }
 }
@@ -670,7 +696,7 @@ async function addCard(columnId) {
     // O Realtime vai renderizar o card com autofocus
   } catch (error) {
     console.error('Erro ao adicionar card:', error);
-    alert('Erro: ' + error.message);
+    showErrorModal('Erro: ' + error.message);
   }
 }
 
@@ -698,7 +724,7 @@ async function saveCardText(textarea) {
     if (card) card.texto = newText;
   } catch (error) {
     console.error('Erro ao salvar card:', error);
-    alert('Erro: ' + error.message);
+    showErrorModal('Erro: ' + error.message);
   }
 }
 
@@ -757,7 +783,7 @@ async function confirmEmptyCardDelete() {
     showToast('Card apagado', 'success');
   } catch (error) {
     console.error('Erro ao deletar card vazio:', error);
-    alert('Erro ao deletar card');
+    showErrorModal('Erro ao deletar card.');
   }
 }
 
@@ -777,7 +803,7 @@ async function confirmEmptyColumnDelete() {
     showToast('Coluna excluída', 'success');
   } catch (error) {
     console.error('Erro ao deletar coluna vazia:', error);
-    alert('Erro ao deletar coluna');
+    showErrorModal('Erro ao deletar coluna.');
     closeEmptyColumnDeleteModal();
   }
 }
@@ -1197,7 +1223,7 @@ async function mergeCards(draggedCardId, targetCardId, sourceColumnId, targetCol
 
   } catch (error) {
     console.error('❌ Erro ao mesclar cards:', error);
-    alert('Erro ao mesclar cards: ' + error.message);
+    showErrorModal('Erro ao mesclar cards: ' + error.message);
     location.reload();
   }
 }
@@ -1275,7 +1301,7 @@ async function handleColumnDrop(e) {
   } catch (error) {
     console.error('Erro ao reordenar coluna:', error);
 
-    alert(`Erro ao reordenar: ${error.message}`);
+    showErrorModal(`Erro ao reordenar coluna: ${error.message}`);
   }
 }
 
@@ -1341,13 +1367,13 @@ async function exportToCSV() {
     document.body.removeChild(link);
   } catch (error) {
     console.error('Erro ao exportar CSV:', error);
-    alert('Erro ao exportar arquivo');
+    showErrorModal('Erro ao exportar arquivo CSV.');
   }
 }
 
 function copyRoomCode() {
   navigator.clipboard.writeText(currentRoomId);
-  alert('Código copiado: ' + currentRoomId);
+  showSuccessModal('Código da sala copiado: ' + currentRoomId);
 }
 
 // ========== Votos por coluna ==========
@@ -1429,11 +1455,17 @@ async function confirmClearLikes() {
       });
     });
 
+    // Resetar contador de votos
+    voteCount = 0;
+    localStorage.setItem(`votesCount_${currentRoomId}`, 0);
+    updateVoteCounter();
+
     closeClearModals();
     window.analytics.trackRoomAction('likes_cleared', currentRoomId);
+    showToast('Todos os votos foram zerados', 'success');
   } catch (error) {
     console.error('❌ Erro ao zerar votos:', error);
-    alert('Erro ao zerar votos');
+    showErrorModal('Erro ao zerar votos.');
     closeClearModals();
   }
 }
@@ -1464,7 +1496,7 @@ async function confirmClearCards() {
     window.analytics.trackRoomAction('cards_cleared', currentRoomId);
   } catch (error) {
     console.error('❌ Erro ao excluir cards:', error);
-    alert('Erro ao excluir cards');
+    showErrorModal('Erro ao excluir cards.');
     closeClearModals();
   }
 }
@@ -1494,7 +1526,7 @@ async function confirmClearAll() {
     window.analytics.trackRoomAction('all_cleared', currentRoomId);
   } catch (error) {
     console.error('❌ Erro ao excluir colunas:', error);
-    alert('Erro ao excluir colunas');
+    showErrorModal('Erro ao excluir colunas.');
     closeClearModals();
   }
 }
