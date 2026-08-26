@@ -221,6 +221,9 @@ async function createRoom() {
     // Save to history before redirect
     saveRoomToHistory(roomId, currentRoomName);
 
+    // Marcar que este usuário criou esta sala (facilitador)
+    localStorage.setItem(`facilitador_${roomId}`, 'true');
+
     // Redirecionar para a sala
     window.location.href = `sala.html?id=${roomId}`;
   } catch (error) {

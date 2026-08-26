@@ -162,10 +162,20 @@ async function init() {
 
   document.getElementById('roomCode').textContent = currentRoomId;
 
-  // Restaurar contador de votos do localStorage
-  const savedVoteCount = localStorage.getItem(`votesCount_${currentRoomId}`);
-  voteCount = savedVoteCount ? parseInt(savedVoteCount) : 0;
+  // Inicializar contador de votos para 0 (será incrementado conforme vota nesta sessão)
+  voteCount = 0;
+  localStorage.setItem(`votesCount_${currentRoomId}`, 0);
   updateVoteCounter();
+
+  // Verificar se é facilitador (criador da sala)
+  const isFacilitador = localStorage.getItem(`facilitador_${currentRoomId}`) === 'true';
+
+  // Se não for facilitador, esconder comboboxes de controle
+  if (!isFacilitador) {
+    document.getElementById('sortSelect').style.display = 'none';
+    document.getElementById('clearSelect')?.parentElement?.style.display = 'none';
+    document.getElementById('maxLikesInput')?.parentElement?.style.display = 'none';
+  }
 
   try {
     // Esperar Supabase estar pronto
@@ -275,10 +285,10 @@ async function renderColumn(column, isNewColumn = false) {
         <button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>
       </div>
     </div>
-    <div class="column-cards"></div>
     <div class="column-add-card">
       <button class="btn-add-card" onclick="addCard('${column.id}')">+ Adicionar Card</button>
     </div>
+    <div class="column-cards"></div>
   `;
 
   // Aplicar cor ao fundo da coluna
