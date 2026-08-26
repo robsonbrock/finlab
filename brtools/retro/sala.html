@@ -337,6 +337,21 @@
   </div>
 </div>
 
+<!-- Modal: Confirmar Merge de Cards -->
+<div class="modal-overlay" id="mergeCardsModal">
+  <div class="modal">
+    <div class="modal-header">Unificar Cards?</div>
+    <div class="modal-body">
+      <p>Os textos dos cards serão concatenados e os votos/emojis serão somados.</p>
+      <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic;">Esta ação é irreversível.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeMergeCardsModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmMergeCards()">Unificar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal: Limite de Votos Atingido -->
 <div class="modal-overlay" id="voteLimitModal">
   <div class="modal">

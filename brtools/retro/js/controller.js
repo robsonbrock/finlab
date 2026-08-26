@@ -10,6 +10,7 @@ let emojiPickerColumnId = null;
 let draggedCard = null;
 let draggedColumn = null;
 let mergeTargetCard = null;
+let pendingMerge = null;
 let reorderTimeouts = {};
 let sessionId = null;
 let sortBy = 'data-criacao';
@@ -228,6 +229,7 @@ async function init() {
         closeEmojiPicker();
         closeVoteLimitModal();
         closeChangeLikesLimitModals();
+        closeMergeCardsModal();
       }
     });
 
@@ -1095,11 +1097,11 @@ async function handleCardDrop(e) {
   const targetColumnId = targetColumnDiv.getAttribute('data-column-id');
   const sourceColumnId = draggedCard.sourceColumnId;
 
-  // Se soltou sobre outro card específico, fazer merge
+  // Se soltou sobre outro card específico, mostrar confirmação
   if (mergeTargetCard) {
     const targetCardId = mergeTargetCard.getAttribute('data-card-id');
     if (targetCardId !== draggedCard.id) {
-      await mergeCards(draggedCard.id, targetCardId, sourceColumnId, targetColumnId);
+      showMergeCardsModal(draggedCard.id, targetCardId, sourceColumnId, targetColumnId);
     }
     mergeTargetCard.classList.remove('merge-target');
     mergeTargetCard = null;
@@ -1140,6 +1142,26 @@ async function handleCardDrop(e) {
     // Reverter visual
     location.reload();
   }
+}
+
+// Modal de confirmação de merge
+function showMergeCardsModal(draggedCardId, targetCardId, sourceColumnId, targetColumnId) {
+  pendingMerge = { draggedCardId, targetCardId, sourceColumnId, targetColumnId };
+  document.getElementById('mergeCardsModal').classList.add('open');
+}
+
+function closeMergeCardsModal() {
+  document.getElementById('mergeCardsModal').classList.remove('open');
+  pendingMerge = null;
+}
+
+async function confirmMergeCards() {
+  if (!pendingMerge) return;
+
+  const { draggedCardId, targetCardId, sourceColumnId, targetColumnId } = pendingMerge;
+  closeMergeCardsModal();
+
+  await mergeCards(draggedCardId, targetCardId, sourceColumnId, targetColumnId);
 }
 
 // Mesclar dois cards
