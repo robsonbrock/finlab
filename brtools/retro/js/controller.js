@@ -291,13 +291,14 @@ async function renderColumn(column, isNewColumn = false) {
   const nameClass = isNewColumn ? 'column-name editing' : 'column-name';
   const nameOnclick = isFacilitador ? `onclick="editColumnName('${column.id}')"` : '';
   const nameAttrClass = isFacilitador ? nameClass : `${nameClass} column-name-readonly`;
+  const deleteButton = isFacilitador ? `<button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>` : '';
 
   columnDiv.innerHTML = `
     <div class="column-header">
       <div class="${nameAttrClass}" ${nameOnclick}>${escapeHtml(column.nome)}</div>
       <div class="column-actions">
         <input type="color" class="btn-color" value="${column.cor}" onchange="changeColumnColor('${column.id}', this.value)">
-        <button class="btn-delete" onclick="openDeleteColumn('${column.id}')">🗑️</button>
+        ${deleteButton}
       </div>
     </div>
     <div class="column-add-card">
@@ -681,6 +682,8 @@ async function addColumn() {
 
 // Deletar coluna
 function openDeleteColumn(columnId) {
+  if (!isFacilitador) return;
+
   pendingColumnDelete = columnId;
   document.getElementById('deleteColumnModal1').classList.add('open');
 }
